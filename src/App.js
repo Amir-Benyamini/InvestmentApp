@@ -9,10 +9,12 @@ import { NavComp } from './components/Navbar';
 import { PlanComp } from './components/PlanDash';
 import { MonitorComp } from './components/MonitorDash';
 import {MainComp} from './components/MainDash'
+import { observer, inject } from 'mobx-react'
 
-function App() {
-	return (
+const App = inject("ratesStore") (observer((props) => {
+	return ( 
 		<div>
+			{props.ratesStore.fetchLatests('https://v6.exchangerate-api.com/v6','af42bef5c66bb270bf4cd243', 'ILS')}
 			<Router>
 				<NavComp />
 
@@ -31,6 +33,6 @@ function App() {
 		</div>
 
 	);
-}
+}))
 
 export default App;

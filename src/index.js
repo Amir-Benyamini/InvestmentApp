@@ -5,10 +5,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'mobx-react'
 import { PlanStore } from './stores/PlanStore'
+import { RatesStore } from './stores/RatesStore'
 
 const planStore = new PlanStore()
+const ratesStore = new RatesStore()
+
 const stores = {
-	planStore, 
+	planStore,
+	ratesStore
 }
 ReactDOM.render(
 	<React.StrictMode>
