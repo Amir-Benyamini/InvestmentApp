@@ -1,49 +1,66 @@
 import { AddInvestmentComp } from './AddInvestment'
 import { observer, inject } from 'mobx-react'
-import React, { useState } from "react";
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
-export const PlanComp = inject("planStore", 'ratesStore')(observer((props) => {
 
-	const [investmentsTimeRange, setInvestmentsTimeRange] = useState(1)
-
-	const updateInvestmentsTimeRange = (value) => {
-
-		setInvestmentsTimeRange(value)
+const useStyles = makeStyles({
+	table: {
+		minWidth: 650,
+	},
+	headerCells: {
+		fontWeight: 'bold'
 	}
 
-	//make a function for every calculation you need for this table (for example show revenu per year)
+});
 
-	const compoundInterest = (investmentObj, investmentsTimeRange) => {
-		const rate = investmentObj.revPerYear / 100
-		const base = (1 + rate / 1)
-		const compundInterest = investmentObj.amount *  Math.pow(base, investmentsTimeRange) - investmentObj.amount
+export const PlanComp = inject("planStore", "ratesStore")(observer((props) => {
 
-		return compundInterest
-	}
+	const rateStore = props.ratesStore
+	const Investments = props.planStore.investments
+	const timeFrame = props.planStore.timeFrame
 
-	const interest = (investmentObj, investmentsTimeRange) => {
-		const rate = investmentObj.revPerYear / 100
-		
-		const interest = investmentObj.amount * rate * investmentsTimeRange
-
-		return interest
-	}
-
-	const ILSRates = props.ratesStore.latestRates.conversion_rates
+	const classes = useStyles();
 
 	return (
 		<div>
-			{console.log(ILSRates.USD)}
-			<div><AddInvestmentComp /></div>
-			<br />
-			<label for="timeRange">time range:</label>
-			<select name="timeRange" id="timeRange" value={investmentsTimeRange} onChange={(e) => updateInvestmentsTimeRange(e.target.value)}>
-				<option value="1">one year</option>
-				<option value="3">three years</option>
-				<option value="5">five years</option>
-				<option value="10">ten years</option>
-			</select>
-			{props.planStore.investments.map(i => <h1>{i.name} - {i.amount} - {compoundInterest(i, investmentsTimeRange)}  - {interest(i, investmentsTimeRange)} isRegulated: {i.isRegulated}</h1>)}
+			<AddInvestmentComp />
+
+			<TableContainer component={Paper}>
+				<Table className={classes.table} aria-label="simple table">
+					<TableHead>
+						<TableRow >
+							<TableCell className={classes.headerCells} align='center'>Name</TableCell>
+							<TableCell className={classes.headerCells} align='center'>Company</TableCell>
+							<TableCell className={classes.headerCells} align='center'>Investment Amount</TableCell>
+							<TableCell className={classes.headerCells} align='center'>Currency</TableCell>
+							<TableCell className={classes.headerCells} align='center'>Interest</TableCell>
+							<TableCell className={classes.headerCells} align='center'>Compound Interest</TableCell>
+							<TableCell className={classes.headerCells} align='center'>Risk Grade&nbsp;(0-100)</TableCell>
+						</TableRow>
+					</TableHead>
+
+					<TableBody>
+						{Investments.map((row) => (
+							<TableRow key={row.name}>
+								<TableCell align="center">{row.name}</TableCell>
+								<TableCell align="center">{row.company}</TableCell>
+								<TableCell align="center">{row.currency === 'USD' ? rateStore.convertUSDILS(row.amount) : row.amount}</TableCell>
+								<TableCell align="center">{row.currency}</TableCell>
+								<TableCell align="center">{row.currency === 'USD' ? rateStore.convertUSDILS(row.interest(timeFrame)) : row.interest(timeFrame)}</TableCell>
+								<TableCell align="center">{row.currency === 'USD' ? rateStore.convertUSDILS(row.compoundInterest(timeFrame)):row.compoundInterest(timeFrame)}</TableCell>
+								<TableCell align="center">{row.risk(timeFrame)}</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+			</TableContainer>
 
 		</div>
 	)

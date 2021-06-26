@@ -1,5 +1,19 @@
 import React, { useState } from "react";
 import { observer, inject } from 'mobx-react'
+import { Investment } from "../objects/Investment";
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControl from '@material-ui/core/FormControl';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import Select from '@material-ui/core/Select';
 
 export const AddInvestmentComp = inject("planStore")(observer((props) => {
 
@@ -15,6 +29,11 @@ export const AddInvestmentComp = inject("planStore")(observer((props) => {
 		isCompanyCapital: false,
 		isRegulated: false,
 	})
+	const [investmentsTimeRange, setInvestmentsTimeRange] = useState(1)
+
+	const [timeMenu, setTimeMenu] = useState(false)
+	const [investmentMenu, setInvestmentMenu] = useState(false)
+
 
 	const updateInvestmentInput = (value, name) => {
 		const updatedInputs = { ...investmentInput }
@@ -30,55 +49,242 @@ export const AddInvestmentComp = inject("planStore")(observer((props) => {
 		setInvestmentInput(updatedInputs)
 	}
 
+	const updateInvestmentsTimeRange = (value) => {
+
+		setInvestmentsTimeRange(value)
+	}
+
+	const handleInvestmentMentu = () => {
+		setInvestmentMenu(!investmentMenu);
+	}
+
+	const handleTimeMenu = () => {
+		setTimeMenu(!timeMenu);
+	}
+
+	const currencies = [
+		{
+			value: 'USD',
+
+		},
+		{
+			value: 'EUR',
+
+		},
+		{
+			value: 'ILS',
+
+		},
+		{
+			value: 'JPY',
+
+		},
+	];
+
+	const investmentTypes = [
+		{
+			value: 'Stock-Market',
+
+		},
+		{
+			value: 'Real-Estat',
+
+		},
+		{
+			value: 'Loans',
+
+		},
+		{
+			value: 'Crypto',
+
+		},
+	];
+
+	const liquidity = [
+		{
+			value: 'days',
+			label: 'Days'
+		},
+		{
+			value: 'months',
+			label: 'Months'
+		},
+		{
+			value: 'years',
+			label: 'Years'
+
+		}
+	];
+
+
 	return (
 		<div>
-			{console.log(props.planStore.investments)}
+			<Button onClick={handleTimeMenu}>Select Time Frame</Button>
+			<Dialog disableBackdropClick disableEscapeKeyDown open={timeMenu} onClose={handleTimeMenu}>
+				<DialogTitle>Select Time Frame</DialogTitle>
+				<DialogContent>
+					<form >
+						<FormControl >
+							<InputLabel htmlFor="demo-dialog-native">Age</InputLabel>
+							<Select
+								native
+								value={investmentsTimeRange}
+								onChange={(e) => updateInvestmentsTimeRange(e.target.value)}
+								input={<Input id="demo-dialog-native" />}
+							>
+								<option value={1}>One Year</option>
+								<option value={3}>Three Years</option>
+								<option value={5}>Five Years</option>
+								<option value={10}>Ten Years</option>
+							</Select>
+						</FormControl>
 
-			<input name='name' type="text" placeholder='investment-name' value={investmentInput.name} onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)} />
+					</form>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleTimeMenu} color="primary">
+						Cancel
+          </Button>
+					<Button onClick={() => {
+						props.planStore.changeTimeFrame(investmentsTimeRange)
+						handleTimeMenu()
+					}} color="primary">
+						Ok
+          </Button>
+				</DialogActions>
+			</Dialog>
 
-			<input name='company' type="text" placeholder='company' value={investmentInput.company} onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)} />
 
-			<label for="currency">currency:</label>
-			<select name="currency" id="currency" value={investmentInput.currency} onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)}>
-				<option value="">choose currency</option>
-				<option value="USD">USD</option>
-				<option value="ILS">ILS</option>
-			</select>
+			<Button onClick={handleInvestmentMentu}>Add Investment</Button>
+			<Dialog disableBackdropClick disableEscapeKeyDown open={investmentMenu} onClose={handleInvestmentMentu}>
+				<DialogTitle>Fill Investment Data</DialogTitle>
+				<DialogContent>
+					<form >
+						<FormControl >
+							<TextField
+								id='name'
+								name='name'
+								type='text'
+								label='Investment Name'
+								required
+								onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)}
+							/>
 
-			<label >yield per year:</label><input name='revPerYear' type="number" value={investmentInput.revPerYear} onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)} />
-			<label>investment amount:</label><input name='amount' type="number" value={investmentInput.amount} onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)} />
+							<TextField
+								id='company'
+								name='company'
+								label="Company"
+								type='text'
+								required
+								onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)}
+							/>
+							<TextField
+								id="currency"
+								name='currency'
+								label="Currency"
+								required
+								select
+								helperText="Select Currency"
+								onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)}>
 
-			<label for="type">type:</label>
-			<select name="type" id="type" value={investmentInput.type} onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)}>
-				<option value="choose">choose</option>
-				<option value="stock-market">stock-market</option>
-				<option value="real-estat">real-estat</option>
-				<option value="crypto">crypto-currency</option>
-				<option value="loans">loans</option>
-			</select>
+								{currencies.map((option) => (
+									<MenuItem key={option.value} value={option.value}>
+										{option.value}
+									</MenuItem>
+								))}
+							</TextField>
 
-			<label for="liquidity">liquidity:</label>
-			<select name="liquidity" id="liquidity" value={investmentInput.liquidity} onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)}>
-				<option value="choose">choose</option>
-				<option value="days">few days</option>
-				<option value="weeks">few weeks</option>
-				<option value="months">few months</option>
-				<option value="years">few years</option>
-			</select>
+							<TextField
+								id='revPerYear'
+								name='revPerYear'
+								type='number'
+								label='Yield Per Year'
+								required
+								onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)}
+							/>
 
-			<label>regulated?</label>
-			<input name='isRegulated' type="checkbox" value={investmentInput.isRegulated} onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)} />
+							<TextField
+								id='amount'
+								name='amount'
+								type='number'
+								label='Investment Amount'
+								required
+								onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)}
+							/>
 
-			<label>company risk own capital?</label>
-			<input name='isCompanyCapital' type="checkbox" value={investmentInput.isCompanyCapital} onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)} />
+							<TextField
+								id="type"
+								name='type'
+								label="Investment Type"
+								required
+								select
+								helperText="Select Investment Type"
+								onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)}>
 
-			<label>end date:</label>
-			<input name='endDate' type="date" value={investmentInput.endDate} onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)} />
+								{investmentTypes.map((option) => (
+									<MenuItem key={option.value} value={option.value}>
+										{option.value}
+									</MenuItem>
+								))}
+							</TextField>
 
-			<button onClick={() => {
-				props.planStore.addInvestment(investmentInput)
-				console.log(props)
-			}}>invest</button>
+							<TextField
+								id="liquidity"
+								name='liquidity'
+								label="Liquidity"
+								required
+								select
+								helperText="Select liquidity"
+								onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)}>
+
+								{liquidity.map((option) => (
+									<MenuItem key={option.value} value={option.value}>
+										{option.label}
+									</MenuItem>
+								))}
+							</TextField>
+
+							<FormControlLabel
+								control={
+									<Checkbox
+										onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)}
+										name="isRegulated"
+										color="primary"
+									/>
+								}
+								label="Rgulated?"
+							/>
+
+							<FormControlLabel
+								control={
+									<Checkbox
+										onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)}
+										name="isCompanyCapital"
+										color="primary"
+									/>
+								}
+								label="Company Risk Own Capital?"
+							/>
+
+						</FormControl>
+					</form>
+				</DialogContent>
+
+				<DialogActions>
+					<Button onClick={handleInvestmentMentu} color="primary">
+						Cancel
+          </Button>
+					<Button onClick={() => {
+						const investment = new Investment(investmentInput)
+						props.planStore.addInvestment(investment)
+						handleInvestmentMentu()
+					}} color="primary">
+						Invest
+          </Button>
+				</DialogActions>
+			</Dialog>
+			{/* <label>end date:</label>
+			<input name='endDate' type="date" value={investmentInput.endDate} onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)} /> */}
 		</div>
 
 	)
