@@ -30,9 +30,10 @@ export const AddInvestmentComp = inject("planStore")(observer((props) => {
 		isRegulated: false,
 	})
 	const [investmentsTimeRange, setInvestmentsTimeRange] = useState(1)
-
+	const [planName, setplanName] = useState('')
 	const [timeMenu, setTimeMenu] = useState(false)
 	const [investmentMenu, setInvestmentMenu] = useState(false)
+	const [saveMenu, setSaveMenu] = useState(false)
 
 
 	const updateInvestmentInput = (value, name) => {
@@ -54,12 +55,21 @@ export const AddInvestmentComp = inject("planStore")(observer((props) => {
 		setInvestmentsTimeRange(value)
 	}
 
+	const updatePlanName = (value) => {
+
+		setplanName(value)
+	}
+
 	const handleInvestmentMentu = () => {
 		setInvestmentMenu(!investmentMenu);
 	}
 
 	const handleTimeMenu = () => {
 		setTimeMenu(!timeMenu);
+	}
+
+	const handleSaveMenu = () => {
+		setSaveMenu(!saveMenu);
 	}
 
 	const currencies = [
@@ -283,6 +293,40 @@ export const AddInvestmentComp = inject("planStore")(observer((props) => {
           </Button>
 				</DialogActions>
 			</Dialog>
+
+			<Button onClick={handleSaveMenu}>Save</Button>
+			<Dialog disableBackdropClick disableEscapeKeyDown open={saveMenu} onClose={handleSaveMenu}>
+				<DialogTitle>Select Plan Name</DialogTitle>
+				<DialogContent>
+					<form >
+						<FormControl >
+							
+							<TextField
+								id='planName'
+								name='planName'
+								type='text'
+								label='Plan Name'
+								required
+								onChange={(e) => updatePlanName(e.target.value)}
+							/>
+						</FormControl>
+
+					</form>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleSaveMenu} color="primary">
+						Cancel
+          </Button>
+					<Button onClick={() => {
+						// props.planStore.changeTimeFrame(investmentsTimeRange)
+						console.log(planName)
+						handleSaveMenu()
+					}} color="primary">
+						save
+          </Button>
+				</DialogActions>
+			</Dialog>
+
 			{/* <label>end date:</label>
 			<input name='endDate' type="date" value={investmentInput.endDate} onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)} /> */}
 		</div>

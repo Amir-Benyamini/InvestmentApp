@@ -9,13 +9,20 @@ export class PlanStore {
 		makeObservable(this, {
 			investments: observable,
 			addInvestment: action,
+			deleteInvestment: action,
 			timeFrame: observable,
 			changeTimeFrame: action,
+			
 		})
 	}
 
 	addInvestment(investment) {
 		this.investments.push(investment)
+	}
+
+	deleteInvestment(investment) {
+		const indexOfInvestment = this.investments.indexOf(investment)
+		this.investments.splice(indexOfInvestment, 1)
 	}
 
 	changeTimeFrame(Years) {

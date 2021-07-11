@@ -8,7 +8,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles({
 	table: {
@@ -37,25 +38,36 @@ export const PlanComp = inject("planStore", "ratesStore")(observer((props) => {
 					<TableHead>
 						<TableRow >
 							<TableCell className={classes.headerCells} align='center'>Name</TableCell>
+
 							<TableCell className={classes.headerCells} align='center'>Company</TableCell>
-							<TableCell className={classes.headerCells} align='center'>Investment Amount</TableCell>
+
+							<TableCell className={classes.headerCells} align='center'>Investment Amount&nbsp;(₪)</TableCell>
+
 							<TableCell className={classes.headerCells} align='center'>Currency</TableCell>
-							<TableCell className={classes.headerCells} align='center'>Interest</TableCell>
-							<TableCell className={classes.headerCells} align='center'>Compound Interest</TableCell>
+
+							<TableCell className={classes.headerCells} align='center'>Interest Amount&nbsp;(₪)</TableCell>
+
+							<TableCell className={classes.headerCells} align='center'>Compound Interest Amount&nbsp;(₪)</TableCell>
+
 							<TableCell className={classes.headerCells} align='center'>Risk Grade&nbsp;(0-100)</TableCell>
+
+							<TableCell className={classes.headerCells} align='center'>Actions</TableCell>
 						</TableRow>
 					</TableHead>
 
 					<TableBody>
-						{Investments.map((row) => (
-							<TableRow key={row.name}>
-								<TableCell align="center">{row.name}</TableCell>
-								<TableCell align="center">{row.company}</TableCell>
-								<TableCell align="center">{row.currency === 'USD' ? rateStore.convertUSDILS(row.amount) : row.amount}</TableCell>
-								<TableCell align="center">{row.currency}</TableCell>
-								<TableCell align="center">{row.currency === 'USD' ? rateStore.convertUSDILS(row.interest(timeFrame)) : row.interest(timeFrame)}</TableCell>
-								<TableCell align="center">{row.currency === 'USD' ? rateStore.convertUSDILS(row.compoundInterest(timeFrame)):row.compoundInterest(timeFrame)}</TableCell>
-								<TableCell align="center">{row.risk(timeFrame)}</TableCell>
+						{Investments.map((investment) => (
+							<TableRow key={investment.name}>
+								<TableCell align="center">{investment.name}</TableCell>
+								<TableCell align="center">{investment.company}</TableCell>
+								<TableCell align="center">{investment.currency === 'USD' ? rateStore.convertUSDILS(investment.amount) : investment.amount}</TableCell>
+								<TableCell align="center">{investment.currency}</TableCell>
+								<TableCell align="center">{investment.currency === 'USD' ? rateStore.convertUSDILS(investment.interest(timeFrame)) : investment.interest(timeFrame)}</TableCell>
+								<TableCell align="center">{investment.currency === 'USD' ? rateStore.convertUSDILS(investment.compoundInterest(timeFrame)) : investment.compoundInterest(timeFrame)}</TableCell>
+								<TableCell align="center">{investment.risk(timeFrame)}</TableCell>
+								<TableCell align="center"><IconButton onClick={() => {
+									props.planStore.deleteInvestment(investment)
+								}} variant="contained" color="secondary"><DeleteForeverIcon fontSize="large" /></IconButton></TableCell>
 							</TableRow>
 						))}
 					</TableBody>
