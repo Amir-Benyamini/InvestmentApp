@@ -10,13 +10,14 @@ router.get('/', function (req, res) {
 router.get('/getPlans', function (req, res) {
 	console.log('fetching plans')
 	Plan.find({}, function (err, plans) {
-        res.send(plans)
-    })
+		res.send(plans)
+	})
 })
 
 router.post('/savePlan', function (req, res) {
 	console.log('saving plan')
-	let plan = new Plan ({planName: 'test100', investments: [{name:'test100'}, {name:'test104'}]})
+	const investmentsArry = req.body
+	const plan = new Plan({ planName: 'test100', investments: investmentsArry })
 	plan.save()
 	res.send('plan saved')
 })

@@ -11,16 +11,14 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
-import Select from '@material-ui/core/Select';
 
-export const AddInvestmentComp = inject("planStore")(observer((props) => {
+
+export const AddInvestmentComp = inject("planStore", "ratesStore")(observer((props) => {
 
 	const [investmentInput, setInvestmentInput] = useState({
 		name: '',
 		company: '',
-		currency: '',
+		currency: 'ILS',
 		revPerYear: 0,
 		amount: 0,
 		endDate: '',
@@ -29,11 +27,11 @@ export const AddInvestmentComp = inject("planStore")(observer((props) => {
 		isCompanyCapital: false,
 		isRegulated: false,
 	})
-	const [investmentsTimeRange, setInvestmentsTimeRange] = useState(1)
-	const [planName, setplanName] = useState('')
-	const [timeMenu, setTimeMenu] = useState(false)
+
+	// const Investments = props.planStore.investments
+
+
 	const [investmentMenu, setInvestmentMenu] = useState(false)
-	const [saveMenu, setSaveMenu] = useState(false)
 
 
 	const updateInvestmentInput = (value, name) => {
@@ -50,27 +48,23 @@ export const AddInvestmentComp = inject("planStore")(observer((props) => {
 		setInvestmentInput(updatedInputs)
 	}
 
-	const updateInvestmentsTimeRange = (value) => {
-
-		setInvestmentsTimeRange(value)
-	}
-
-	const updatePlanName = (value) => {
-
-		setplanName(value)
-	}
-
 	const handleInvestmentMentu = () => {
+		setInvestmentInput({
+			name: '',
+			company: '',
+			currency: 'ILS',
+			revPerYear: 0,
+			amount: 0,
+			endDate: '',
+			liquidity: '',
+			type: '',
+			isCompanyCapital: false,
+			isRegulated: false,
+		})
+
 		setInvestmentMenu(!investmentMenu);
 	}
 
-	const handleTimeMenu = () => {
-		setTimeMenu(!timeMenu);
-	}
-
-	const handleSaveMenu = () => {
-		setSaveMenu(!saveMenu);
-	}
 
 	const currencies = [
 		{
@@ -78,17 +72,9 @@ export const AddInvestmentComp = inject("planStore")(observer((props) => {
 
 		},
 		{
-			value: 'EUR',
-
-		},
-		{
 			value: 'ILS',
 
-		},
-		{
-			value: 'JPY',
-
-		},
+		}
 	];
 
 	const investmentTypes = [
@@ -99,15 +85,7 @@ export const AddInvestmentComp = inject("planStore")(observer((props) => {
 		{
 			value: 'Real-Estat',
 
-		},
-		{
-			value: 'Loans',
-
-		},
-		{
-			value: 'Crypto',
-
-		},
+		}
 	];
 
 	const liquidity = [
@@ -129,40 +107,6 @@ export const AddInvestmentComp = inject("planStore")(observer((props) => {
 
 	return (
 		<div>
-			<Button onClick={handleTimeMenu}>Select Time Frame</Button>
-			<Dialog disableBackdropClick disableEscapeKeyDown open={timeMenu} onClose={handleTimeMenu}>
-				<DialogTitle>Select Time Frame</DialogTitle>
-				<DialogContent>
-					<form >
-						<FormControl >
-							<InputLabel htmlFor="demo-dialog-native">Age</InputLabel>
-							<Select
-								native
-								value={investmentsTimeRange}
-								onChange={(e) => updateInvestmentsTimeRange(e.target.value)}
-								input={<Input id="demo-dialog-native" />}
-							>
-								<option value={1}>One Year</option>
-								<option value={3}>Three Years</option>
-								<option value={5}>Five Years</option>
-								<option value={10}>Ten Years</option>
-							</Select>
-						</FormControl>
-
-					</form>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={handleTimeMenu} color="primary">
-						Cancel
-          </Button>
-					<Button onClick={() => {
-						props.planStore.changeTimeFrame(investmentsTimeRange)
-						handleTimeMenu()
-					}} color="primary">
-						Ok
-          </Button>
-				</DialogActions>
-			</Dialog>
 
 
 			<Button onClick={handleInvestmentMentu}>Add Investment</Button>
@@ -285,7 +229,7 @@ export const AddInvestmentComp = inject("planStore")(observer((props) => {
 						Cancel
           </Button>
 					<Button onClick={() => {
-						const investment = new Investment(investmentInput)
+						const investment = new Investment(investmentInput, props.ratesStore.latestRates.quotes.USDILS)
 						props.planStore.addInvestment(investment)
 						handleInvestmentMentu()
 					}} color="primary">
@@ -294,38 +238,6 @@ export const AddInvestmentComp = inject("planStore")(observer((props) => {
 				</DialogActions>
 			</Dialog>
 
-			<Button onClick={handleSaveMenu}>Save</Button>
-			<Dialog disableBackdropClick disableEscapeKeyDown open={saveMenu} onClose={handleSaveMenu}>
-				<DialogTitle>Select Plan Name</DialogTitle>
-				<DialogContent>
-					<form >
-						<FormControl >
-							
-							<TextField
-								id='planName'
-								name='planName'
-								type='text'
-								label='Plan Name'
-								required
-								onChange={(e) => updatePlanName(e.target.value)}
-							/>
-						</FormControl>
-
-					</form>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={handleSaveMenu} color="primary">
-						Cancel
-          </Button>
-					<Button onClick={() => {
-						// props.planStore.changeTimeFrame(investmentsTimeRange)
-						console.log(planName)
-						handleSaveMenu()
-					}} color="primary">
-						save
-          </Button>
-				</DialogActions>
-			</Dialog>
 
 			{/* <label>end date:</label>
 			<input name='endDate' type="date" value={investmentInput.endDate} onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)} /> */}
