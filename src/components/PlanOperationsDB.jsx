@@ -7,9 +7,11 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import API from '../services/api';
 
-export const OperationsDB = inject("planStore", "ratesStore")(observer((props) => {
+export const PlanOperationsDB = inject("planStore")(observer((props) => {
 
+	const Investments = props.planStore.investments
 
 	const [planName, setplanName] = useState('')
 	const [saveMenu, setSaveMenu] = useState(false)
@@ -21,16 +23,20 @@ export const OperationsDB = inject("planStore", "ratesStore")(observer((props) =
 	}
 
 
-	const handleSaveMenu = () => {
+	const toggleSaveMenu = () => {
 		setSaveMenu(!saveMenu);
 	}
 
+	const onSavePlanClicked = async (planName, investments) => {
+		API.savePlan(planName, investments)
+		toggleSaveMenu()
+	}
 
 	return (
 		<div>
 
-			<Button onClick={handleSaveMenu}>Save</Button>
-			<Dialog disableBackdropClick disableEscapeKeyDown open={saveMenu} onClose={handleSaveMenu}>
+			<Button onClick={toggleSaveMenu}>Save Plan</Button>
+			<Dialog disableBackdropClick disableEscapeKeyDown open={saveMenu} onClose={toggleSaveMenu}>
 				<DialogTitle>Select Plan Name</DialogTitle>
 				<DialogContent>
 					<form >
@@ -49,13 +55,11 @@ export const OperationsDB = inject("planStore", "ratesStore")(observer((props) =
 					</form>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleSaveMenu} color="primary">
+					<Button onClick={toggleSaveMenu} color="primary">
 						Cancel
           </Button>
 					<Button onClick={() => {
-
-						console.log(planName)
-						handleSaveMenu()
+						onSavePlanClicked(planName, Investments)
 					}} color="primary">
 						save
           </Button>

@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { AddInvestmentComp } from './AddInvestment'
-import {TimeFrameComp} from './TimeFrameComp'
-import {OperationsDB} from './OperationsDB'
+import { TimeFrameComp } from './TimeFrameComp'
+import { PlanOperationsDB } from './PlanOperationsDB'
 import { observer, inject } from 'mobx-react'
-import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -13,33 +12,24 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import IconButton from '@material-ui/core/IconButton';
-
-const useStyles = makeStyles({
-	table: {
-		minWidth: 650,
-	},
-	headerCells: {
-		fontWeight: 'bold'
-	}
-
-});
+import {useStyles} from '../constants'
 
 // useEffect(() => {
 // 	//update latest rates from rateStore to planStore
 //  });
 
 export const PlanComp = inject("planStore")(observer((props) => {
-
+	const classes = useStyles();
 	const Investments = props.planStore.investments
 	const timeFrame = props.planStore.timeFrame
 
-	const classes = useStyles();
 
 	return (
 		<div>
+			{console.log(Investments)}
 			<AddInvestmentComp />
 			<TimeFrameComp />
-			<OperationsDB />
+			<PlanOperationsDB />
 
 			<TableContainer component={Paper}>
 				<Table className={classes.table} aria-label="simple table">
@@ -99,9 +89,9 @@ export const PlanComp = inject("planStore")(observer((props) => {
 
 							<TableCell className={classes.headerCells} align='center'>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS', notation: 'compact' }).format(props.planStore.interestAmount)}</TableCell>
 
-						</TableRow> : <TableRow ></TableRow> }
+						</TableRow> : <TableRow ></TableRow>}
 
-					
+
 					</TableBody>
 				</Table>
 			</TableContainer>

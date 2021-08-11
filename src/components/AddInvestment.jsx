@@ -11,7 +11,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
+import {currencies, investmentTypes, liquidity} from '../constants';
 
 export const AddInvestmentComp = inject("planStore", "ratesStore")(observer((props) => {
 
@@ -64,45 +64,6 @@ export const AddInvestmentComp = inject("planStore", "ratesStore")(observer((pro
 
 		setInvestmentMenu(!investmentMenu);
 	}
-
-
-	const currencies = [
-		{
-			value: 'USD',
-
-		},
-		{
-			value: 'ILS',
-
-		}
-	];
-
-	const investmentTypes = [
-		{
-			value: 'Stock-Market',
-
-		},
-		{
-			value: 'Real-Estat',
-
-		}
-	];
-
-	const liquidity = [
-		{
-			value: 'days',
-			label: 'Days'
-		},
-		{
-			value: 'months',
-			label: 'Months'
-		},
-		{
-			value: 'years',
-			label: 'Years'
-
-		}
-	];
 
 
 	return (

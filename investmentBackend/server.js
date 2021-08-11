@@ -2,12 +2,13 @@ const express = require('express')
 const app = express()
 const api = require('./routs/api')
 const connectDB = require('./db/connection')
-
+const cors = require('cors')
 
 connectDB();
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use(cors())
  
 app.use('/', api)
 

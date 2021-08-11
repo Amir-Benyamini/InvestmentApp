@@ -9,6 +9,7 @@ import { RatesStore} from './stores/RatesStore'
 
 const planStore = new PlanStore()
 const ratesStore = new RatesStore()
+
 ratesStore.fetchLatests()
 
 const stores = {
