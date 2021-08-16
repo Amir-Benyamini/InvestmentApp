@@ -21,6 +21,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Divider from '@material-ui/core/Divider';
 import InboxIcon from '@material-ui/icons/Inbox';
 import DraftsIcon from '@material-ui/icons/Drafts'
+import { PanTool } from "@material-ui/icons";
 
 
 
@@ -32,20 +33,25 @@ export const LoadPlanComp = inject("planStore", "ratesStore")(observer((props) =
 
 	useEffect(async () => {
 		let plans = await API.getPlans()
-		setPlans(plans)
+		let plansMaped = plans.map(plan => 
+			plan = {planName: plan.planName, _id: plan._id}
+		)
+		setPlans(plansMaped)
 	}, []);
 
 	const toggleLoadMenu = () => {
 		setLoadMenu(!loadMenu);
 	}
 
-	const onLoadPlanClicked = (investmentsData) => {
+	const onLoadPlanClicked = async (planId) => {
+		let plan = await API.getPlan(planId)
+
 		const investmentsInstances = []
-		investmentsData.forEach((investment) => {
+		plan.investments.forEach((investment) => {
 			const investmentInstance = new Investment(investment, props.ratesStore.latestRates.quotes.USDILS)
 			investmentsInstances.push(investmentInstance)
 		})
-		planStore.addPlan(investmentsInstances)
+		planStore.setPlan(investmentsInstances)
 		toggleLoadMenu()
 	};
 
@@ -55,7 +61,7 @@ export const LoadPlanComp = inject("planStore", "ratesStore")(observer((props) =
 		return (
 			<ListItem button
 				key={index}
-				onClick={() => { onLoadPlanClicked(plan.investments) }}>
+				onClick={() => { onLoadPlanClicked(plan._id) }}>
 				<ListItemText primary={plan.planName} />
 			</ListItem>
 		);

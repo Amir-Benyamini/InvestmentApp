@@ -17,7 +17,7 @@ export class PlanStore {
 			interestAmount: computed,
 			totalInvestmentAmount: computed,
 			totalAmount: computed,
-			addPlan: action
+			setPlan: action
 		})
 	}
 
@@ -25,7 +25,7 @@ export class PlanStore {
 		this.investments.push(investment)
 	}
 
-	addPlan(investments) {
+	setPlan(investments) {
 		const newInvestments = [...investments]
 		this.investments = newInvestments
 	}

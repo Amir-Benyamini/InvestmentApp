@@ -8,6 +8,12 @@ class API {
 		return plansJson
 	}
 
+	async getPlan(id) {
+		const res = await fetch(`http://localhost:4000/getPlan/${id}`)
+		const planJson = res.json()
+		return planJson
+	}
+
 	async savePlan(planName, investments) {
 		const options = {
 			method: 'POST',
