@@ -80,7 +80,7 @@ export function NavComp() {
 				<Divider />
 				<List>
 					{[{ text: 'Main Dashboard', path: '/', icon: <InboxIcon /> }, { text: 'Planing Dashboard', path: '/plan', icon: <MailIcon /> }, { text: 'Monitoring Dashboard', path: '/monitor', icon: <MailIcon /> }].map((menuItem, index) => (
-						<Link to={menuItem.path}>
+						<Link key={index} to={menuItem.path}>
 							<ListItem button key={menuItem.text}>
 								<ListItemIcon>{menuItem.icon}</ListItemIcon>
 								<ListItemText primary={menuItem.text} />

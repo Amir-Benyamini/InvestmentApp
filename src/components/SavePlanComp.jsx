@@ -9,7 +9,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import API from '../services/api';
 
-export const PlanOperationsDB = inject("planStore")(observer((props) => {
+export const SavePlanComp = inject("planStore")(observer((props) => {
 
 	const Investments = props.planStore.investments
 

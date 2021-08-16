@@ -1,9 +1,11 @@
 
 class API {
-	baseUrl = "http://localhost:4000"
 
-	getPlans() {
-
+	async getPlans() {
+		
+		const res = await fetch("http://localhost:4000/getPlans")
+		const plansJson = res.json()
+		return plansJson
 	}
 
 	async savePlan(planName, investments) {
@@ -16,7 +18,7 @@ class API {
 		}
 
 		const res = await fetch("http://localhost:4000/savePlan", options)
-		const plansJson = res.json()
+		const planJson = res.json()
 	}
 }
 

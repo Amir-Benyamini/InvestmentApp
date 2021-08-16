@@ -101,4 +101,10 @@ export const useStyles = makeStyles((theme) => ({
 	headerCells: {
 		fontWeight: 'bold'
 	},
+	loadRoot: {
+		width: '100%',
+		maxWidth: 500,
+		backgroundColor: theme.palette.background.paper,
+	 }
+
 }));
