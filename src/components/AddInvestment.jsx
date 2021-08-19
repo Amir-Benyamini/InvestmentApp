@@ -65,6 +65,11 @@ export const AddInvestmentComp = inject("planStore", "ratesStore")(observer((pro
 		setInvestmentMenu(!investmentMenu);
 	}
 
+		const addInvestment = () => {
+			const investment = new Investment(investmentInput, props.ratesStore.latestRates.quotes.USDILS)
+			props.planStore.addInvestment(investment)
+			handleInvestmentMentu()
+		};
 
 	return (
 		<div>
@@ -189,17 +194,11 @@ export const AddInvestmentComp = inject("planStore", "ratesStore")(observer((pro
 					<Button onClick={handleInvestmentMentu} color="primary">
 						Cancel
           </Button>
-					<Button onClick={() => {
-						const investment = new Investment(investmentInput, props.ratesStore.latestRates.quotes.USDILS)
-						props.planStore.addInvestment(investment)
-						handleInvestmentMentu()
-					}} color="primary">
+					<Button onClick={addInvestment} color="primary">
 						Invest
           </Button>
 				</DialogActions>
 			</Dialog>
-
-
 			{/* <label>end date:</label>
 			<input name='endDate' type="date" value={investmentInput.endDate} onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)} /> */}
 		</div>

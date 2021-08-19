@@ -9,35 +9,33 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import API from '../services/api';
 
-export const SavePlanComp = inject("planStore")(observer((props) => {
-
+export const UpdatePlanComp = inject("planStore")(observer((props) => {
 	const Investments = props.planStore.investments
-
-	const [planName, setplanName] = useState('')
-	const [saveMenu, setSaveMenu] = useState(false)
-
+	const planId = props.planStore.id
+	const planName = props.planStore.planName
+	const [newName, setNewName] = useState('')
+	const [updateMenu, setUpdateMenu] = useState(false)
 
 	const updatePlanName = (value) => {
 
-		setplanName(value)
+		setNewName(value)
 	}
 
-
-	const toggleSaveMenu = () => {
-		setSaveMenu(!saveMenu);
+	const toggleUptadeMenu = () => {
+		setUpdateMenu(!updateMenu);
 	}
 
-	const onSavePlanClicked = async (planName, investments) => {
-		API.savePlan(planName, investments)
-		toggleSaveMenu()
+	const onUpdatePlanClicked = async (planName, id, investments) => {
+		API.updatePlan(planName, id, investments)
+		setNewName('')
+		toggleUptadeMenu()
 	}
 
 	return (
 		<div>
-
-			<Button onClick={toggleSaveMenu}>Save New Plan</Button>
-			<Dialog disableBackdropClick disableEscapeKeyDown open={saveMenu} onClose={toggleSaveMenu}>
-				<DialogTitle>Select Plan Name</DialogTitle>
+			<Button onClick={toggleUptadeMenu}>Update Plan</Button>
+			<Dialog disableBackdropClick disableEscapeKeyDown open={updateMenu} onClose={toggleUptadeMenu}>
+				<DialogTitle>Update Plan Name</DialogTitle>
 				<DialogContent>
 					<form >
 						<FormControl >
@@ -55,19 +53,16 @@ export const SavePlanComp = inject("planStore")(observer((props) => {
 					</form>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={toggleSaveMenu} color="primary">
+					<Button onClick={toggleUptadeMenu} color="primary">
 						Cancel
           </Button>
 					<Button onClick={() => {
-						onSavePlanClicked(planName, Investments)
+						onUpdatePlanClicked(newName == '' ? planName : newName, planId, Investments)
 					}} color="primary">
-						save
+						update
           </Button>
 				</DialogActions>
 			</Dialog>
-
-
 		</div>
-
 	)
 }))

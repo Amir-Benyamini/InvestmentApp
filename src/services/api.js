@@ -26,6 +26,31 @@ class API {
 		const res = await fetch("http://localhost:4000/savePlan", options)
 		const planJson = res.json()
 	}
+
+	async updatePlan(planName, id, investments) {
+		const options = {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({investments})
+		}
+
+		const res = await fetch(`http://localhost:4000/updatePlan/${id}/${planName}`, options)
+		const planJson = res.json()
+	}
+
+	async deletePlan(id) {
+		const options = {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		}
+
+		const res = await fetch(`http://localhost:4000/updatePlan/${id}`, options)
+		const planJson = res.json()
+	}
 }
 
 export default new API()

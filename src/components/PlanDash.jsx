@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 import { AddInvestmentComp } from './AddInvestment'
 import { TimeFrameComp } from './TimeFrameComp'
 import { SavePlanComp } from './SavePlanComp'
-import { LoadPlanComp } from './LoadPlanComp'
+import { SetPlanComp } from './SetPlanComp'
+import { UpdatePlanComp } from './UpdatePlanComp'
+import { NewPlanComp } from './NewPlanComp'
 import { observer, inject } from 'mobx-react'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -31,7 +33,9 @@ export const PlanComp = inject("planStore")(observer((props) => {
 			<AddInvestmentComp />
 			<TimeFrameComp />
 			<SavePlanComp />
-			<LoadPlanComp />
+			<SetPlanComp />
+			<UpdatePlanComp />
+			<NewPlanComp />
 			<TableContainer component={Paper}>
 				<Table className={classes.table} aria-label="simple table">
 					<TableHead>

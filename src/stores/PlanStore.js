@@ -5,6 +5,8 @@ export class PlanStore {
 	constructor() {
 		this.investments = []
 		this.timeFrame = 1
+		this.id = ''
+		this.planName = ''
 
 		makeObservable(this, {
 			investments: observable,
@@ -25,9 +27,11 @@ export class PlanStore {
 		this.investments.push(investment)
 	}
 
-	setPlan(investments) {
+	setPlan(investments, id, planName) {
 		const newInvestments = [...investments]
 		this.investments = newInvestments
+		this.id = id
+		this.planName = planName
 	}
 
 	deleteInvestment(investment) {

@@ -11,10 +11,9 @@ import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
 
 export const TimeFrameComp = inject("planStore", "ratesStore")(observer((props) => {
-
 	const [investmentsTimeRange, setInvestmentsTimeRange] = useState(1)
 	const [timeMenu, setTimeMenu] = useState(false)
-
+	
 	const updateInvestmentsTimeRange = (value) => {
 
 		setInvestmentsTimeRange(value)
