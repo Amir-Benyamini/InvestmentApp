@@ -10,18 +10,17 @@ import API from '../services/api';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import IconButton from '@material-ui/core/IconButton';
+import {useStyles} from '../constants'
 
 export const SetPlanComp = inject("planStore", "ratesStore")(observer((props) => {
-
+	const classes = useStyles();
 	const [plansMenu, setPlansMenu] = useState(false)
 	const [plans, setPlans] = useState([])
 	const planStore = props.planStore
 
 	useEffect(async () => {
-		let plans = await API.getPlans()
-		let plansMaped = plans.map(plan =>
+		let plansDB = await API.getPlans()
+		let plansMaped = plansDB.map(plan =>
 			plan = { planName: plan.planName, _id: plan._id }
 		)
 		setPlans(plansMaped)
@@ -43,11 +42,20 @@ export const SetPlanComp = inject("planStore", "ratesStore")(observer((props) =>
 		togglePlansMenu()
 	};
 
-	const onDeletePlanClicked = async (id) => {
-		let deletedPlan = await API.deletePlan(id)
-		return console.log(deletedPlan)
-	}
+	// const onDeletePlanClicked = async (id) => {
+	// 	let deletedPlan = await API.deletePlan(id)
+	// 	let newPlans = [...plans]
 
+	// 	newPlans.forEach(plan => {
+	// 		if(plan._id == id){
+	// 			let index = plans.indexOf(plan)
+	// 			newPlans.splice(index, 1)
+	// 		} 
+	// 	})
+	// 	setPlans(newPlans)
+	// 	return console.log(deletedPlan)
+	// }
+{/* <IconButton onClick={onDeletePlanClicked(plan._id)} variant="contained" color="secondary"><DeleteForeverIcon fontSize="large" /></IconButton> */}
 	function renderRow(props) {
 		const { index, plan } = props;
 
@@ -55,27 +63,27 @@ export const SetPlanComp = inject("planStore", "ratesStore")(observer((props) =>
 			<ListItem button
 				key={index}
 				onClick={() => { onPlanClicked(plan._id) }}>
-				<ListItemText primary={plan.planName} /> <IconButton onClick={onDeletePlanClicked(plan._id)} variant="contained" color="secondary"><DeleteForeverIcon fontSize="large" /></IconButton>
+				<ListItemText primary={plan.planName} /> 
 			</ListItem>
 		);
 	}
 
-	const onNewPlanClicked = async () => {
-		planStore.setPlan([])
-		togglePlansMenu()
-	};
+	// const onNewPlanClicked = async () => {
+	// 	planStore.setPlan([])
+	// 	togglePlansMenu()
+	// };
 
 	return (
 		<div>
-			<Button onClick={togglePlansMenu}>Set Current Plan</Button>
+			<Button onClick={togglePlansMenu}>Set Plan</Button>
 			<Dialog disableBackdropClick disableEscapeKeyDown open={plansMenu} onClose={togglePlansMenu}>
 				<DialogTitle>Select Plan</DialogTitle>
 				<DialogContent>
 					<List itemCount={plans.length}>
-						<ListItem button
+						{/* <ListItem button
 							onClick={() => { onNewPlanClicked() }}>
 							<ListItemText primary={'New Plan'} />
-						</ListItem>
+						</ListItem> */}
 						{plans.map((plan, index) => {
 							return renderRow({ index, plan });
 						})}

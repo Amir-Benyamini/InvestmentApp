@@ -38,7 +38,7 @@ export const liquidity = [
 	}
 ];
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 export const useStyles = makeStyles((theme) => ({
 	root: {
@@ -101,10 +101,32 @@ export const useStyles = makeStyles((theme) => ({
 	headerCells: {
 		fontWeight: 'bold'
 	},
-	loadRoot: {
+	setRoot: {
 		width: '100%',
 		maxWidth: 500,
 		backgroundColor: theme.palette.background.paper,
-	 }
-
+	},
+	planSummeryCard: {
+		display: 'flex',
+		justifyContent: 'center',
+		flexWrap: 'wrap'
+	},
+	planSummeryCardItems: {
+		margin: '12px',
+		justifyItems: 'center',
+	},
+	planSummeryCardTitle: {
+		display: 'flex',
+		justifyContent: 'center'
+	},
+	planSummeryContainer: {
+		display: 'flex',
+		justifyContent: 'space-around',
+	},
+	planSummerySubContainers: {
+		display: 'flex',
+		justifyContent: 'center',
+		alignContent: 'center',
+		flexWrap: 'wrap'
+	},
 }));

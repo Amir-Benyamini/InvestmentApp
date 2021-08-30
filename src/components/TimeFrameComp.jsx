@@ -9,10 +9,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
+import { useStyles } from '../constants'
 
 export const TimeFrameComp = inject("planStore", "ratesStore")(observer((props) => {
 	const [investmentsTimeRange, setInvestmentsTimeRange] = useState(1)
 	const [timeMenu, setTimeMenu] = useState(false)
+	const classes = useStyles();
 	
 	const updateInvestmentsTimeRange = (value) => {
 
@@ -23,15 +25,19 @@ export const TimeFrameComp = inject("planStore", "ratesStore")(observer((props) 
 		setTimeMenu(!timeMenu);
 	}
 
+	const handleChange = () => {
+
+	};
+
 	return (
 		<div>
-			<Button onClick={handleTimeMenu}>Select Time Frame</Button>
+			<Button onClick={handleTimeMenu}>Change Time Frame</Button>
 			<Dialog disableBackdropClick disableEscapeKeyDown open={timeMenu} onClose={handleTimeMenu}>
 				<DialogTitle>Select Time Frame</DialogTitle>
 				<DialogContent>
 					<form >
 						<FormControl >
-							<InputLabel htmlFor="demo-dialog-native">Age</InputLabel>
+							<InputLabel htmlFor="demo-dialog-native">Time Frame</InputLabel>
 							<Select
 								native
 								value={investmentsTimeRange}
@@ -64,4 +70,4 @@ export const TimeFrameComp = inject("planStore", "ratesStore")(observer((props) 
 		</div>
 	)
 
-}))
+	}))

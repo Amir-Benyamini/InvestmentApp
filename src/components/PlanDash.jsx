@@ -1,10 +1,6 @@
 import React, { useEffect } from "react";
-import { AddInvestmentComp } from './AddInvestment'
-import { TimeFrameComp } from './TimeFrameComp'
-import { SavePlanComp } from './SavePlanComp'
-import { SetPlanComp } from './SetPlanComp'
-import { UpdatePlanComp } from './UpdatePlanComp'
-import { NewPlanComp } from './NewPlanComp'
+
+import { PlanDetailsComp } from './PlanDetailsComp'
 import { observer, inject } from 'mobx-react'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -15,7 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import IconButton from '@material-ui/core/IconButton';
-import {useStyles} from '../constants'
+import { useStyles } from '../constants'
 
 // useEffect(() => {
 // 	//update latest rates from rateStore to planStore
@@ -30,12 +26,8 @@ export const PlanComp = inject("planStore")(observer((props) => {
 	return (
 		<div>
 			{console.log(Investments)}
-			<AddInvestmentComp />
-			<TimeFrameComp />
-			<SavePlanComp />
-			<SetPlanComp />
-			<UpdatePlanComp />
-			<NewPlanComp />
+			<PlanDetailsComp />
+
 			<TableContainer component={Paper}>
 				<Table className={classes.table} aria-label="simple table">
 					<TableHead>
@@ -100,7 +92,6 @@ export const PlanComp = inject("planStore")(observer((props) => {
 					</TableBody>
 				</Table>
 			</TableContainer>
-
 		</div>
 	)
 }))

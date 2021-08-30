@@ -48,8 +48,20 @@ class API {
 			},
 		}
 
-		const res = await fetch(`http://localhost:4000/updatePlan/${id}`, options)
+		const res = await fetch(`http://localhost:4000/deletePlan/${id}`, options)
 		const planJson = res.json()
+	}
+
+	async deleteInvestment(id, index) {
+		const options = {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		}
+
+		const res = await fetch(`http://localhost:4000/deletePlan/${id}/${index}`, options)
+		const InvestmentJson = res.json()
 	}
 }
 

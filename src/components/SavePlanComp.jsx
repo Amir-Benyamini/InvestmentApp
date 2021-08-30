@@ -8,9 +8,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import API from '../services/api';
+import {useStyles} from '../constants'
 
 export const SavePlanComp = inject("planStore")(observer((props) => {
-
+	const classes = useStyles();
 	const Investments = props.planStore.investments
 
 	const [planName, setplanName] = useState('')
@@ -35,7 +36,7 @@ export const SavePlanComp = inject("planStore")(observer((props) => {
 	return (
 		<div>
 
-			<Button onClick={toggleSaveMenu}>Save New Plan</Button>
+			<Button onClick={toggleSaveMenu}>Save Plan</Button>
 			<Dialog disableBackdropClick disableEscapeKeyDown open={saveMenu} onClose={toggleSaveMenu}>
 				<DialogTitle>Select Plan Name</DialogTitle>
 				<DialogContent>

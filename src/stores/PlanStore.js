@@ -19,7 +19,9 @@ export class PlanStore {
 			interestAmount: computed,
 			totalInvestmentAmount: computed,
 			totalAmount: computed,
-			setPlan: action
+			setPlan: action,
+			id: observable,
+			planName: observable
 		})
 	}
 
@@ -35,8 +37,8 @@ export class PlanStore {
 	}
 
 	deleteInvestment(investment) {
-		const indexOfInvestment = this.investments.indexOf(investment)
-		this.investments.splice(indexOfInvestment, 1)
+			const indexOfInvestment = this.investments.indexOf(investment)
+			this.investments.splice(indexOfInvestment, 1)
 	}
 
 	changeTimeFrame(Years) {

@@ -11,10 +11,11 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {currencies, investmentTypes, liquidity} from '../constants';
+import { currencies, investmentTypes, liquidity } from '../constants';
+import { useStyles } from '../constants'
 
 export const AddInvestmentComp = inject("planStore", "ratesStore")(observer((props) => {
-
+	const classes = useStyles();
 	const [investmentInput, setInvestmentInput] = useState({
 		name: '',
 		company: '',
@@ -65,16 +66,14 @@ export const AddInvestmentComp = inject("planStore", "ratesStore")(observer((pro
 		setInvestmentMenu(!investmentMenu);
 	}
 
-		const addInvestment = () => {
-			const investment = new Investment(investmentInput, props.ratesStore.latestRates.quotes.USDILS)
-			props.planStore.addInvestment(investment)
-			handleInvestmentMentu()
-		};
+	const addInvestment = () => {
+		const investment = new Investment(investmentInput, props.ratesStore.latestRates.quotes.USDILS)
+		props.planStore.addInvestment(investment)
+		handleInvestmentMentu()
+	};
 
 	return (
 		<div>
-
-
 			<Button onClick={handleInvestmentMentu}>Add Investment</Button>
 			<Dialog disableBackdropClick disableEscapeKeyDown open={investmentMenu} onClose={handleInvestmentMentu}>
 				<DialogTitle>Fill Investment Data</DialogTitle>

@@ -50,4 +50,5 @@ router.delete('/deletePlan/:planId',async function (req, res) {
 	 let plan = await Plan.findByIdAndDelete(_id)
 	res.send(plan)
 });
+
 module.exports = router

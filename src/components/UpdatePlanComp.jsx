@@ -8,6 +8,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import API from '../services/api';
+import {useStyles} from '../constants'
 
 export const UpdatePlanComp = inject("planStore")(observer((props) => {
 	const Investments = props.planStore.investments
@@ -15,7 +16,7 @@ export const UpdatePlanComp = inject("planStore")(observer((props) => {
 	const planName = props.planStore.planName
 	const [newName, setNewName] = useState('')
 	const [updateMenu, setUpdateMenu] = useState(false)
-
+	const classes = useStyles();
 	const updatePlanName = (value) => {
 
 		setNewName(value)
