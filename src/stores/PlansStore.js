@@ -17,11 +17,6 @@ export class PlansStore {
 			addInvestment: action,
 			deleteInvestment: action,
 			changeTimeFrame: action,
-			// currencyRate: observable,
-			// updateCurrencyRates: action,
-			// interestAmount: computed,
-			// totalInvestmentAmount: computed,
-			// totalAmount: computed,
 			setPlan: action,
 		})
 	}
@@ -35,7 +30,7 @@ export class PlansStore {
 	}
 
 	addPlan(newPlan) {
-		// this.plans.push(newPlan)
+		this.plans.push(newPlan)
 		this.plan = newPlan
 	}
 

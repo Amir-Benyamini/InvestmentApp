@@ -35,7 +35,7 @@ export class Plan {
 	get totalInvestmentAmount() {
 		let amount = 0
 
-		this.plan.investments.forEach((investment) => {
+		this.investments.forEach((investment) => {
 			if (investment.currency === 'USD') {
 				amount += investment.baseAmount
 			} else { amount += investment.amount }
@@ -47,11 +47,11 @@ export class Plan {
 	get interestAmount() {
 		let interest = 0
 
-		this.plan.investments.forEach((investment) => {
+		this.investments.forEach((investment) => {
 			if (investment.type === 'Stock-Market') {
-				interest += investment.compoundInterest(this.plan.timeFrame)
+				interest += investment.compoundInterest(this.timeFrame)
 			} else {
-				interest += investment.interest(this.plan.timeFrame)
+				interest += investment.interest(this.timeFrame)
 			}
 		})
 

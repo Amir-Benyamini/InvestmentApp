@@ -18,12 +18,11 @@ import { useStyles } from '../constants'
 
 export const PlanDash = inject("plansStore")(observer((props) => {
 	const classes = useStyles();
-	const investments = props.plansStore.plan.investments
-	const timeFrame = props.plansStore.plan.timeFrame
+	const selectedPlan = props.plansStore.plan
 
 	return (
 		<div>
-			<PlanDetails plan={props.plansStore}/>
+			<PlanDetails plan={selectedPlan}/>
 			<TableContainer component={Paper}>
 				<Table className={classes.table} aria-label="simple table">
 					<TableHead>
@@ -47,7 +46,7 @@ export const PlanDash = inject("plansStore")(observer((props) => {
 					</TableHead>
 
 					<TableBody>
-						{investments.map((investment) => (
+						{selectedPlan.investments.map((investment) => (
 							<TableRow key={investment.name}>
 								<TableCell align="center">{investment.name}</TableCell>
 
@@ -59,9 +58,9 @@ export const PlanDash = inject("plansStore")(observer((props) => {
 
 								<TableCell align="center">{investment.currency === '' ? 'ILS' : investment.currency}</TableCell>
 
-								<TableCell align="center">{investment.type === 'Stock-Market' ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS', notation: 'compact' }).format(investment.compoundInterest(timeFrame)) : new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS', notation: 'compact' }).format(investment.interest(timeFrame))}</TableCell>
+								<TableCell align="center">{investment.type === 'Stock-Market' ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS', notation: 'compact' }).format(investment.compoundInterest(selectedPlan.timeFrame)) : new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS', notation: 'compact' }).format(investment.interest(selectedPlan.timeFrame))}</TableCell>
 
-								<TableCell align="center">{new Intl.NumberFormat('en-US', { style: 'percent' }).format(investment.risk(timeFrame))}</TableCell>
+								<TableCell align="center">{new Intl.NumberFormat('en-US', { style: 'percent' }).format(investment.risk(selectedPlan.timeFrame))}</TableCell>
 
 								<TableCell align="center"><IconButton onClick={() => {
 									props.plansStore.deleteInvestment(investment.id)
@@ -69,7 +68,7 @@ export const PlanDash = inject("plansStore")(observer((props) => {
 							</TableRow>
 						))}
 
-						{investments.length > 0 ? <TableRow >
+						{selectedPlan.investments.length > 0 ? <TableRow >
 							<TableCell className={classes.headerCells} align='center'>Total Amount: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS' }).format(props.plansStore.totalAmount)}</TableCell>
 
 							<TableCell className={classes.headerCells} align='center'></TableCell>
