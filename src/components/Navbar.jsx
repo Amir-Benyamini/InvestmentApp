@@ -20,7 +20,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import {useTheme} from '@material-ui/core/styles';
 import {useStyles} from '../constants'
 
-export function NavComp() {
+export function NavBar() {
 	const classes = useStyles();
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(false);

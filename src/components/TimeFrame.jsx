@@ -11,7 +11,7 @@ import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
 import { useStyles } from '../constants'
 
-export const TimeFrameComp = inject("planStore", "ratesStore")(observer((props) => {
+export const TimeFrame = inject("selectedPlan", "rates")(observer((props) => {
 	const [investmentsTimeRange, setInvestmentsTimeRange] = useState(1)
 	const [timeMenu, setTimeMenu] = useState(false)
 	const classes = useStyles();
@@ -35,7 +35,6 @@ export const TimeFrameComp = inject("planStore", "ratesStore")(observer((props) 
 			<Dialog disableBackdropClick disableEscapeKeyDown open={timeMenu} onClose={handleTimeMenu}>
 				<DialogTitle>Select Time Frame</DialogTitle>
 				<DialogContent>
-					<form >
 						<FormControl >
 							<InputLabel htmlFor="demo-dialog-native">Time Frame</InputLabel>
 							<Select
@@ -50,15 +49,13 @@ export const TimeFrameComp = inject("planStore", "ratesStore")(observer((props) 
 								<option value={10}>Ten Years</option>
 							</Select>
 						</FormControl>
-
-					</form>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleTimeMenu} color="primary">
 						Cancel
           </Button>
 					<Button onClick={() => {
-						props.planStore.changeTimeFrame(investmentsTimeRange)
+						props.selectedPlan.changeTimeFrame(investmentsTimeRange)
 						handleTimeMenu()
 					}} color="primary">
 						Ok

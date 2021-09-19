@@ -1,17 +1,16 @@
 import React from "react";
 import { observer, inject } from 'mobx-react'
 import Button from '@material-ui/core/Button';
-import API from '../services/api';
 import {useStyles} from '../constants'
+import {deletePlan} from '../actions/Plan'
 
-export const DeletePlanComp = inject("planStore")(observer((props) => {
-	const planId = props.planStore.id
+export const DeletePlan = inject("selectedPlan")(observer((props) => {
+	const planId = props.selectedPlan.id
 	const classes = useStyles();
 	const onDeletePlanClicked = async (id) => {
-		let result = window.confirm(`are you sure you want to delete "${props.planStore.planName}"?`)
-		if(result){
-			API.deletePlan(id)
-			props.planStore.setPlan([], '', '')
+		let result = window.confirm(`are you sure you want to delete "${props.selectedPlan.planName}"?`)
+		if (result){
+			deletePlan(id)
 		}
 	}
 
@@ -20,8 +19,6 @@ export const DeletePlanComp = inject("planStore")(observer((props) => {
 			<Button color="secondary" onClick={() => {
 						onDeletePlanClicked(planId)
 					}}>Delete Plan</Button>
-			
-	
 		</div>
 	)
 }))

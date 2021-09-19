@@ -1,10 +1,10 @@
 import { observable, makeObservable, action } from 'mobx'
 
-export class RatesStore {
+export class Rates {
 
 	constructor() {
 		this.latestRates = {}
-
+		this.fetchLatests()
 
 		makeObservable(this, {
 			latestRates: observable,
@@ -22,6 +22,10 @@ export class RatesStore {
 	convertUSDILS(amount){
 		let converted = this.latestRates.quotes.USDILS * parseInt(amount)
 		return Math.round(converted)
+	}
+
+	getUSDRate() {
+		return this.latestRates.quotes.USDILS
 	}
 }
 

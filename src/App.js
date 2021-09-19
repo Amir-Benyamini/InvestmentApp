@@ -5,27 +5,27 @@ import {
 	Route,
 } from "react-router-dom";
 
-import { NavComp } from './components/Navbar';
-import { PlanComp } from './components/PlanDash';
-import { MonitorComp } from './components/MonitorDash';
-import {MainComp} from './components/MainDash'
+import { NavBar } from './components/Navbar';
+import { PlanDash } from './components/PlanDash';
+import { MonitorDash } from './components/MonitorDash';
+import { MainDash } from './components/MainDash'
 import { observer, inject } from 'mobx-react'
 
-const App = inject("ratesStore") (observer((props) => {
+const App = inject("rates") (observer((props) => {
 	
 	return ( 
 		<div>
 			<Router>
-				<NavComp />
+				<NavBar />
 				<Switch>
 					<Route path="/plan">
-						<PlanComp />
+						<PlanDash />
 					</Route>
 					<Route path="/monitor">
-						<MonitorComp />
+						<MonitorDash />
 					</Route>
 					<Route path="/">
-						<MainComp />
+						<MainDash />
 					</Route>
 				</Switch>
 			</Router>

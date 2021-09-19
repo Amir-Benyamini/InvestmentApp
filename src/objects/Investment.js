@@ -1,6 +1,6 @@
 export class Investment {
 	constructor(investmentInput, currencyRate) {
-
+		this.id = investmentInput._id
 		this.amount = parseInt(investmentInput.amount)
 		this.currencyRate = currencyRate
 		this.baseAmount = parseInt(investmentInput.amount) * this.currencyRate

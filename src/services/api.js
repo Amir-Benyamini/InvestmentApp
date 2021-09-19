@@ -2,7 +2,6 @@
 class API {
 
 	async getPlans() {
-		
 		const res = await fetch("http://localhost:4000/getPlans")
 		const plansJson = res.json()
 		return plansJson
@@ -14,30 +13,44 @@ class API {
 		return planJson
 	}
 
-	async savePlan(planName, investments) {
+	async createPlan(name, investments) {
 		const options = {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ planName, investments })
+			body: JSON.stringify({ name, investments })
 		}
 
-		const res = await fetch("http://localhost:4000/savePlan", options)
+		const res = await fetch("http://localhost:4000/createPlan", options)
 		const planJson = res.json()
+		return planJson;
 	}
 
-	async updatePlan(planName, id, investments) {
+	async updatePlan(name, id) {
+		const options = {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}
+
+		const res = await fetch(`http://localhost:4000/updatePlan/${id}/${name}`, options)
+		return res.ok;
+	}
+
+	async addInvestment(id, investment) {
 		const options = {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({investments})
+			body: JSON.stringify({investment})
 		}
 
-		const res = await fetch(`http://localhost:4000/updatePlan/${id}/${planName}`, options)
+		const res = await fetch(`http://localhost:4000/addInvestment/${id}`, options)
 		const planJson = res.json()
+		return planJson;
 	}
 
 	async deletePlan(id) {
@@ -52,7 +65,7 @@ class API {
 		const planJson = res.json()
 	}
 
-	async deleteInvestment(id, index) {
+	async deleteInvestment(id, planId) {
 		const options = {
 			method: 'DELETE',
 			headers: {
@@ -60,8 +73,8 @@ class API {
 			},
 		}
 
-		const res = await fetch(`http://localhost:4000/deletePlan/${id}/${index}`, options)
-		const InvestmentJson = res.json()
+		const res = await fetch(`http://localhost:4000/deleteInvestment/${id}/${planId}`, options)
+		return res.ok
 	}
 }
 

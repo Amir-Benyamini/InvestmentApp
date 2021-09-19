@@ -4,18 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'mobx-react'
-import { PlanStore } from './stores/PlanStore'
-import { RatesStore} from './stores/RatesStore'
-
-const planStore = new PlanStore()
-const ratesStore = new RatesStore()
-
-ratesStore.fetchLatests()
-
-const stores = {
-	planStore,
-	ratesStore
-}
+import * as stores from './stores'
 
 ReactDOM.render(
 	<React.StrictMode>

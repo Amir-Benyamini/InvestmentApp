@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { observer, inject } from 'mobx-react'
-import { Investment } from "../objects/Investment";
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -13,8 +12,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { currencies, investmentTypes, liquidity } from '../constants';
 import { useStyles } from '../constants'
+import * as planActions from '../actions/Plan'
 
-export const AddInvestmentComp = inject("planStore", "ratesStore")(observer((props) => {
+export const AddInvestment = inject("selectedPlan", "rates")(observer((props) => {
 	const classes = useStyles();
 	const [investmentInput, setInvestmentInput] = useState({
 		name: '',
@@ -67,8 +67,7 @@ export const AddInvestmentComp = inject("planStore", "ratesStore")(observer((pro
 	}
 
 	const addInvestment = () => {
-		const investment = new Investment(investmentInput, props.ratesStore.latestRates.quotes.USDILS)
-		props.planStore.addInvestment(investment)
+		planActions.addInvestment(investmentInput, props.rates.latestRates.quotes.USDILS)
 		handleInvestmentMentu()
 	};
 

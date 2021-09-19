@@ -1,44 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { observer, inject } from 'mobx-react';
-import { Investment } from "../objects/Investment";
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import API from '../services/api';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import {useStyles} from '../constants'
+import * as planActions from '../actions/Plan'
 
-export const SetPlanComp = inject("planStore", "ratesStore")(observer((props) => {
+export const SetPlan = inject("selectedPlan", "rates")(observer((props) => {
 	const classes = useStyles();
 	const [plansMenu, setPlansMenu] = useState(false)
-	const [plans, setPlans] = useState([])
-	const planStore = props.planStore
+//	const [plans, setPlans] = useState([])
 
 	useEffect(async () => {
-		let plansDB = await API.getPlans()
-		let plansMaped = plansDB.map(plan =>
-			plan = { planName: plan.planName, _id: plan._id }
-		)
-		setPlans(plansMaped)
+		planActions.fetchPlans()
+		//let plansMaped = plansDB.map(plan =>
+		//	plan = { name: plan.name, _id: plan._id }
+		//)
+		//setPlans(plansMaped)
 	}, [plansMenu]);
 
 	const togglePlansMenu = () => {
 		setPlansMenu(!plansMenu);
 	};
 
-	const onPlanClicked = async (planId) => {
-		let plan = await API.getPlan(planId)
-
-		const investmentsInstances = []
-		plan.investments.forEach((investment) => {
-			const investmentInstance = new Investment(investment, props.ratesStore.latestRates.quotes.USDILS)
-			investmentsInstances.push(investmentInstance)
-		})
-		planStore.setPlan(investmentsInstances, planId, plan.planName)
+	const onPlanClicked = async (plan) => {
+		planActions.setPlan(plan)
 		togglePlansMenu()
 	};
 
@@ -62,8 +53,8 @@ export const SetPlanComp = inject("planStore", "ratesStore")(observer((props) =>
 		return (
 			<ListItem button
 				key={index}
-				onClick={() => { onPlanClicked(plan._id) }}>
-				<ListItemText primary={plan.planName} /> 
+				onClick={() => { onPlanClicked(plan) }}>
+				<ListItemText primary={plan.name} /> 
 			</ListItem>
 		);
 	}
@@ -73,6 +64,7 @@ export const SetPlanComp = inject("planStore", "ratesStore")(observer((props) =>
 	// 	togglePlansMenu()
 	// };
 
+	const plans = props.selectedPlan.plans
 	return (
 		<div>
 			<Button onClick={togglePlansMenu}>Set Plan</Button>

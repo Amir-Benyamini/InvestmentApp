@@ -1,60 +1,57 @@
 import React from "react";
-import { observer, inject } from 'mobx-react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { useStyles } from '../constants'
-import { AddInvestmentComp } from './AddInvestment'
-import { TimeFrameComp } from './TimeFrameComp'
-import { SavePlanComp } from './SavePlanComp'
-import { SetPlanComp } from './SetPlanComp'
-import { UpdatePlanComp } from './UpdatePlanComp'
-import { NewPlanComp } from './NewPlanComp'
-import { DeletePlanComp } from './DeletePlanComp'
+import { AddInvestment } from './AddInvestment'
+import { TimeFrame } from './TimeFrame'
+import { SetPlan } from './SetPlan'
+import { UpdatePlan } from './UpdatePlan'
+import { NewPlan } from './NewPlan'
+import { DeletePlan } from './DeletePlan'
 
-export const PlanDetailsComp = inject("planStore")(observer((props) => {
+export const PlanDetails = (props) => {
 	const classes = useStyles();
-	const planStore = props.planStore
-
-
+	const plan = props.plan
+	
 	return (
 		<div>
 			<Card variant="outlined">
 				<div className={classes.planSummeryContainer}>
 					<div className={classes.planSummerySubContainers}>
-						<AddInvestmentComp />
-						<TimeFrameComp />
+						<AddInvestment />
+						<TimeFrame />
 					</div>
 					<Card variant="outlined" >
 						<CardContent>
 							<Typography className={classes.planSummeryCardTitle} color="textSecondary" gutterBottom>
-								{planStore.planName} Plan Summery
+								{plan.name} Plan Summery
        						</Typography>
 							<div className={classes.planSummeryCard}>
 								<Typography className={classes.planSummeryCardItems} color='primary' variant="subtitle1">
-									{planStore.timeFrame} {planStore.timeFrame > 1 ? 'years plan' : 'year plan'}
+									{plan.timeFrame} {plan.timeFrame > 1 ? 'years plan' : 'year plan'}
 								</Typography>
 								<Typography className={classes.planSummeryCardItems} color='primary' variant="subtitle1">
-									Invested: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS', notation: 'compact' }).format(props.planStore.totalInvestmentAmount)}
+									Invested: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS', notation: 'compact' }).format(props.plan.totalInvestmentAmount)}
 								</Typography>
 								<Typography className={classes.planSummeryCardItems} color='primary' variant="subtitle1">
-									revenue: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS', notation: 'compact' }).format(props.planStore.interestAmount)}
+									revenue: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS', notation: 'compact' }).format(props.plan.interestAmount)}
 								</Typography>
 								<Typography className={classes.planSummeryCardItems} color='primary' variant="subtitle1">
-									Total: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS', notation: 'compact' }).format(props.planStore.totalAmount)}
+									Total: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS', notation: 'compact' }).format(props.plan.totalAmount)}
 								</Typography>
 							</div>
 						</CardContent>
 					</Card>
 					<div className={classes.planSummerySubContainers}>
-						<NewPlanComp />
-						<SetPlanComp />
-						<UpdatePlanComp />
-						<SavePlanComp />
-						<DeletePlanComp />
+						<NewPlan />
+						<SetPlan />
+						<UpdatePlan />
+						{/* <SavePlan investments={investments}/> */}
+						<DeletePlan />
 					</div>
 				</div>
 			</Card>
 		</div>
 	)
-}));
+};

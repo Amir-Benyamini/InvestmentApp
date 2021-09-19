@@ -1,6 +1,6 @@
 import React from "react";
 
-export function MainComp() {
+export function MainDash() {
 	return (
 		<div>
 			<h1>Main</h1>
