@@ -4,20 +4,19 @@ import Button from '@material-ui/core/Button';
 import {useStyles} from '../constants'
 import {deletePlan} from '../actions/Plan'
 
-export const DeletePlan = inject("selectedPlan")(observer((props) => {
-	const planId = props.selectedPlan.id
+export const DeletePlan = inject("plansStore")(observer((props) => {
 	const classes = useStyles();
-	const onDeletePlanClicked = async (id) => {
-		let result = window.confirm(`are you sure you want to delete "${props.selectedPlan.planName}"?`)
+	const onDeletePlanClicked = async () => {
+		let result = window.confirm(`are you sure you want to delete "${props.plansStore.plan.name}"?`)
 		if (result){
-			deletePlan(id)
+			deletePlan()
 		}
 	}
 
 	return (
 		<div>
 			<Button color="secondary" onClick={() => {
-						onDeletePlanClicked(planId)
+						onDeletePlanClicked()
 					}}>Delete Plan</Button>
 		</div>
 	)

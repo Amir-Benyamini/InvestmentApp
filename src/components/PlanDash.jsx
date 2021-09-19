@@ -16,14 +16,14 @@ import { useStyles } from '../constants'
 // 	//update latest rates from rateStore to planStore
 //  });
 
-export const PlanDash = inject("selectedPlan")(observer((props) => {
+export const PlanDash = inject("plansStore")(observer((props) => {
 	const classes = useStyles();
-	const Investments = props.selectedPlan.investments
-	const timeFrame = props.selectedPlan.plan.timeFrame
+	const investments = props.plansStore.plan.investments
+	const timeFrame = props.plansStore.plan.timeFrame
 
 	return (
 		<div>
-			<PlanDetails plan={props.selectedPlan}/>
+			<PlanDetails plan={props.plansStore}/>
 			<TableContainer component={Paper}>
 				<Table className={classes.table} aria-label="simple table">
 					<TableHead>
@@ -47,7 +47,7 @@ export const PlanDash = inject("selectedPlan")(observer((props) => {
 					</TableHead>
 
 					<TableBody>
-						{Investments.map((investment) => (
+						{investments.map((investment) => (
 							<TableRow key={investment.name}>
 								<TableCell align="center">{investment.name}</TableCell>
 
@@ -64,23 +64,23 @@ export const PlanDash = inject("selectedPlan")(observer((props) => {
 								<TableCell align="center">{new Intl.NumberFormat('en-US', { style: 'percent' }).format(investment.risk(timeFrame))}</TableCell>
 
 								<TableCell align="center"><IconButton onClick={() => {
-									props.selectedPlan.deleteInvestment(investment.id)
+									props.plansStore.deleteInvestment(investment.id)
 								}} variant="contained" color="secondary"><DeleteForeverIcon fontSize="large" /></IconButton></TableCell>
 							</TableRow>
 						))}
 
-						{Investments.length > 0 ? <TableRow >
-							<TableCell className={classes.headerCells} align='center'>Total Amount: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS' }).format(props.selectedPlan.totalAmount)}</TableCell>
+						{investments.length > 0 ? <TableRow >
+							<TableCell className={classes.headerCells} align='center'>Total Amount: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS' }).format(props.plansStore.totalAmount)}</TableCell>
 
 							<TableCell className={classes.headerCells} align='center'></TableCell>
 
 							<TableCell className={classes.headerCells} align='center'></TableCell>
 
-							<TableCell className={classes.headerCells} align='center'>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS', notation: 'compact' }).format(props.selectedPlan.totalInvestmentAmount)}</TableCell>
+							<TableCell className={classes.headerCells} align='center'>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS', notation: 'compact' }).format(props.plansStore.totalInvestmentAmount)}</TableCell>
 
 							<TableCell className={classes.headerCells} align='center'></TableCell>
 
-							<TableCell className={classes.headerCells} align='center'>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS', notation: 'compact' }).format(props.selectedPlan.interestAmount)}</TableCell>
+							<TableCell className={classes.headerCells} align='center'>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS', notation: 'compact' }).format(props.plansStore.interestAmount)}</TableCell>
 
 						</TableRow> : <TableRow ></TableRow>}
 

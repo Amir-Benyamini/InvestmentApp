@@ -11,7 +11,7 @@ import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
 import { useStyles } from '../constants'
 
-export const TimeFrame = inject("selectedPlan", "rates")(observer((props) => {
+export const TimeFrame = inject("plansStore")(observer((props) => {
 	const [investmentsTimeRange, setInvestmentsTimeRange] = useState(1)
 	const [timeMenu, setTimeMenu] = useState(false)
 	const classes = useStyles();
@@ -55,7 +55,7 @@ export const TimeFrame = inject("selectedPlan", "rates")(observer((props) => {
 						Cancel
           </Button>
 					<Button onClick={() => {
-						props.selectedPlan.changeTimeFrame(investmentsTimeRange)
+						props.plansStore.plan.changeTimeFrame(investmentsTimeRange)
 						handleTimeMenu()
 					}} color="primary">
 						Ok

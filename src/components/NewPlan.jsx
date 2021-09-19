@@ -10,9 +10,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import * as planActions from '../actions/Plan'
 
-export const NewPlan = inject("selectedPlan")(observer((props) => {
+export const NewPlan = (props) => {
 	const classes = useStyles();
-	const plan = props.plan
 
 	const [name, setname] = useState('')
 	const [nameDialog, setNameDialog] = useState(false)
@@ -27,7 +26,6 @@ export const NewPlan = inject("selectedPlan")(observer((props) => {
 
 	const onNewPlanClicked = async () => {
 		planActions.createPlan(name)
-		// plan.createPlan([], name)
 		toggleNameDialog()
 	};
 
@@ -61,4 +59,4 @@ export const NewPlan = inject("selectedPlan")(observer((props) => {
 			</Dialog>
 		</div>
 	)
-}));
+}

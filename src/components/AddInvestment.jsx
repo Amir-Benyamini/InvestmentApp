@@ -14,7 +14,7 @@ import { currencies, investmentTypes, liquidity } from '../constants';
 import { useStyles } from '../constants'
 import * as planActions from '../actions/Plan'
 
-export const AddInvestment = inject("selectedPlan", "rates")(observer((props) => {
+export const AddInvestment = (props) => {
 	const classes = useStyles();
 	const [investmentInput, setInvestmentInput] = useState({
 		name: '',
@@ -67,7 +67,7 @@ export const AddInvestment = inject("selectedPlan", "rates")(observer((props) =>
 	}
 
 	const addInvestment = () => {
-		planActions.addInvestment(investmentInput, props.rates.latestRates.quotes.USDILS)
+		planActions.addInvestment(investmentInput)
 		handleInvestmentMentu()
 	};
 
@@ -202,4 +202,4 @@ export const AddInvestment = inject("selectedPlan", "rates")(observer((props) =>
 		</div>
 
 	)
-}))
+}

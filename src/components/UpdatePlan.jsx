@@ -10,11 +10,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import {useStyles} from '../constants'
 import * as planActions from '../actions/Plan'
 
-export const UpdatePlan = inject("selectedPlan", "rates")(observer((props) => {
-	const plan = props.selectedPlan
-	const Investments = props.selectedPlan.plan.investments
-	const id = props.selectedPlan.plan.id
-	const name = props.selectedPlan.plan.name
+export const UpdatePlan = inject("plansStore")(observer((props) => {
+	const id = props.plansStore.plan.id
+	const name = props.plansStore.plan.name
 
 	const [newName, setNewName] = useState('')
 	const [updateDialog, setUpdateDialog] = useState(false)
@@ -28,7 +26,7 @@ export const UpdatePlan = inject("selectedPlan", "rates")(observer((props) => {
 		setUpdateDialog(!updateDialog);
 	}
 
-	const onUpdatePlanClicked = async (name, id, investments, usdRate) => {
+	const onUpdatePlanClicked = async (name, id) => {
 		planActions.updatePlanName(name, id)
 		setNewName('')
 		toggleUptadeDialog()
@@ -57,7 +55,7 @@ export const UpdatePlan = inject("selectedPlan", "rates")(observer((props) => {
 						Cancel
           </Button>
 					<Button onClick={() => {
-						onUpdatePlanClicked(newName == '' ? name : newName, id, Investments, props.rates.latestRates.quotes.USDILS)
+						onUpdatePlanClicked(newName == '' ? name : newName, id)
 					}} color="primary">
 						update
           </Button>

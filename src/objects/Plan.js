@@ -1,8 +1,13 @@
 import { Investment } from "./Investment"
+import { makeObservable, observable } from "mobx"
 
 export class Plan {
+	investments = []
 	constructor(planJson, usdRate) {
-		this.investments = []
+		makeObservable(this, {
+			investments: observable
+	  })
+
 		planJson.investments.forEach((investmentJson) => {
 			const investment = new Investment(investmentJson, usdRate)
 			this.investments.push(investment)

@@ -1,11 +1,10 @@
 import { observable, makeObservable, action, computed } from 'mobx'
 
-export class SelectedPlan {
+export class PlansStore {
 
 	constructor() {
-		this.investments = []
 		this.plan = {
-			investments: this.investments,
+			investments: [],
 			timeFrame: 1,
 			name: ''
 		}
@@ -15,7 +14,6 @@ export class SelectedPlan {
 			plans: observable,
 			setPlans: action,
 			plan: observable,
-			investments: observable,
 			addInvestment: action,
 			deleteInvestment: action,
 			changeTimeFrame: action,
@@ -33,7 +31,7 @@ export class SelectedPlan {
 	}
 
 	addInvestment(investment) {
-		this.investments.push(investment)
+		this.plan.investments.push(investment)
 	}
 
 	addPlan(newPlan) {
@@ -43,7 +41,6 @@ export class SelectedPlan {
 
 	setPlan(plan) {
 		this.plan = plan
-		this.investments = plan.investments
 	}
 
 	updatePlanName(name) {
@@ -51,7 +48,7 @@ export class SelectedPlan {
 	}
 
 	async deleteInvestment(investmentId) {
-		this.investments = this.investments.filter(function( investment ) {
+		this.plan.investments = this.plan.investments.filter(function( investment ) {
 			return investment.id !== investmentId;
 		});
 	}

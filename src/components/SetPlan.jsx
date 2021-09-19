@@ -11,7 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import {useStyles} from '../constants'
 import * as planActions from '../actions/Plan'
 
-export const SetPlan = inject("selectedPlan", "rates")(observer((props) => {
+export const SetPlan = inject("plansStore")(observer((props) => {
 	const classes = useStyles();
 	const [plansMenu, setPlansMenu] = useState(false)
 //	const [plans, setPlans] = useState([])
@@ -64,7 +64,7 @@ export const SetPlan = inject("selectedPlan", "rates")(observer((props) => {
 	// 	togglePlansMenu()
 	// };
 
-	const plans = props.selectedPlan.plans
+	const plans = props.plansStore.plans
 	return (
 		<div>
 			<Button onClick={togglePlansMenu}>Set Plan</Button>

@@ -1,5 +1,5 @@
-import { SelectedPlan } from './SelectedPlan'
+import { PlansStore } from './PlansStore'
 import { Rates} from './Rates'
 
-export const selectedPlan = new SelectedPlan()
+export const plansStore = new PlansStore()
 export const rates = new Rates()
