@@ -8,8 +8,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import {useStyles} from '../constants'
-import * as planActions from '../actions/Plan'
+import {useStyles} from '../../constants'
+import * as planActions from '../../actions/Plan'
 
 export const SetPlan = inject("plansStore")(observer((props) => {
 	const classes = useStyles();

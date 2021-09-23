@@ -6,8 +6,8 @@ import {
 } from "react-router-dom";
 
 import { NavBar } from './components/Navbar';
-import { PlanDash } from './components/PlanDash';
-import { MonitorDash } from './components/MonitorDash';
+import { PlanDash } from './components/plan/PlanDash';
+import { MonitorDash } from './components/monitor/MonitorDash';
 import { MainDash } from './components/MainDash'
 import { observer, inject } from 'mobx-react'
 

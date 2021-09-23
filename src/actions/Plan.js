@@ -14,13 +14,14 @@ export const setPlan = (plan) => {
 }
 
 export const createPlan = async (name, investments = []) => {
-	const newPlan = await API.createPlan(name, investments)
-	plansStore.setPlan(newPlan)
+	const planJason = await API.createPlan(name, investments)
+	const plan = new Plan(planJason, rates.getUSDRate())
+	plansStore.setPlan(plan)
 }
 
 export const deletePlan = async () => {
-	API.deletePlan(plansStore.deletePlan(plansStore.plan.id))
-	// TODO - update store
+	API.deletePlan(plansStore.plan.id)
+	plansStore.deletePlan(plansStore.plan.id)
 }
 
 export const addInvestment = async (investmentInput) => {
@@ -33,6 +34,11 @@ export const updatePlanName = async (name, id) => {
 	const success = await API.updatePlan(name, id)
 	if (success) plansStore.updatePlanName(name)
 }
+
+export const changePlanTimeFrame = (timeFrame) => {
+	plansStore.setPlanTimeFrame(timeFrame)
+}
+
 
 export const deleteInvestment = async (investmentId) => {
 	const success = await API.deleteInvestment(investmentId, plansStore.plan.id)

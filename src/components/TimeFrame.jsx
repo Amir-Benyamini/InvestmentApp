@@ -10,23 +10,24 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
 import { useStyles } from '../constants'
+import {changePlanTimeFrame} from '../actions/Plan'
 
 export const TimeFrame = inject("plansStore")(observer((props) => {
-	const [investmentsTimeRange, setInvestmentsTimeRange] = useState(1)
+	const [planTimeFrame, setPlanTimeFrame] = useState(1)
 	const [timeMenu, setTimeMenu] = useState(false)
 	const classes = useStyles();
 	
-	const updateInvestmentsTimeRange = (value) => {
-
-		setInvestmentsTimeRange(value)
+	const updatePlanTimeRange = (value) => {
+		setPlanTimeFrame(value)
 	}
 
 	const handleTimeMenu = () => {
 		setTimeMenu(!timeMenu);
 	}
 
-	const handleChange = () => {
-
+	const onChangeTimeFrameClick = () => {
+		changePlanTimeFrame(planTimeFrame)
+		handleTimeMenu()
 	};
 
 	return (
@@ -39,8 +40,8 @@ export const TimeFrame = inject("plansStore")(observer((props) => {
 							<InputLabel htmlFor="demo-dialog-native">Time Frame</InputLabel>
 							<Select
 								native
-								value={investmentsTimeRange}
-								onChange={(e) => updateInvestmentsTimeRange(e.target.value)}
+								value={planTimeFrame}
+								onChange={(e) => updatePlanTimeRange(e.target.value)}
 								input={<Input id="demo-dialog-native" />}
 							>
 								<option value={1}>One Year</option>
@@ -55,8 +56,7 @@ export const TimeFrame = inject("plansStore")(observer((props) => {
 						Cancel
           </Button>
 					<Button onClick={() => {
-						props.plansStore.plan.changeTimeFrame(investmentsTimeRange)
-						handleTimeMenu()
+						onChangeTimeFrameClick()
 					}} color="primary">
 						Ok
           </Button>

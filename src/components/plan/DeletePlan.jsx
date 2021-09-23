@@ -1,8 +1,8 @@
 import React from "react";
 import { observer, inject } from 'mobx-react'
 import Button from '@material-ui/core/Button';
-import {useStyles} from '../constants'
-import {deletePlan} from '../actions/Plan'
+import {useStyles} from '../../constants'
+import {deletePlan} from '../../actions/Plan'
 
 export const DeletePlan = inject("plansStore")(observer((props) => {
 	const classes = useStyles();

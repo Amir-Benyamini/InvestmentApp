@@ -2,9 +2,9 @@ import React from "react";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { useStyles } from '../constants'
-import { AddInvestment } from './AddInvestment'
-import { TimeFrame } from './TimeFrame'
+import { useStyles } from '../../constants'
+import { AddInvestment } from '../AddInvestment'
+import { TimeFrame } from '../TimeFrame'
 import { SetPlan } from './SetPlan'
 import { UpdatePlan } from './UpdatePlan'
 import { NewPlan } from './NewPlan'

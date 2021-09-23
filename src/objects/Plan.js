@@ -90,4 +90,8 @@ export class Plan {
 			investment.currencyRate = currencyRate
 		})
 	}
+
+	changeTimeFrame(Years) {
+		this.timeFrame = Years
+	}
 }

@@ -7,8 +7,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {useStyles} from '../constants'
-import * as planActions from '../actions/Plan'
+import {useStyles} from '../../constants'
+import * as planActions from '../../actions/Plan'
 
 export const UpdatePlan = inject("plansStore")(observer((props) => {
 	const id = props.plansStore.plan.id

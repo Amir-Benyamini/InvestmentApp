@@ -10,7 +10,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import IconButton from '@material-ui/core/IconButton';
-import { useStyles } from '../constants'
+import { useStyles } from '../../constants'
+import * as planActions from '../../actions/Plan'
 
 // useEffect(() => {
 // 	//update latest rates from rateStore to planStore
@@ -63,7 +64,7 @@ export const PlanDash = inject("plansStore")(observer((props) => {
 								<TableCell align="center">{new Intl.NumberFormat('en-US', { style: 'percent' }).format(investment.risk(selectedPlan.timeFrame))}</TableCell>
 
 								<TableCell align="center"><IconButton onClick={() => {
-									props.plansStore.deleteInvestment(investment.id)
+									planActions.deleteInvestment(investment.id)
 								}} variant="contained" color="secondary"><DeleteForeverIcon fontSize="large" /></IconButton></TableCell>
 							</TableRow>
 						))}

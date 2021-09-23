@@ -16,12 +16,11 @@ export class PlansStore {
 			plan: observable,
 			addInvestment: action,
 			deleteInvestment: action,
-			changeTimeFrame: action,
 			setPlan: action,
 		})
 	}
 
-	async setPlans(plans) {
+	setPlans(plans) {
 		this.plans = plans
 	}
 
@@ -38,17 +37,28 @@ export class PlansStore {
 		this.plan = plan
 	}
 
+	setPlanTimeFrame(timeFrame) {
+		this.plan.timeFrame = timeFrame
+	}
+
 	updatePlanName(name) {
 		this.plan.name = name
 	}
 
-	async deleteInvestment(investmentId) {
-		this.plan.investments = this.plan.investments.filter(function( investment ) {
-			return investment.id !== investmentId;
+	deletePlan(id) {
+		this.plan = {
+			investments: [],
+			timeFrame: 1,
+			name: ''
+		}
+		this.plans = this.plans.filter(function (plan) {
+			return plan.id !== id;
 		});
 	}
 
-	changeTimeFrame(Years) {
-		this.plan.timeFrame = Years
+	deleteInvestment(investmentId) {
+		this.plan.investments = this.plan.investments.filter(function (investment) {
+			return investment.id !== investmentId;
+		});
 	}
 }
