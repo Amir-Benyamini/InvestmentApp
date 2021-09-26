@@ -5,7 +5,7 @@ export class PlansStore {
 	constructor() {
 		this.plan = {
 			investments: [],
-			timeFrame: 1,
+			timeFrame: NaN,
 			name: ''
 		}
 		this.plans = []

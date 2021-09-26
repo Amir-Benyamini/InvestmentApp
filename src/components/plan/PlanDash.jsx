@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { PlanDetails } from './PlanDetails'
+import { PlanHeader } from './PlanHeader'
 import { observer, inject } from 'mobx-react'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -23,7 +23,7 @@ export const PlanDash = inject("plansStore")(observer((props) => {
 
 	return (
 		<div>
-			<PlanDetails plan={selectedPlan}/>
+			<PlanHeader plan={selectedPlan}/>
 			<TableContainer component={Paper}>
 				<Table className={classes.table} aria-label="simple table">
 					<TableHead>
@@ -70,20 +70,19 @@ export const PlanDash = inject("plansStore")(observer((props) => {
 						))}
 
 						{selectedPlan.investments.length > 0 ? <TableRow >
-							<TableCell className={classes.headerCells} align='center'>Total Amount: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS' }).format(props.plansStore.totalAmount)}</TableCell>
+							<TableCell className={classes.headerCells} align='center'>Total Amount: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS' }).format(selectedPlan.totalAmount)}</TableCell>
 
 							<TableCell className={classes.headerCells} align='center'></TableCell>
 
 							<TableCell className={classes.headerCells} align='center'></TableCell>
 
-							<TableCell className={classes.headerCells} align='center'>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS', notation: 'compact' }).format(props.plansStore.totalInvestmentAmount)}</TableCell>
+							<TableCell className={classes.headerCells} align='center'>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS', notation: 'compact' }).format(selectedPlan.totalInvestmentAmount)}</TableCell>
 
 							<TableCell className={classes.headerCells} align='center'></TableCell>
 
-							<TableCell className={classes.headerCells} align='center'>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS', notation: 'compact' }).format(props.plansStore.interestAmount)}</TableCell>
+							<TableCell className={classes.headerCells} align='center'>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'ILS', notation: 'compact' }).format(selectedPlan.interestAmount)}</TableCell>
 
 						</TableRow> : <TableRow ></TableRow>}
-
 
 					</TableBody>
 				</Table>

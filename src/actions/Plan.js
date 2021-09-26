@@ -13,6 +13,7 @@ export const setPlan = (plan) => {
 	plansStore.setPlan(plan)
 }
 
+
 export const createPlan = async (name, investments = []) => {
 	const planJason = await API.createPlan(name, investments)
 	const plan = new Plan(planJason, rates.getUSDRate())
