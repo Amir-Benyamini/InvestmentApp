@@ -26,7 +26,8 @@ export const TimeFrame = inject("plansStore")(observer((props) => {
 	}
 
 	const onChangeTimeFrameClick = () => {
-		changePlanTimeFrame(planTimeFrame)
+		const parsedValue = parseInt(planTimeFrame)
+		changePlanTimeFrame(parsedValue)
 		handleTimeMenu()
 	};
 

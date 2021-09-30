@@ -1,13 +1,16 @@
 import { Investment } from "./Investment"
-import { makeObservable, observable } from "mobx"
+import { makeObservable, observable, action } from "mobx"
 
 export class Plan {
 	investments = []
 	timeFrame = 1
+	name = ''
+
 	constructor(planJson, usdRate) {
 		makeObservable(this, {
 			investments: observable,
-			timeFrame: observable
+			timeFrame: observable,
+			name: observable,
 	  })
 
 		planJson.investments.forEach((investmentJson) => {
@@ -15,7 +18,6 @@ export class Plan {
 			this.investments.push(investment)
 		})
 		
-		this.timeFrame = this.timeFrame
 		this.name = planJson.name
 		this.id = planJson._id
 	}
@@ -91,9 +93,5 @@ export class Plan {
 		this.investments.forEach((investment) => {
 			investment.currencyRate = currencyRate
 		})
-	}
-
-	changeTimeFrame(Years) {
-		this.timeFrame = Years
 	}
 }

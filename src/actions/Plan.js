@@ -33,8 +33,12 @@ export const addInvestment = async (investmentInput) => {
 
 export const updatePlanName = async (name, id) => {
 	const success = await API.updatePlan(name, id)
-	if (success) plansStore.updatePlanName(name)
-}
+	if (success) {
+		// plansStore.updatePlanName(name)
+		const planJason = await API.getPlan(id)
+		const plan = new Plan (planJason, rates.getUSDRate())
+		plansStore.setPlan(plan)
+	}}
 
 export const changePlanTimeFrame = (timeFrame) => {
 	plansStore.setPlanTimeFrame(timeFrame)

@@ -17,6 +17,8 @@ export class PlansStore {
 			addInvestment: action,
 			deleteInvestment: action,
 			setPlan: action,
+			setPlanTimeFrame: action,
+			updatePlanName: action
 		})
 	}
 

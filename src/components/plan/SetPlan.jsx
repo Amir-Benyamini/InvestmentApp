@@ -14,6 +14,7 @@ import * as planActions from '../../actions/Plan'
 export const SetPlan = inject("plansStore")(observer((props) => {
 	const classes = useStyles();
 	const [plansMenu, setPlansMenu] = useState(false)
+	
 //	const [plans, setPlans] = useState([])
 
 	useEffect(async () => {

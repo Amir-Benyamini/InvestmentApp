@@ -9,7 +9,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import * as planActions from '../../actions/Plan'
 
-export const NewPlan = (props) => {
+export const NewPlan = () => {
 	const classes = useStyles();
 
 	const [name, setname] = useState('')
