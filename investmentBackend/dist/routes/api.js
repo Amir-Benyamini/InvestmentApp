@@ -12,6 +12,9 @@ const Investment_1 = require("./../db/Investment");
 router.get('/', function (req, res) {
     res.send('Hello welcome to my server');
 });
+router.post('/signUp', async function (req, res) {
+    console.log('signing up');
+});
 router.get('/getPlans', async function (req, res) {
     console.log('fetching plans');
     const plans = await plan_1.default.find({}).populate('investments').exec();

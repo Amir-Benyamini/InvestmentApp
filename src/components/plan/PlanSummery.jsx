@@ -3,8 +3,9 @@ import { useStyles } from '../../constants'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import { observer } from "mobx-react";
 
-export const PlanSummery = (props) => {
+export const PlanSummery = observer((props) => {
 	const classes = useStyles();
 	const plan = props.plan
 
@@ -43,4 +44,4 @@ export const PlanSummery = (props) => {
 
 		</div>
 	)
-};
+});

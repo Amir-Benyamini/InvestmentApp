@@ -5,9 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 // const mongoose = require('mongoose');
 const mongoose_1 = __importDefault(require("mongoose"));
-const uri = "mongodb+srv://bini:dn278dn278@investmentappcluster.1jghv.mongodb.net/investmentsDB?retryWrites=true&w=majority";
 const connectDB = async function () {
-    const conn = await mongoose_1.default.connect(`${uri}`, { useNewUrlParser: true, useUnifiedTopology: true });
+    const conn = await mongoose_1.default.connect(process.env.DB, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+    });
     console.log('DB is connected');
     // conn.connection.db.dropDatabase();
 };

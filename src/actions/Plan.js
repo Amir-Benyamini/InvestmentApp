@@ -34,10 +34,10 @@ export const addInvestment = async (investmentInput) => {
 export const updatePlanName = async (name, id) => {
 	const success = await API.updatePlan(name, id)
 	if (success) {
-		// plansStore.updatePlanName(name)
-		const planJason = await API.getPlan(id)
-		const plan = new Plan (planJason, rates.getUSDRate())
-		plansStore.setPlan(plan)
+		plansStore.updatePlanName(name)
+		// const planJason = await API.getPlan(id)
+		// const plan = new Plan (planJason, rates.getUSDRate())
+		// plansStore.setPlan(plan)
 	}}
 
 export const changePlanTimeFrame = (timeFrame) => {
@@ -51,3 +51,5 @@ export const deleteInvestment = async (investmentId) => {
 		plansStore.deleteInvestment(investmentId)
 	} else alert('Server error')
 }
+
+

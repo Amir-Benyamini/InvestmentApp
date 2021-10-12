@@ -76,6 +76,21 @@ class API {
 		const res = await fetch(`http://localhost:4000/deleteInvestment/${id}/${planId}`, options)
 		return res.ok
 	}
+
+	async login(userName, password) {
+		const options = {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: {
+				userName,
+				password
+			}
+		}
+
+		return await fetch(`http://localhost:4000/login`, options)
+	}
 }
 
 export default new API()

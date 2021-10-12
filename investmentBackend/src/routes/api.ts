@@ -9,6 +9,11 @@ router.get('/', function (req, res) {
 	res.send('Hello welcome to my server')
 });
 
+router.post('/signUp', async function (req, res) {
+	console.log('signing up')
+	
+});
+
 router.get('/getPlans', async function (req, res) {
 	console.log('fetching plans')
 	const plans = await Plan.find({}).populate('investments').exec()
@@ -72,5 +77,6 @@ router.delete('/deletePlan/:planId',async function (req, res) {
 	 let plan = await Plan.findByIdAndDelete(_id)
 	res.send(plan)
 });
+
 
 export default router

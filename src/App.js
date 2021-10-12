@@ -10,9 +10,12 @@ import { PlanDash } from './components/plan/PlanDash';
 import { MonitorDash } from './components/monitor/MonitorDash';
 import { MainDash } from './components/MainDash'
 import { observer, inject } from 'mobx-react'
+import { Login } from "./components/login/Login";
 
-const App = inject("rates") (observer((props) => {
-	
+const App = inject("rates", "auth")(observer((props) => {
+	if (!props.auth.isLoggedIn) {
+		return <Login />
+	}
 	return ( 
 		<div>
 			<Router>
