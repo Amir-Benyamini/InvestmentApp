@@ -3,12 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signup = void 0;
+exports.accountActivation = exports.signup = void 0;
 const user_1 = __importDefault(require("./../db/user"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const email_1 = require("../services/email");
-// import sgMail from '@sendgrid/mail';
-// sgMail.setApiKey(`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`)
 // export const signup = (req: { body: { name: string; email: string; password: string; }; }, res: any) => {
 // 	// console.log('REQ BODY ON SIGNUP', req.body);
 // 	const { name, email, password } = req.body
@@ -59,3 +57,36 @@ const signup = (req, res) => {
     // })
 };
 exports.signup = signup;
+const accountActivation = (req, res) => {
+    const { token } = req.body;
+    if (token) {
+        jsonwebtoken_1.default.verify(token, process.env.JWT_ACCOUNT_ACTIVATION, function (err, decoded) {
+            if (err) {
+                console.log('JWT ACCOUNT ACTIVATION ERROR', err);
+                return res.status(401).json({
+                    error: 'Expierd link. Please signup again.'
+                });
+            }
+            // @ts-ignore
+            const { name, email, password } = jsonwebtoken_1.default.decode(token);
+            const user = new user_1.default({ name, email, password });
+            user.save((err, user) => {
+                if (err) {
+                    console.log('SAVE USER IN ACCOUNT ACTIVATION ERROR', err);
+                    return res.status(401).json({
+                        error: 'Error saveing user in DB. Try signup again.'
+                    });
+                }
+                return res.json({
+                    messaga: 'Signup success! Please signin.'
+                });
+            });
+        });
+    }
+    else {
+        return res.json({
+            messaga: 'Something went wrong. Please try again.'
+        });
+    }
+};
+exports.accountActivation = accountActivation;

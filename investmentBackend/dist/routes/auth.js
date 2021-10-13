@@ -9,4 +9,5 @@ const auth_1 = require("../actions/auth");
 const index_1 = require("./../validators/index");
 const auth_2 = require("./../validators/auth");
 authRouter.post('/signup', auth_2.userSighnupValidator, index_1.runValidation, auth_1.signup);
+authRouter.post('/account-activation', auth_1.accountActivation);
 exports.default = authRouter;

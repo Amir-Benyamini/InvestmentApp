@@ -1,10 +1,6 @@
 import User from './../db/user';
 import jwt from 'jsonwebtoken'
 import { sendEmailWithNodemailer } from '../services/email'
-// import sgMail from '@sendgrid/mail';
-// sgMail.setApiKey(`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`)
-
-
 
 // export const signup = (req: { body: { name: string; email: string; password: string; }; }, res: any) => {
 // 	// console.log('REQ BODY ON SIGNUP', req.body);
@@ -64,3 +60,39 @@ export const signup = (req: any, res: any) => {
 	// })
 
 }
+
+export const accountActivation = (req: any, res: any) => {
+	const { token } = req.body
+
+	if (token) {
+		jwt.verify(token, process.env.JWT_ACCOUNT_ACTIVATION!, function (err: any, decoded: any) {
+			if (err) {
+				console.log('JWT ACCOUNT ACTIVATION ERROR', err);
+				return res.status(401).json({
+					error: 'Expierd link. Please signup again.'
+				})
+			}
+			// @ts-ignore
+			const { name, email, password } = jwt.decode(token);
+
+			const user = new User({ name, email, password });
+
+			user.save((err: any, user: any) => {
+				if (err) {
+					console.log('SAVE USER IN ACCOUNT ACTIVATION ERROR', err)
+					return res.status(401).json({
+						error: 'Error saveing user in DB. Try signup again.'
+					})
+				}
+				return res.json({
+					messaga: 'Signup success! Please signin.'
+				})
+			});
+
+		});
+	} else {
+		return res.json({
+			messaga: 'Something went wrong. Please try again.'
+		})
+	}
+};
