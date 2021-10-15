@@ -17,14 +17,17 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import {useTheme} from '@material-ui/core/styles';
-import {useStyles} from '../constants'
+import Button from '@material-ui/core/Button';
+import LinkM from '@material-ui/core/Link';
+import { useTheme } from '@material-ui/core/styles';
+import { useStyles } from '../constants'
+import { observer, inject } from 'mobx-react'
 
-export function NavBar() {
+export const NavBar = inject("auth")(observer((props) => {
 	const classes = useStyles();
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(false);
-
+	const { isLoggedIn } = props.auth
 	const handleDrawerOpen = () => {
 		setOpen(true);
 	};
@@ -32,65 +35,95 @@ export function NavBar() {
 	const handleDrawerClose = () => {
 		setOpen(false);
 	};
-	return (
-		<div className={classes.root}>
-			<CssBaseline />
-			<AppBar
-				position="fixed"
-				className={clsx(classes.appBar, {
-					[classes.appBarShift]: open,
-				})}
-			>
-				<Toolbar>
-					<Typography variant="h6" noWrap className={classes.title}>
-						Investments Monitoring
-           </Typography>
-					<IconButton
-						color="inherit"
-						aria-label="open drawer"
-						edge="end"
-						onClick={handleDrawerOpen}
-						className={clsx(open && classes.hide)}
-					>
-						<MenuIcon />
-					</IconButton>
-				</Toolbar>
-			</AppBar>
-			<main
-				className={clsx(classes.content, {
-					[classes.contentShift]: open,
-				})}
-			>
-				<div className={classes.drawerHeader} />
-			</main>
-			<Drawer
-				className={classes.drawer}
-				variant="persistent"
-				anchor="right"
-				open={open}
-				classes={{
-					paper: classes.drawerPaper,
-				}}
-			>
-				<div className={classes.drawerHeader}>
-					<IconButton onClick={handleDrawerClose}>
-						{theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-					</IconButton>
-				</div>
-				<Divider />
-				<List>
-					{[{ text: 'Main Dashboard', path: '/', icon: <InboxIcon /> }, { text: 'Planing Dashboard', path: '/plan', icon: <MailIcon /> }, { text: 'Monitoring Dashboard', path: '/monitor', icon: <MailIcon /> }].map((menuItem, index) => (
-						<Link key={index} to={menuItem.path}>
-							<ListItem button key={menuItem.text}>
-								<ListItemIcon>{menuItem.icon}</ListItemIcon>
-								<ListItemText primary={menuItem.text} />
-							</ListItem>
-						</Link>
-
-					))}
-				</List>
-			</Drawer>
-		</div>
-
-	)
-} 
+	if (!isLoggedIn) {
+		return (
+			<div className={classes.root}>
+				<CssBaseline />
+				<AppBar
+					position="fixed"
+					className={clsx(classes.appBar, {
+						[classes.appBarShift]: open,
+					})}
+				>
+					<Toolbar>
+					<LinkM color='inherit' href="#text-home" underline="none" noWrap className={classes.title}>
+					<Typography variant="h6">
+					enWhealthy
+			  		</Typography>
+					  </LinkM>
+					  <Button size="large" color='inherit' href="/signup">Signup</Button>
+					  <Button size="large" color='inherit' href="/login">Login</Button>
+					</Toolbar>
+				</AppBar>
+				<main
+					className={clsx(classes.content, {
+						[classes.contentShift]: open,
+					})}
+				>
+					<div className={classes.drawerHeader} />
+				</main>
+				
+			</div>
+		)
+	} else {
+		return (
+			<div className={classes.root}>
+				<CssBaseline />
+				<AppBar
+					position="fixed"
+					className={clsx(classes.appBar, {
+						[classes.appBarShift]: open,
+					})}
+				>
+					<Toolbar>
+						<Typography variant="h6" noWrap className={classes.title}>
+							Investments Monitoring
+			  			</Typography>
+						<IconButton
+							color="inherit"
+							aria-label="open drawer"
+							edge="end"
+							onClick={handleDrawerOpen}
+							className={clsx(open && classes.hide)}
+						>
+							<MenuIcon />
+						</IconButton>
+					</Toolbar>
+				</AppBar>
+				<main
+					className={clsx(classes.content, {
+						[classes.contentShift]: open,
+					})}
+				>
+					<div className={classes.drawerHeader} />
+				</main>
+				<Drawer
+					className={classes.drawer}
+					variant="persistent"
+					anchor="right"
+					open={open}
+					classes={{
+						paper: classes.drawerPaper,
+					}}
+				>
+					<div className={classes.drawerHeader}>
+						<IconButton onClick={handleDrawerClose}>
+							{theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+						</IconButton>
+					</div>
+					<Divider />
+					<List>
+						{[{ text: 'Profile', path: '/profile', icon: <InboxIcon /> }, { text: 'Analytics Dashboard', path: '/analytics', icon: <InboxIcon /> }, { text: 'Planing Dashboard', path: '/plan', icon: <MailIcon /> }, { text: 'Monitoring Dashboard', path: '/monitor', icon: <MailIcon /> }].map((menuItem, index) => (
+							<Link key={index} to={menuItem.path}>
+								<ListItem button key={menuItem.text}>
+									<ListItemIcon>{menuItem.icon}</ListItemIcon>
+									<ListItemText primary={menuItem.text} />
+								</ListItem>
+							</Link>
+						))}
+					</List>
+				</Drawer>
+			</div>
+		)
+	}
+}));

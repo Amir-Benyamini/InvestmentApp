@@ -19,11 +19,10 @@ dotenv_1.default.config();
 const app = (0, express_1.default)();
 (0, connection_1.default)();
 //middlewares
-// app.use(cors()) allow all origins
-if (process.env.NODE_ENV === 'development') {
-    app.use((0, cors_1.default)({ origin: `http://localhost:300` }));
-}
-;
+app.use((0, cors_1.default)()); //allow all origins
+// if(process.env.NODE_ENV === 'development'){
+// 	app.use(cors({origin: `http://localhost:300`}))
+// };
 app.use(body_parser_1.default.json());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));

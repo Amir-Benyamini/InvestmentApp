@@ -17,10 +17,10 @@ const app = express()
 connectDB();
 
 //middlewares
-// app.use(cors()) allow all origins
-if(process.env.NODE_ENV === 'development'){
-	app.use(cors({origin: `http://localhost:300`}))
-};
+app.use(cors()) //allow all origins
+// if(process.env.NODE_ENV === 'development'){
+// 	app.use(cors({origin: `http://localhost:300`}))
+// };
 app.use(bodyParser.json())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))

@@ -45,7 +45,7 @@ class API {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({investment})
+			body: JSON.stringify({ investment })
 		}
 
 		const res = await fetch(`http://localhost:4000/addInvestment/${id}`, options)
@@ -77,19 +77,37 @@ class API {
 		return res.ok
 	}
 
-	async login(userName, password) {
+	async signup(name, email, password) {
 		const options = {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/json'
+				"Content-Type": "application/json",
+				"Accept": "*/*"
 			},
-			body: {
-				userName,
+			body: JSON.stringify({
+				name,
+				email,
 				password
-			}
+			})
 		}
 
-		return await fetch(`http://localhost:4000/login`, options)
+		return await fetch(`http://localhost:4000/auth/signup`, options)
+	};
+
+	async login(email, password) {
+		const options = {
+			method: 'POST',
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "*/*"
+			},
+			body: JSON.stringify({
+				email,
+				password
+			})
+		}
+
+		return await fetch(`http://localhost:4000/auth/login`, options)
 	}
 }
 

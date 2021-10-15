@@ -4,19 +4,18 @@ import {
 	Switch,
 	Route,
 } from "react-router-dom";
+import { observer, inject } from 'mobx-react'
 
 import { NavBar } from './components/Navbar';
 import { PlanDash } from './components/plan/PlanDash';
 import { MonitorDash } from './components/monitor/MonitorDash';
-import { MainDash } from './components/MainDash'
-import { observer, inject } from 'mobx-react'
-import { Login } from "./components/login/Login";
+import { AnalyticsDash } from './components/AnalyticsDash'
+import { Signup } from "./components/UserAuth/Signup";
+import { Login } from "./components/UserAuth/Login";
 
 const App = inject("rates", "auth")(observer((props) => {
-	if (!props.auth.isLoggedIn) {
-		return <Login />
-	}
-	return ( 
+	
+	return (
 		<div>
 			<Router>
 				<NavBar />
@@ -27,8 +26,17 @@ const App = inject("rates", "auth")(observer((props) => {
 					<Route path="/monitor">
 						<MonitorDash />
 					</Route>
-					<Route path="/">
-						<MainDash />
+					<Route path="/analytics">
+						<AnalyticsDash />
+					</Route>
+					{/* <Route path="/profile">
+						<Profiler />
+					</Route> */}
+					<Route path="/signup">
+					<Signup />
+					</Route>
+					<Route path="/login">
+					<Login />
 					</Route>
 				</Switch>
 			</Router>
