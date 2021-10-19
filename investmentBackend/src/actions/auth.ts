@@ -1,5 +1,6 @@
 import User from './../db/user';
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
+import expressJwt from 'express-jwt';
 import { sendEmailWithNodemailer } from '../services/email'
 
 // export const signup = (req: { body: { name: string; email: string; password: string; }; }, res: any) => {
@@ -95,7 +96,7 @@ export const accountActivation = (req: any, res: any) => {
 					})
 				}
 				return res.json({
-					messaga: 'Signup success! Please signin.'
+					messaga: 'Signup success! Please login.'
 				})
 			});
 
@@ -127,5 +128,14 @@ export const login = (req: any, res: any) => {
 			token,
 			user: { _id, name, email, role }
 		})
-	})
+	});
+
+
 };
+
+// @ts-ignore
+export const requireLogin = expressJwt({
+	secret: process.env.JWT_SECRET!,
+	algorithms: ['HS256']
+});
+

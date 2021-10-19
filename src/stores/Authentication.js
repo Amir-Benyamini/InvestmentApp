@@ -1,5 +1,5 @@
 import { observable, makeObservable, action } from 'mobx'
-
+import { isAuth } from '.././services/authHelpers'
 export class Authentication {
 
 	constructor() {
@@ -21,4 +21,5 @@ export class Authentication {
 		this.token = undefined
 		this.isLoggedIn = false
 	}
+
 }

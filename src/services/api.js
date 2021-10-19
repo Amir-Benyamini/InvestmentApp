@@ -109,6 +109,22 @@ class API {
 
 		return await fetch(`http://localhost:4000/auth/login`, options)
 	}
+
+	async accountActivation(token) {
+		const options = {
+			method: 'POST',
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "*/*"
+			},
+			body: JSON.stringify({
+				token
+			})
+		}
+
+		return await fetch(`http://localhost:4000/auth/account-activation`, options)
+	}
 }
+
 
 export default new API()

@@ -3,9 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.login = exports.accountActivation = exports.signup = void 0;
+exports.requireLogin = exports.login = exports.accountActivation = exports.signup = void 0;
 const user_1 = __importDefault(require("./../db/user"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const express_jwt_1 = __importDefault(require("express-jwt"));
 const email_1 = require("../services/email");
 // export const signup = (req: { body: { name: string; email: string; password: string; }; }, res: any) => {
 // 	// console.log('REQ BODY ON SIGNUP', req.body);
@@ -90,7 +91,7 @@ const accountActivation = (req, res) => {
                     });
                 }
                 return res.json({
-                    messaga: 'Signup success! Please signin.'
+                    messaga: 'Signup success! Please login.'
                 });
             });
         });
@@ -124,3 +125,8 @@ const login = (req, res) => {
     });
 };
 exports.login = login;
+// @ts-ignore
+exports.requireLogin = (0, express_jwt_1.default)({
+    secret: process.env.JWT_SECRET,
+    algorithms: ['HS256']
+});

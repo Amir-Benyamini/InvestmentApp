@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -22,12 +22,24 @@ import LinkM from '@material-ui/core/Link';
 import { useTheme } from '@material-ui/core/styles';
 import { useStyles } from '../constants'
 import { observer, inject } from 'mobx-react'
+import { isAuth, removeLocalStorage, removeCookie} from '.././services/authHelpers'
 
-export const NavBar = inject("auth")(observer((props) => {
+export const NavBar = withRouter(inject("auth")(observer((props) => {
 	const classes = useStyles();
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(false);
-	const { isLoggedIn } = props.auth
+
+	const isActive = (path) => {
+		if (props.location.pathname === path) {
+			return ''
+		} else {
+			return 'inherit'
+		}
+	};
+	const logout = () => {
+		removeLocalStorage('user')
+		removeCookie('token')
+	}
 	const handleDrawerOpen = () => {
 		setOpen(true);
 	};
@@ -35,7 +47,7 @@ export const NavBar = inject("auth")(observer((props) => {
 	const handleDrawerClose = () => {
 		setOpen(false);
 	};
-	if (!isLoggedIn) {
+	if (!isAuth()) {
 		return (
 			<div className={classes.root}>
 				<CssBaseline />
@@ -46,13 +58,13 @@ export const NavBar = inject("auth")(observer((props) => {
 					})}
 				>
 					<Toolbar>
-					<LinkM color='inherit' href="#text-home" underline="none" noWrap className={classes.title}>
-					<Typography variant="h6">
-					enWhealthy
-			  		</Typography>
-					  </LinkM>
-					  <Button size="large" color='inherit' href="/signup">Signup</Button>
-					  <Button size="large" color='inherit' href="/login">Login</Button>
+						<LinkM color='inherit' href="/" underline="none" noWrap className={classes.title}>
+							<Typography variant="h6">
+								enWhealthy
+							</Typography>
+						</LinkM>
+						<Button size="large" color={isActive('/signup')} href="/signup">Signup</Button>
+						<Button size="large" color={isActive('/login')} href="/login">Login</Button>
 					</Toolbar>
 				</AppBar>
 				<main
@@ -62,7 +74,7 @@ export const NavBar = inject("auth")(observer((props) => {
 				>
 					<div className={classes.drawerHeader} />
 				</main>
-				
+
 			</div>
 		)
 	} else {
@@ -77,8 +89,9 @@ export const NavBar = inject("auth")(observer((props) => {
 				>
 					<Toolbar>
 						<Typography variant="h6" noWrap className={classes.title}>
-							Investments Monitoring
+							enWhealthy
 			  			</Typography>
+						<Button onClick={logout} size="large" color='inherit' href="/">Logout</Button>
 						<IconButton
 							color="inherit"
 							aria-label="open drawer"
@@ -126,4 +139,4 @@ export const NavBar = inject("auth")(observer((props) => {
 			</div>
 		)
 	}
-}));
+})));

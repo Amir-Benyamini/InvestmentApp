@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { login } from '../../actions/Auth'
-import { Link, Redirect } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify"
+import { Redirect } from 'react-router-dom'
+import { login } from '../../actions/Auth';
+import { authenticate, isAuth } from '../../services/authHelpers'
+import { ToastContainer, toast } from "react-toastify";
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import 'react-toastify/dist/ReactToastify.css';
+import { observer, inject } from 'mobx-react'
 
-export function Login() {
-
+export const Login = inject("auth")(observer((props) => {
+	const isLogin = props.auth.isLoggedIn
 	const [values, SetValues] = useState({
 		email: '',
 		password: '',
@@ -29,18 +31,20 @@ export function Login() {
 		let res = await login(email, password)
 
 		if (res.ok) {
-			//safve the res(user/token) on local storage/coockie
+			//save the res(user/token) on local storage/coockie
 			let data = await res.text()
-			SetValues({ ...values, email: '', password: '', buttonText: 'Submited' })
-			toast.success(`Welcome ${JSON.parse(data).user.name}`)
+			authenticate(JSON.parse(data), () => {
+				console.log('LOGIN SUCCESS!', JSON.parse(data))
+				toast.success(`Welcome ${JSON.parse(data).user.name}`)
+				SetValues({ ...values, email: '', password: '', buttonText: 'Submited' })
+			})
 		}
+
 		if (!res.ok) {
 			let data = await res.text()
 			SetValues({ ...values, email: '', password: '', buttonText: 'Submit' })
 			toast.error(JSON.parse(data).error)
 		}
-
-
 	};
 
 	const loginForm = () => (
@@ -76,7 +80,8 @@ export function Login() {
 	return (
 		<div>
 			<ToastContainer />
+			{isAuth() ? <Redirect to='/' /> : null}
 			<h1>Login</h1>
 			{loginForm()}
 		</div>)
-} 
+}))

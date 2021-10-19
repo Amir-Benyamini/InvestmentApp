@@ -6,12 +6,14 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+dotenv.config()
 import api from './routes/api';
 import authRoutes from './routes/auth';
+import userRoutes from './routes/user';
 import connectDB from './db/connection';
 import bodyParser from 'body-parser'
 
-dotenv.config()
+
 
 const app = express()
 connectDB();
@@ -29,7 +31,9 @@ app.use(morgan('dev'))
 
 //routes
 app.use('/', api)
+app.use('/user', userRoutes)
 app.use('/auth', authRoutes)
+
 
 const port = process.env.PORT
 app.listen(port, () => console.log(`server is up and running at port ${port}`))

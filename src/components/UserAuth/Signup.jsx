@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { signup } from '../../actions/Auth'
-import { Link, Redirect } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify"
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
