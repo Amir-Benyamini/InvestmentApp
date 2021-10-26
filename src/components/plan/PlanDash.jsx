@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { PlanHeader } from './PlanHeader'
 import { observer, inject } from 'mobx-react'
 import Table from '@material-ui/core/Table';
@@ -13,9 +13,6 @@ import IconButton from '@material-ui/core/IconButton';
 import { useStyles } from '../../constants'
 import * as planActions from '../../actions/Plan'
 
-// useEffect(() => {
-// 	//update latest rates from rateStore to planStore
-//  });
 
 export const PlanDash = inject("plansStore")(observer((props) => {
 	const classes = useStyles();

@@ -6,7 +6,7 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
-dotenv.config()
+dotenv.config({path:`${__dirname}/../.env`})
 import api from './routes/api';
 import authRoutes from './routes/auth';
 import userRoutes from './routes/user';

@@ -6,9 +6,10 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 export function Signup() {
 
-	const [values, SetValues] = useState({
+	const [values, setValues] = useState({
 		name: '',
 		email: '',
 		password: '',
@@ -19,22 +20,22 @@ export function Signup() {
 	const updateSignupInput = (value, name) => {
 		const updatedValues = { ...values }
 		updatedValues[name] = value
-		SetValues(updatedValues)
+		setValues(updatedValues)
 	};
 
 	const onFormSubmit = async (event) => {
 		event.preventDefault()
-		SetValues({ ...values, buttonText: 'Submitting...' })
+		setValues({ ...values, buttonText: 'Submitting...' })
 
 		let res = await signup(name, email, password)
+		let data = await res.text()
+
 		if (res.ok) {
-			let data = await res.text()
-			SetValues({ ...values, name: '', email: '', password: '', buttonText: 'Submited' })
+			setValues({ ...values, name: '', email: '', password: '', buttonText: 'Submited' })
 			toast.success(JSON.parse(data).message)
 		}
 		if (!res.ok) {
-			let data = await res.text()
-			SetValues({ ...values, name: '', email: '', password: '', buttonText: 'Submit' })
+			setValues({ ...values, name: '', email: '', password: '', buttonText: 'Submit' })
 			toast.error(JSON.parse(data).error)
 		}
 

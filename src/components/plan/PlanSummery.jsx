@@ -30,7 +30,7 @@ export const PlanSummery = observer((props) => {
 					</Typography>
 				</div>
 			</CardContent>
-		</Card> : plan.id && plan.investments.length == 0 ? <Card variant="outlined" >
+		</Card> : plan.id && plan.investments.length === 0 ? <Card variant="outlined" >
 			<CardContent>
 				<Typography className={classes.planSummeryCardTitle} color="textSecondary" gutterBottom>
 					{plan.name} Plan Summery

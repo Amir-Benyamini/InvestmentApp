@@ -1,4 +1,4 @@
-import { observable, makeObservable, action, computed } from 'mobx'
+import { observable, makeObservable, action } from 'mobx'
 
 export class PlansStore {
 

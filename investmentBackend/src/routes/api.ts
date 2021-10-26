@@ -2,17 +2,13 @@
 // const Plan = require('./plan')
 import express from 'express';
 const router = express.Router()
-import Plan from '../db/plan';
+import {Plan} from '../db/plan';
 import {Investment} from './../db/Investment';
 
 router.get('/', function (req, res) {
 	res.send('Hello welcome to my server')
 });
 
-router.post('/signUp', async function (req, res) {
-	console.log('signing up')
-	
-});
 
 router.get('/getPlans', async function (req, res) {
 	console.log('fetching plans')
@@ -30,8 +26,10 @@ router.get('/getPlan/:planId',async function (req, res) {
 router.post('/createPlan', function (req, res) {
 	console.log('creating plan')
 	const name = req.body.name
+	const userId = req.body.id
 
 	const plan = new Plan({ name })
+	
 	plan.save()
 	res.json(plan)
 });

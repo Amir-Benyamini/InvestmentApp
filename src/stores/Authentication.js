@@ -1,5 +1,4 @@
 import { observable, makeObservable, action } from 'mobx'
-import { isAuth } from '.././services/authHelpers'
 export class Authentication {
 
 	constructor() {

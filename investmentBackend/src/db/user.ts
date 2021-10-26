@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-// import AuthSchema from './Auth';
+import { PlanSchema } from './plan';
 import crypto from 'crypto'
 
 //userSchema
@@ -28,6 +28,7 @@ const userSchema = new Schema({
 		type: String,
 		default: 'subscriber',
 	},
+	plans: [PlanSchema],
 	resetPasswordLink: {
 		data: String,
 		default: '',

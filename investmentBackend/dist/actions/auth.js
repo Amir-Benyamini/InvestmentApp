@@ -3,11 +3,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.requireLogin = exports.login = exports.accountActivation = exports.signup = void 0;
+exports.facebookLogin = exports.googleLogin = exports.resetPassword = exports.forgotPassword = exports.requireLogin = exports.login = exports.accountActivation = exports.signup = void 0;
 const user_1 = __importDefault(require("./../db/user"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const express_jwt_1 = __importDefault(require("express-jwt"));
 const email_1 = require("../services/email");
+const lodash_1 = __importDefault(require("lodash"));
+const google_auth_library_1 = require("google-auth-library");
+// import fetch from 'node-fetch'
+const axios_1 = __importDefault(require("axios"));
+axios_1.default.defaults;
 // export const signup = (req: { body: { name: string; email: string; password: string; }; }, res: any) => {
 // 	// console.log('REQ BODY ON SIGNUP', req.body);
 // 	const { name, email, password } = req.body
@@ -130,3 +135,160 @@ exports.requireLogin = (0, express_jwt_1.default)({
     secret: process.env.JWT_SECRET,
     algorithms: ['HS256']
 });
+const forgotPassword = (req, res) => {
+    const { email } = req.body;
+    user_1.default.findOne({ email }).exec((err, user) => {
+        if (err || !user) {
+            return res.status(400).json({
+                error: 'User with that email does not exist. Please try again'
+            });
+        }
+        const token = jsonwebtoken_1.default.sign({ _id: user._id, name: user.name }, process.env.JWT_RESET_PASSWORD, { expiresIn: '15m' });
+        const emailData = {
+            from: process.env.EMAIL_FROM,
+            to: email,
+            subject: 'Password reset link',
+            html: `<h1>Please use the following link to reset your password</h1> 
+				 <p>${process.env.CLIENT_URL}/auth/password/reset/${token}</p>
+				 <hr />
+				 <p>This email may contain sensetive information.</p>
+				 <p>${process.env.CLIENT_URL}</p>`
+        };
+        return user_1.default.updateOne({ resetPasswordLink: token }, (err, success) => {
+            if (err) {
+                console.log('REXSET PASSWORD LINK ERROR', err);
+                return res.status(400).json({
+                    error: 'DB connection error on user forgot password'
+                });
+            }
+            else {
+                (0, email_1.sendEmailWithNodemailer)(req, res, emailData);
+            }
+        });
+    });
+};
+exports.forgotPassword = forgotPassword;
+const resetPassword = (req, res) => {
+    const { resetPasswordLink, newPassword } = req.body;
+    if (resetPasswordLink) {
+        jsonwebtoken_1.default.verify(resetPasswordLink, process.env.JWT_RESET_PASSWORD, function (err, decoded) {
+            if (err) {
+                return res.status(400).json({
+                    error: 'Expired link, try again.'
+                });
+            }
+            user_1.default.findOne({ resetPasswordLink }, (err, user) => {
+                if (err || !user) {
+                    return res.status(400).json({
+                        error: 'Somthing went wrong, try again'
+                    });
+                }
+                const updatedFields = {
+                    password: newPassword,
+                    resetPasswordLink: ''
+                };
+                user = lodash_1.default.extend(user, updatedFields);
+                user.save((err, result) => {
+                    if (err) {
+                        return res.status(400).json({
+                            error: 'Error reseting user password!'
+                        });
+                    }
+                    res.json({
+                        message: 'Great! now you can login with your new password.'
+                    });
+                });
+            });
+        });
+    }
+};
+exports.resetPassword = resetPassword;
+const googleLogin = async (req, res) => {
+    const client = new google_auth_library_1.OAuth2Client(process.env.GOOGLE_CLIENT);
+    const { idToken } = req.body;
+    let response = await client.verifyIdToken({ idToken, audience: process.env.GOOGLE_CLIENT });
+    console.log('GOOGLE LOGIN RESPONSE', response);
+    // @ts-ignore
+    const { email_verified, name, email } = response.payload;
+    if (email_verified) {
+        user_1.default.findOne({ email }).exec((err, user) => {
+            if (user) {
+                const token = jsonwebtoken_1.default.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '30D' });
+                const { _id, name, email, role } = user;
+                return res.json({
+                    token,
+                    user: { _id, name, email, role }
+                });
+            }
+            else {
+                let password = email + process.env.JWT_SECRET;
+                user = new user_1.default({ name, email, password });
+                user.save((err, data) => {
+                    if (err) {
+                        console.log('ERROR GOOGLE LOGIN ON USER SAVE', err);
+                        return res.status(400).json({
+                            error: 'User faild to save on google login.'
+                        });
+                    }
+                    const token = jsonwebtoken_1.default.sign({ _id: data._id }, process.env.JWT_SECRET, { expiresIn: '30D' });
+                    const { _id, name, email, role } = data;
+                    return res.json({
+                        token,
+                        user: { _id, name, email, role }
+                    });
+                });
+            }
+        });
+    }
+    else {
+        return res.status(400).json({
+            error: 'Google login faild, Please try again.'
+        });
+    }
+};
+exports.googleLogin = googleLogin;
+const facebookLogin = async (req, res) => {
+    console.log('FACEBOOK LOGIN REQ BODY', req.body);
+    const { userID, accessToken } = req.body;
+    const url = `https://graph.facebook.com/v2.11/${userID}/?fields=id,name,email&access_token=${accessToken}`;
+    let userProfile = await axios_1.default.get(url);
+    let userData = userProfile.data;
+    if (userProfile) {
+        // @ts-ignore
+        const { email, name } = userData;
+        user_1.default.findOne({ email }).exec((err, user) => {
+            if (user) {
+                const token = jsonwebtoken_1.default.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '30D' });
+                const { _id, name, email, role } = user;
+                return res.json({
+                    token,
+                    user: { _id, name, email, role }
+                });
+            }
+            else {
+                let password = email + process.env.JWT_SECRET;
+                user = new user_1.default({ name, email, password });
+                user.save((err, data) => {
+                    if (err) {
+                        console.log('ERROR FACEBOOK LOGIN ON USER SAVE', err);
+                        return res.status(400).json({
+                            error: 'User faild to save on facebook login.'
+                        });
+                    }
+                    const token = jsonwebtoken_1.default.sign({ _id: data._id }, process.env.JWT_SECRET, { expiresIn: '30D' });
+                    const { _id, name, email, role } = data;
+                    return res.json({
+                        token,
+                        user: { _id, name, email, role }
+                    });
+                });
+            }
+        });
+    }
+    else {
+        res.json({
+            error: 'Facebook login failed, Please try again.'
+        });
+    }
+};
+exports.facebookLogin = facebookLogin;

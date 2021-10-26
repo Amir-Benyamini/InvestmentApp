@@ -13,6 +13,9 @@ import { AnalyticsDash } from './components/AnalyticsDash'
 import { Signup } from "./components/UserAuth/Signup";
 import { Login } from "./components/UserAuth/Login";
 import { Acivate } from "./components/UserAuth/Activate";
+import {Profile} from './components/UserAuth/Profile'
+import {ForgotPassword} from './components/UserAuth/ForgotPassword';
+import {ResetPassword} from './components/UserAuth/ResetPassword';
 
 const App = inject("rates", "auth")(observer((props) => {
 
@@ -25,7 +28,10 @@ const App = inject("rates", "auth")(observer((props) => {
 					<Route path="/signup" exact component={Signup} />
 					<Route path="/login" exact component={Login} />
 					<Route path="/auth/activate/:token" exact component={Acivate} />
-					
+					<Route path="/auth/password/forgot" exact component={ForgotPassword} />
+					<Route path="/auth/password/reset/:token" exact component={ResetPassword} />
+
+					<PrivateRoute path="/profile" exact component={Profile} />
 					<PrivateRoute path="/plan" exact component={PlanDash} />
 					<PrivateRoute path="/monitor" exact component={MonitorDash} />
 					<PrivateRoute path="/analytics" exact component={AnalyticsDash} />

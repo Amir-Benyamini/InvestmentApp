@@ -49,3 +49,12 @@ export const isAuth = () => {
 		}
 	}
 };
+//set local storage when updating profile info
+export const updateUser = (resData, cb) => {
+	if (typeof window !== undefined) {
+		let auth = JSON.parse(localStorage.getItem('user'))
+		auth = resData
+		localStorage.setItem('user', JSON.stringify(auth))
+	}
+	cb()
+}

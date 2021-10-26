@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-// import AuthSchema from './Auth';
+const plan_1 = require("./plan");
 const crypto_1 = __importDefault(require("crypto"));
 //userSchema
 const Schema = mongoose_1.default.Schema;
@@ -31,6 +31,7 @@ const userSchema = new Schema({
         type: String,
         default: 'subscriber',
     },
+    plans: [plan_1.PlanSchema],
     resetPasswordLink: {
         data: String,
         default: '',

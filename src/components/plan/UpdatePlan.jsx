@@ -55,7 +55,7 @@ export const UpdatePlan = inject("plansStore")(observer((props) => {
 						Cancel
           </Button>
 					<Button onClick={() => {
-						onUpdatePlanClicked(newName == '' ? name : newName, id)
+						onUpdatePlanClicked(newName === '' ? name : newName, id)
 					}} color="primary">
 						update
           </Button>

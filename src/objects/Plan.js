@@ -1,5 +1,5 @@
 import { Investment } from "./Investment"
-import { makeObservable, observable, action } from "mobx"
+import { makeObservable, observable } from "mobx"
 
 export class Plan {
 	investments = []
@@ -20,20 +20,6 @@ export class Plan {
 		
 		this.name = planJson.name
 		this.id = planJson._id
-	}
-
-	get interestAmount() {
-		let interest = 0
-
-		this.investments.forEach((investment) => {
-			if (investment.type === 'Stock-Market') {
-				interest += investment.compoundInterest(this.timeFrame)
-			} else {
-				interest += investment.interest(this.timeFrame)
-			}
-		})
-
-		return interest
 	}
 
 	get totalInvestmentAmount() {

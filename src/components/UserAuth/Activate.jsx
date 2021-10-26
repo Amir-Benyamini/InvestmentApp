@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export function Acivate({ match }) {
 
-	const [values, SetValues] = useState({
+	const [values, setValues] = useState({
 		name: '',
 		token: '',
 		show: true
@@ -20,7 +20,7 @@ export function Acivate({ match }) {
 		console.log(token)
 		let { name } = jwt.decode(token)
 		if (token) {
-			SetValues({...values, name, token})
+			setValues({...values, name, token})
 		}
 	}, [])
 
@@ -29,7 +29,7 @@ export function Acivate({ match }) {
 		let res = await activateAccount(token)
 		if (res.ok) {
 			let data = await res.text()
-			SetValues({ ...values, show: !show })
+			setValues({ ...values, show: !show })
 			toast.success(JSON.parse(data).messaga)
 		}
 		if (!res.ok) {
