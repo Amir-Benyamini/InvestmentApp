@@ -36,10 +36,10 @@ const userSchema = new Schema({
 }, { timestamps: true })
 
 //virtual
-userSchema.virtual('password') //why password is passed as a string? also what salt is used for?
+userSchema.virtual('password')
 	.set(function (this: any, password: string) {
 		this._password = password
-		this.salt = this.makeSalt()
+		this.salt = this.makeSalt() // i dont want to save salt in DB.
 		this.hashed_password = this.encryptPassword(password)
 	})
 	.get(function (this: any) {

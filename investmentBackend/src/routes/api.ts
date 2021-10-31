@@ -3,77 +3,104 @@
 import express from 'express';
 const router = express.Router()
 import {Plan} from '../db/plan';
+import User from '../db/user';
 import {Investment} from './../db/Investment';
 
 router.get('/', function (req, res) {
 	res.send('Hello welcome to my server')
 });
 
-
-router.get('/getPlans', async function (req, res) {
+//plans
+router.get('/getPlans/:userId', async function (req, res) {
 	console.log('fetching plans')
-	const plans = await Plan.find({}).populate('investments').exec()
+	const userId = req.params.userId
+	const user = await User.findById(userId).populate("plans").exec()
+	const plans = user.plans
 	res.send(plans)
 });
 
-router.get('/getPlan/:planId',async function (req, res) {
+router.get('/getPlan/:planId/:userId',async function (req, res) {
 	console.log('fetching plan')
-	const _id = req.params.planId
-	 let plan = await Plan.findById(_id).exec();
+	const planId = req.params.planId
+	const userId = req.params.userId
+	const user = await User.findById(userId).populate("plans").exec()
+	const plan = await user.plans.id(planId)
 	res.send(plan)
 });
 
-router.post('/createPlan', function (req, res) {
+router.post('/createPlan/:name/:userId', async function (req, res) {
 	console.log('creating plan')
-	const name = req.body.name
-	const userId = req.body.id
+	const name = req.params.name
+	const userId = req.params.userId
 
 	const plan = new Plan({ name })
-	
-	plan.save()
+	const user = await User.findById(userId).populate("plans").exec()
+	user.plans.push(plan)
+
+	user.save()
 	res.json(plan)
 });
 
-router.put('/updatePlan/:id/:name',async function (req, res) {
+router.put('/updatePlan/:planId/:name/:userId',async function (req, res) {
 	console.log('updating plan')
-	const _id = req.params.id
+	const planId = req.params.planId
+	const userId = req.params.userId
 	const name = req.params.name
-	const options = {new:true}
-	const plan = await Plan.findByIdAndUpdate(_id, { name }, options)
+
+	const user = await User.findById(userId).populate("plans").exec()
+	const plan = await user.plans.id(planId)
+	plan.name = name
+
 	res.send(plan)
 });
 
-router.put('/addInvestment/:id',async function (req, res) {
+router.delete('/deletePlan/:planId/:userId',async function (req, res) {
+	console.log('delete plan')
+	const planId = req.params.planId
+	const userId = req.params.userId
+	const user = await User.findById(userId).populate("plans").exec()
+	const options = {new:true}
+	let plans = await user.plans.pull(planId, options)
+
+	user.save()
+	
+	res.send(plans)
+});
+
+//investments
+router.put('/addInvestment/:planId/:userId',async function (req, res) {
 	console.log('addInvestment')
-	const _id = req.params.id
+	const planId = req.params.planId
+	const userId = req.params.userId
 	const investment = req.body.investment
 	
 	const newInvestment = new Investment(investment)
-	const plan = await Plan.findById(_id).populate("investments").exec()
-	plan.investments.push(newInvestment)
-	await plan.save()
 
+	const user = await User.findById(userId).populate("plans").exec()
+	const plan = await user.plans.id(planId)
+
+	plan.investments.push(newInvestment)
+	await user.save()
 	res.send(newInvestment)
 });
 
-router.delete('/deleteInvestment/:id/:planId',async function (req, res) {
+router.delete('/deleteInvestment/:investmentId/:planId/:userId',async function (req, res) {
 	console.log('deleteInvestment')
-	const _id = req.params.id
+	const investmentId = req.params.investmentId
 	const planId = req.params.planId
+	const userId = req.params.userId
+	const options = {new:true}
 
-	const plan = await Plan.findById(planId).populate("investments").exec()
-	plan.investments.pull({ _id })
-	await plan.save()
+	const user = await User.findById(userId).populate("plans").exec()
+	const plan = await user.plans.id(planId)
 
-	res.status(200).send('Success!');
-});
+	let investments = await plan.investments.pull(investmentId, options)
 
-router.delete('/deletePlan/:planId',async function (req, res) {
-	console.log('delete plan')
-	const _id = req.params.planId
+	// const plan = await Plan.findById(planId).populate("investments").exec()
+	// plan.investments.pull({ _id })
+	await user.save()
 
-	 let plan = await Plan.findByIdAndDelete(_id)
-	res.send(plan)
+	res.send(investments);
 });
 
 

@@ -24,6 +24,7 @@ app.use((0, cors_1.default)()); //allow all origins
 // if(process.env.NODE_ENV === 'development'){
 // 	app.use(cors({origin: `http://localhost:300`}))
 // };
+app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use(body_parser_1.default.json());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
