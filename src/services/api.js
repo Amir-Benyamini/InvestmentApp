@@ -26,7 +26,7 @@ class API {
 		return planJson;
 	}
 
-	async updatePlan(name, id) {
+	async updatePlan(name, planId, userId) {
 		const options = {
 			method: 'PUT',
 			headers: {
@@ -34,7 +34,7 @@ class API {
 			}
 		}
 
-		const res = await fetch(`http://localhost:4000/updatePlan/${id}/${name}`, options)
+		const res = await fetch(`http://localhost:4000/updatePlan/${planId}/${name}/${userId}`, options)
 		return res.ok;
 	}
 
@@ -52,7 +52,7 @@ class API {
 		return planJson;
 	}
 
-	async deletePlan(id) {
+	async deletePlan(planId, userId) {
 		const options = {
 			method: 'DELETE',
 			headers: {
@@ -60,12 +60,12 @@ class API {
 			},
 		}
 
-		const res = await fetch(`http://localhost:4000/deletePlan/${id}`, options)
+		const res = await fetch(`http://localhost:4000/deletePlan/${planId}/${userId}`, options)
 		const planJson = res.json()
 		return planJson
 	}
 
-	async deleteInvestment(id, planId) {
+	async deleteInvestment(investmentId, planId, userId) {
 		const options = {
 			method: 'DELETE',
 			headers: {
@@ -73,7 +73,7 @@ class API {
 			},
 		}
 
-		const res = await fetch(`http://localhost:4000/deleteInvestment/${id}/${planId}`, options)
+		const res = await fetch(`http://localhost:4000/deleteInvestment/${investmentId}/${planId}/${userId}`, options)
 		return res.ok
 	}
 

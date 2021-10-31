@@ -21,7 +21,7 @@ const userSchema = new Schema({
 	},
 	hashed_password: {
 		type: String,
-		required: true,
+		required: true, 
 	},
 	salt: String,
 	role: {

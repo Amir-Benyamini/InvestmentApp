@@ -11,9 +11,9 @@ import {useStyles} from '../../constants'
 import * as planActions from '../../actions/Plan'
 
 export const UpdatePlan = inject("plansStore")(observer((props) => {
-	const id = props.plansStore.plan.id
+	const planId = props.plansStore.plan.id
 	const name = props.plansStore.plan.name
-
+	const userId = JSON.parse(localStorage.getItem('user'))._id
 	const [newName, setNewName] = useState('')
 	const [updateDialog, setUpdateDialog] = useState(false)
 	const classes = useStyles();
@@ -26,8 +26,8 @@ export const UpdatePlan = inject("plansStore")(observer((props) => {
 		setUpdateDialog(!updateDialog);
 	}
 
-	const onUpdatePlanClicked = async (name, id) => {
-		planActions.updatePlanName(name, id)
+	const onUpdatePlanClicked = async (name, planId, userId) => {
+		planActions.updatePlanName(name, planId, userId)
 		setNewName('')
 		toggleUptadeDialog()
 	}
@@ -55,7 +55,7 @@ export const UpdatePlan = inject("plansStore")(observer((props) => {
 						Cancel
           </Button>
 					<Button onClick={() => {
-						onUpdatePlanClicked(newName === '' ? name : newName, id)
+						onUpdatePlanClicked(newName === '' ? name : newName, planId, userId)
 					}} color="primary">
 						update
           </Button>

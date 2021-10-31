@@ -20,8 +20,8 @@ export const createPlan = async (name, userId) => {
 	plansStore.setPlan(plan)
 }
 
-export const deletePlan = async () => {
-	API.deletePlan(plansStore.plan.id)
+export const deletePlan = async (userId) => {
+	API.deletePlan(plansStore.plan.id, userId)
 	plansStore.deletePlan(plansStore.plan.id)
 }
 
@@ -31,8 +31,8 @@ export const addInvestment = async (investmentInput, userId) => {
 	plansStore.addInvestment(investment)
 }
 
-export const updatePlanName = async (name, id) => {
-	const success = await API.updatePlan(name, id)
+export const updatePlanName = async (name, planId, userId) => {
+	const success = await API.updatePlan(name, planId, userId)
 	if (success) {
 		plansStore.updatePlanName(name)
 		// const planJason = await API.getPlan(id)
@@ -45,8 +45,8 @@ export const changePlanTimeFrame = (timeFrame) => {
 }
 
 
-export const deleteInvestment = async (investmentId) => {
-	const success = await API.deleteInvestment(investmentId, plansStore.plan.id)
+export const deleteInvestment = async (investmentId, userId) => {
+	const success = await API.deleteInvestment(investmentId, plansStore.plan.id, userId)
 	if (success) {
 		plansStore.deleteInvestment(investmentId)
 	} else alert('Server error')

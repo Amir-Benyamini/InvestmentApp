@@ -16,6 +16,7 @@ import * as planActions from '../../actions/Plan'
 
 export const PlanDash = inject("plansStore")(observer((props) => {
 	const classes = useStyles();
+	const userId = JSON.parse(localStorage.getItem('user'))._id
 	const selectedPlan = props.plansStore.plan
 
 	return (
@@ -61,7 +62,7 @@ export const PlanDash = inject("plansStore")(observer((props) => {
 								<TableCell align="center">{new Intl.NumberFormat('en-US', { style: 'percent' }).format(investment.risk(selectedPlan.timeFrame))}</TableCell>
 
 								<TableCell align="center"><IconButton onClick={() => {
-									planActions.deleteInvestment(investment.id)
+									planActions.deleteInvestment(investment.id, userId)
 								}} variant="contained" color="secondary"><DeleteForeverIcon fontSize="large" /></IconButton></TableCell>
 							</TableRow>
 						))}

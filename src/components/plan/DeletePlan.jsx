@@ -5,11 +5,12 @@ import {useStyles} from '../../constants'
 import {deletePlan} from '../../actions/Plan'
 
 export const DeletePlan = inject("plansStore")(observer((props) => {
+	const userId = JSON.parse(localStorage.getItem('user'))._id
 	const classes = useStyles();
 	const onDeletePlanClicked = async () => {
 		let result = window.confirm(`are you sure you want to delete "${props.plansStore.plan.name}"?`)
 		if (result){
-			deletePlan()
+			deletePlan(userId)
 		}
 	}
 
