@@ -30,6 +30,7 @@ export const AddInvestment = (props) => {
 
 	// const Investments = props.planStore.investments
 
+	const userId = JSON.parse(localStorage.getItem('user'))._id
 
 	const [investmentMenu, setInvestmentMenu] = useState(false)
 
@@ -66,7 +67,7 @@ export const AddInvestment = (props) => {
 	}
 
 	const addInvestment = () => {
-		planActions.addInvestment(investmentInput)
+		planActions.addInvestment(investmentInput, userId)
 		handleInvestmentMentu()
 	};
 

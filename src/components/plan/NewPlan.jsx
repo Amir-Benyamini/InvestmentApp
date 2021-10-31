@@ -11,7 +11,7 @@ import * as planActions from '../../actions/Plan'
 
 export const NewPlan = () => {
 	const classes = useStyles();
-
+	const userId = JSON.parse(localStorage.getItem('user'))._id
 	const [name, setname] = useState('')
 	const [nameDialog, setNameDialog] = useState(false)
 
@@ -24,7 +24,7 @@ export const NewPlan = () => {
 	}
 
 	const onNewPlanClicked = async () => {
-		planActions.createPlan(name)
+		planActions.createPlan(name, userId)
 		toggleNameDialog()
 	};
 

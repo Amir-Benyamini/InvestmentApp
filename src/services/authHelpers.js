@@ -18,6 +18,13 @@ export const getCookie = (key) => {
 		return cookie.get(key)
 	}
 }
+//get local storage
+export const getLocalStorage = (key) => {
+	if (window !== undefined) {
+		localStorage.getItem(key)
+	}
+}
+
 //set in local storage
 export const setLocalStorage = (key, value) => {
 	if (window !== undefined) {

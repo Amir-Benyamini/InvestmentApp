@@ -1,28 +1,27 @@
 
 class API {
 
-	async getPlans() {
-		const res = await fetch("http://localhost:4000/getPlans")
+	async getPlans(userId) {
+		const res = await fetch(`http://localhost:4000/getPlans/${userId}`)
 		const plansJson = res.json()
 		return plansJson
 	}
 
-	async getPlan(id) {
-		const res = await fetch(`http://localhost:4000/getPlan/${id}`)
+	async getPlan(planId, userId) {
+		const res = await fetch(`http://localhost:4000/getPlan/${planId}/${userId}`)
 		const planJson = res.json()
 		return planJson
 	}
 
-	async createPlan(name, investments) {
+	async createPlan(name, userId) {
 		const options = {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ name, investments })
+			}
 		}
 
-		const res = await fetch("http://localhost:4000/createPlan", options)
+		const res = await fetch(`http://localhost:4000/createPlan/${name}/${userId}`, options)
 		const planJson = res.json()
 		return planJson;
 	}
@@ -39,7 +38,7 @@ class API {
 		return res.ok;
 	}
 
-	async addInvestment(id, investment) {
+	async addInvestment(planId, investment, userId) {
 		const options = {
 			method: 'PUT',
 			headers: {
@@ -48,7 +47,7 @@ class API {
 			body: JSON.stringify({ investment })
 		}
 
-		const res = await fetch(`http://localhost:4000/addInvestment/${id}`, options)
+		const res = await fetch(`http://localhost:4000/addInvestment/${planId}/${userId}`, options)
 		const planJson = res.json()
 		return planJson;
 	}

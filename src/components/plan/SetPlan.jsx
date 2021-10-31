@@ -13,12 +13,13 @@ import * as planActions from '../../actions/Plan'
 
 export const SetPlan = inject("plansStore")(observer((props) => {
 	const classes = useStyles();
+	const userId = JSON.parse(localStorage.getItem('user'))._id;
 	const [plansMenu, setPlansMenu] = useState(false)
 	
 //	const [plans, setPlans] = useState([])
 
 	useEffect(async () => {
-		planActions.fetchPlans()
+		planActions.fetchPlans(userId)
 		//let plansMaped = plansDB.map(plan =>
 		//	plan = { name: plan.name, _id: plan._id }
 		//)
