@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import {activateAccount} from '../../actions/Auth'
 import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import jwt from 'jsonwebtoken'
 import Button from '@material-ui/core/Button';
-import 'react-toastify/dist/ReactToastify.css';
+
 
 export function Acivate({ match }) {
 

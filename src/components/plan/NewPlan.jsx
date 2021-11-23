@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {useStyles} from '../../constants'
+import { useStyles } from '../../constants'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
@@ -8,28 +8,41 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import * as planActions from '../../actions/Plan'
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export const NewPlan = () => {
 	const classes = useStyles();
 	const userId = JSON.parse(localStorage.getItem('user'))._id
-	const [name, setname] = useState('')
+	const [name, setName] = useState('')
 	const [nameDialog, setNameDialog] = useState(false)
+	const [validation, setValidation] = useState(false)
 
 	const toggleNameDialog = () => {
 		setNameDialog(!nameDialog);
 	}
 
-	const updatename = (value) => {
-		setname(value)
+	const updateName = (value) => {
+		setName(value)
 	}
 
 	const onNewPlanClicked = async () => {
-		planActions.createPlan(name, userId)
-		toggleNameDialog()
+		if (name) {
+			const res = await planActions.createPlan(name, userId)
+			toast.success(`plan ${res.name} created`)
+			toggleNameDialog()
+			updateName('')
+			setValidation(false)
+		} else {
+			setValidation(true)
+			toast.error(`Name is requierd!`)
+		}
+
 	};
 
 	return (
 		<div>
+			<ToastContainer />
 			<Button color="primary" onClick={toggleNameDialog}>New Plan</Button>
 			<Dialog open={nameDialog} onClose={toggleNameDialog}>
 				<DialogTitle>Choose Plan Name</DialogTitle>
@@ -41,7 +54,9 @@ export const NewPlan = () => {
 							type='text'
 							label='Plan Name'
 							required
-							onChange={(e) => updatename(e.target.value)}
+							error={validation}
+							helperText={validation ? 'name is requierd!' : ''}
+							onChange={(e) => updateName(e.target.value)}
 						/>
 					</FormControl>
 				</DialogContent>

@@ -20,10 +20,6 @@ export const SetPlan = inject("plansStore")(observer((props) => {
 
 	useEffect(async () => {
 		planActions.fetchPlans(userId)
-		//let plansMaped = plansDB.map(plan =>
-		//	plan = { name: plan.name, _id: plan._id }
-		//)
-		//setPlans(plansMaped)
 	}, [plansMenu]);
 
 	const togglePlansMenu = () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -15,14 +15,16 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+import TimelineIcon from '@mui/icons-material/Timeline';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import Button from '@material-ui/core/Button';
 import LinkM from '@material-ui/core/Link';
 import { useTheme } from '@material-ui/core/styles';
 import { useStyles } from '../constants'
 import { observer, inject } from 'mobx-react'
-import { isAuth, removeLocalStorage, removeCookie} from '.././services/authHelpers'
+import { isAuth, removeLocalStorage, removeCookie } from '../services/authHelpers'
 
 export const NavBar = withRouter(inject("auth")(observer((props) => {
 	const classes = useStyles();
@@ -58,11 +60,11 @@ export const NavBar = withRouter(inject("auth")(observer((props) => {
 					})}
 				>
 					<Toolbar>
-						<LinkM color='inherit' href="/" underline="none" noWrap className={classes.title}>
-							<Typography variant="h6">
-								enWhealthy
+							<LinkM color='inherit' href="/" underline="none" noWrap className={classes.title}>
+								<Typography variant="h6">
+									enWhealthy
 							</Typography>
-						</LinkM>
+							</LinkM>
 						<Button size="large" color={isActive('/signup')} href="/signup">Signup</Button>
 						<Button size="large" color={isActive('/login')} href="/login">Login</Button>
 					</Toolbar>
@@ -88,9 +90,11 @@ export const NavBar = withRouter(inject("auth")(observer((props) => {
 					})}
 				>
 					<Toolbar>
+					<LinkM color='inherit' href="/" underline="none" noWrap className={classes.title}>
 						<Typography variant="h6" noWrap className={classes.title}>
 							enWhealthy
 			  			</Typography>
+						  </LinkM>
 						<Button onClick={logout} size="large" color='inherit' href="/">Logout</Button>
 						<IconButton
 							color="inherit"
@@ -126,13 +130,13 @@ export const NavBar = withRouter(inject("auth")(observer((props) => {
 					</div>
 					<Divider />
 					<List>
-						{[{ text: 'Profile', path: '/profile', icon: <InboxIcon /> }, { text: 'Analytics Dashboard', path: '/analytics', icon: <InboxIcon /> }, { text: 'Planing Dashboard', path: '/plan', icon: <MailIcon /> }, { text: 'Monitoring Dashboard', path: '/monitor', icon: <MailIcon /> }].map((menuItem, index) => (
-							<Link key={index} to={menuItem.path}>
+						{[{ text: 'Profile', path: '/profile', icon: <AccountCircleIcon color='primary' /> }, { text: 'Monitoring Dashboard', path: '/monitor', icon: <AccountBalanceIcon color='primary' /> }, { text: 'Planing Dashboard', path: '/plan', icon: <TimelineIcon color='primary' /> }, { text: 'Analytics Dashboard', path: '/analytics', icon: <AnalyticsIcon color='primary'/> }].map((menuItem, index) => (
+							<LinkM key={index} href={menuItem.path} color='inherit' underline="none">
 								<ListItem button key={menuItem.text}>
 									<ListItemIcon>{menuItem.icon}</ListItemIcon>
 									<ListItemText primary={menuItem.text} />
 								</ListItem>
-							</Link>
+							</LinkM>
 						))}
 					</List>
 				</Drawer>

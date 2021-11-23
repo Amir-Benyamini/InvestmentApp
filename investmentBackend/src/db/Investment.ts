@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
+import InvestmentDoc from '../interfaces/investmentDoc';
 
 const Schema = mongoose.Schema
+
 
 export const InvestmentSchema = new Schema({
 	amount: { type: Number, required: true },
@@ -14,6 +16,6 @@ export const InvestmentSchema = new Schema({
 	type: { type: String, required: true },
 	isCompanyCapital: { type: Boolean, required: true },
 	isRegulated: { type: Boolean, required: true }
-})
+}, { timestamps: true })
 
-export const Investment = mongoose.model("Investment", InvestmentSchema, "investments")
+export const Investment = mongoose.model<InvestmentDoc>("Investment", InvestmentSchema, "investments")

@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import IconButton from '@material-ui/core/IconButton';
 import { useStyles } from '../../constants'
-import * as planActions from '../../actions/Plan'
+import * as investmentsActions from '../../actions/investments'
 
 
 export const PlanDash = inject("plansStore")(observer((props) => {
@@ -62,7 +62,7 @@ export const PlanDash = inject("plansStore")(observer((props) => {
 								<TableCell align="center">{new Intl.NumberFormat('en-US', { style: 'percent' }).format(investment.risk(selectedPlan.timeFrame))}</TableCell>
 
 								<TableCell align="center"><IconButton onClick={() => {
-									planActions.deleteInvestment(investment.id, userId)
+									investmentsActions.deleteInvestment(investment.id, userId)
 								}} variant="contained" color="secondary"><DeleteForeverIcon fontSize="large" /></IconButton></TableCell>
 							</TableRow>
 						))}

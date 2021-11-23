@@ -7,6 +7,6 @@ const express_1 = __importDefault(require("express"));
 const user_1 = require("../actions/user");
 const auth_1 = require("../actions/auth");
 const userRouter = express_1.default.Router();
-userRouter.get('/:id', auth_1.requireLogin, user_1.read);
-userRouter.put('/update', auth_1.requireLogin, user_1.update);
+userRouter.get("/:id", auth_1.requireLogin, user_1.read);
+userRouter.put("/update", auth_1.requireLogin, user_1.update);
 exports.default = userRouter;

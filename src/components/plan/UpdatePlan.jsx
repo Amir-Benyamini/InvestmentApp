@@ -7,8 +7,9 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {useStyles} from '../../constants'
+import { useStyles } from '../../constants'
 import * as planActions from '../../actions/Plan'
+import { toast } from "react-toastify";
 
 export const UpdatePlan = inject("plansStore")(observer((props) => {
 	const planId = props.plansStore.plan.id
@@ -16,6 +17,7 @@ export const UpdatePlan = inject("plansStore")(observer((props) => {
 	const userId = JSON.parse(localStorage.getItem('user'))._id
 	const [newName, setNewName] = useState('')
 	const [updateDialog, setUpdateDialog] = useState(false)
+	const [validation, setValidation] = useState(false)
 	const classes = useStyles();
 
 	const updatename = (value) => {
@@ -27,9 +29,28 @@ export const UpdatePlan = inject("plansStore")(observer((props) => {
 	}
 
 	const onUpdatePlanClicked = async (name, planId, userId) => {
-		planActions.updatePlanName(name, planId, userId)
-		setNewName('')
-		toggleUptadeDialog()
+		if (planId) {
+			if (newName) {
+				const plan = planActions.updatePlanName(name, planId, userId)
+				if (plan) {
+					setNewName('')
+					toggleUptadeDialog()
+					setValidation(false)
+					toast.success('Plan name is updated!')
+				} else {
+					setValidation(false)
+					toast.error('Something went wrong, Please try again!')
+				}
+
+			} else {
+				setValidation(true)
+				toast.error('Name is requierd!')
+			}
+		} else {
+			toggleUptadeDialog()
+			toast.error('There is no active plan!')
+		}
+		
 	}
 
 	return (
@@ -38,17 +59,19 @@ export const UpdatePlan = inject("plansStore")(observer((props) => {
 			<Dialog disableBackdropClick disableEscapeKeyDown open={updateDialog} onClose={toggleUptadeDialog}>
 				<DialogTitle>Update Plan Name</DialogTitle>
 				<DialogContent>
-						<FormControl >
+					<FormControl >
 
-							<TextField
-								id='name'
-								name='name'
-								type='text'
-								label='Plan Name'
-								required
-								onChange={(e) => updatename(e.target.value)}
-							/>
-						</FormControl>
+						<TextField
+							id='name'
+							name='name'
+							type='text'
+							label='Plan Name'
+							required
+							error={validation}
+							helperText={validation ? 'name is requierd!' : ''}
+							onChange={(e) => updatename(e.target.value)}
+						/>
+					</FormControl>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={toggleUptadeDialog} color="primary">

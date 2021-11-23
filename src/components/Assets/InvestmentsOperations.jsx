@@ -1,7 +1,7 @@
 import React from "react";
-import { useStyles } from '../constants'
+import { useStyles } from '../../constants'
 import { AddInvestment } from './AddInvestment'
-import { TimeFrame } from './TimeFrame'
+import { TimeFrame } from '../plan/TimeFrame'
 
 export const InvestmentsOperations = () => {
 	const classes = useStyles();

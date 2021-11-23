@@ -1,83 +1,84 @@
-import { Investment } from "./Investment"
-import { makeObservable, observable } from "mobx"
+import { Investment } from "./Investment";
+import { makeObservable, observable } from "mobx";
 
 export class Plan {
-	investments = []
-	timeFrame = 1
-	name = ''
+  investments = [];
+  timeFrame = 1;
+  name = "";
 
-	constructor(planJson, usdRate) {
-		makeObservable(this, {
-			investments: observable,
-			timeFrame: observable,
-			name: observable,
-	  })
+  constructor(planJson, usdRate) {
+    makeObservable(this, {
+      investments: observable,
+      timeFrame: observable,
+      name: observable,
+    });
 
-		planJson.investments.forEach((investmentJson) => {
-			const investment = new Investment(investmentJson, usdRate)
-			this.investments.push(investment)
-		})
-		
-		this.name = planJson.name
-		this.id = planJson._id
-	}
+    planJson.investments.forEach((investmentJson) => {
+      const investment = new Investment(investmentJson, usdRate);
+      this.investments.push(investment);
+    });
 
-	get totalInvestmentAmount() {
-		let amount = 0
+    this.name = planJson.name;
+    this.id = planJson._id;
+  }
 
-		this.investments.forEach((investment) => {
-			if (investment.currency === 'USD') {
-				amount += investment.baseAmount
-			} else { amount += investment.amount }
-		})
+  get totalInvestmentAmount() {
+    let amount = 0;
 
-		return amount
-	}
+    this.investments.forEach((investment) => {
+      if (investment.currency === "USD") {
+        amount += investment.baseAmount;
+      } else {
+        amount += investment.amount;
+      }
+    });
 
-	get interestAmount() {
-		let interest = 0
+    return amount;
+  }
 
-		this.investments.forEach((investment) => {
-			if (investment.type === 'Stock-Market') {
-				interest += investment.compoundInterest(this.timeFrame)
-			} else {
-				interest += investment.interest(this.timeFrame)
-			}
-		})
+  get interestAmount() {
+    let interest = 0;
 
-		return interest
-	}
+    this.investments.forEach((investment) => {
+      if (investment.type === "Stock-Market") {
+        interest += investment.compoundInterest(this.timeFrame);
+      } else {
+        interest += investment.interest(this.timeFrame);
+      }
+    });
 
-	get totalAmount() {
-		let totalAmount = 0
+    return interest;
+  }
 
-		this.investments.forEach((investment) => {
-			if (investment.currency === 'USD') {
-				totalAmount += investment.baseAmount
+  get totalAmount() {
+    let totalAmount = 0;
 
-				if (investment.type === 'Stock-Market') {
-					totalAmount += investment.compoundInterest(this.timeFrame)
-				} else {
-					totalAmount += investment.interest(this.timeFrame)
-				}
+    this.investments.forEach((investment) => {
+      if (investment.currency === "USD") {
+        totalAmount += investment.baseAmount;
 
-			} else {
-				totalAmount += investment.amount
+        if (investment.type === "Stock-Market") {
+          totalAmount += investment.compoundInterest(this.timeFrame);
+        } else {
+          totalAmount += investment.interest(this.timeFrame);
+        }
+      } else {
+        totalAmount += investment.amount;
 
-				if (investment.type === 'Stock-Market') {
-					totalAmount += investment.compoundInterest(this.timeFrame)
-				} else {
-					totalAmount += investment.interest(this.timeFrame)
-				}
-			}
-		})
+        if (investment.type === "Stock-Market") {
+          totalAmount += investment.compoundInterest(this.timeFrame);
+        } else {
+          totalAmount += investment.interest(this.timeFrame);
+        }
+      }
+    });
 
-		return totalAmount
-	}
+    return totalAmount;
+  }
 
-	updateCurrencyRates(currencyRate) {
-		this.investments.forEach((investment) => {
-			investment.currencyRate = currencyRate
-		})
-	}
+  updateCurrencyRates(currencyRate) {
+    this.investments.forEach((investment) => {
+      investment.currencyRate = currencyRate;
+    });
+  }
 }

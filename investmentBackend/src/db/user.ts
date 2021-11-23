@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 import { PlanSchema } from './plan';
 import crypto from 'crypto'
-
+import UserDoc from '../interfaces/userDoc';
 //userSchema
 const Schema = mongoose.Schema
 
-const userSchema = new Schema({
+const userSchema = new Schema<UserDoc>({
 	name: {
 		type: String,
 		required: true,
@@ -37,21 +37,21 @@ const userSchema = new Schema({
 
 //virtual
 userSchema.virtual('password')
-	.set(function (this: any, password: string) {
+	.set(function (this: UserDoc, password: string) {
 		this._password = password
 		this.salt = this.makeSalt() // i dont want to save salt in DB.
 		this.hashed_password = this.encryptPassword(password)
 	})
-	.get(function (this: any) {
+	.get(function (this: UserDoc) {
 		return this._password
 	})
 //methods
 userSchema.methods = {
-	authenticate: function (this: any, password: string) {
+	authenticate: function (this: UserDoc, password: string) {
 		return this.encryptPassword(password) === this.hashed_password;
 
 	},
-	encryptPassword: function (this: any, password) {
+	encryptPassword: function (this: UserDoc, password: string) {
 		if (!password) return ''
 		try {
 			return crypto
@@ -66,6 +66,6 @@ userSchema.methods = {
 		return string
 	}
 }
-const User = mongoose.model("User", userSchema)
+const User = mongoose.model<UserDoc>("User", userSchema)
 
 export default User

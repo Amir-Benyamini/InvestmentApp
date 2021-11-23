@@ -10,5 +10,5 @@ const Schema = mongoose_1.default.Schema;
 exports.PlanSchema = new Schema({
     name: { type: String, required: true },
     investments: [Investment_1.InvestmentSchema]
-});
+}, { timestamps: true });
 exports.Plan = mongoose_1.default.model("Plan", exports.PlanSchema, "plans");

@@ -5,7 +5,7 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { isAuth, getCookie, updateUser } from '../../services/authHelpers'
-import API from '../../services/api'
+import {loadProfile} from '../../actions/Auth'
 import 'react-toastify/dist/ReactToastify.css';
 
 export function Profile() {
@@ -26,7 +26,7 @@ export function Profile() {
 	const { name, email, role } = values
 
 	useEffect(async () => {
-		let res = await API.loadProfile(isAuth()._id, token)
+		let res = await loadProfile(isAuth()._id, token)
 		let data = await res.text()
 
 		if (res.ok) {

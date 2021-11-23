@@ -9,8 +9,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
-import { useStyles } from '../constants'
-import {changePlanTimeFrame} from '../actions/Plan'
+import { useStyles } from '../../constants'
+import {changePlanTimeFrame} from '../../actions/Plan'
 
 export const TimeFrame = inject("plansStore")(observer((props) => {
 	const [planTimeFrame, setPlanTimeFrame] = useState(1)

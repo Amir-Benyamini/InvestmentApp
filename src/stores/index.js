@@ -1,7 +1,7 @@
-import { PlansStore } from './PlansStore'
-import { Rates } from './Rates'
-import { Authentication } from './Authentication'
+import { PlansStore } from "./PlansStore";
+import { Rates } from "./Rates";
+import { Authentication } from "./Authentication";
 
-export const plansStore = new PlansStore()
-export const rates = new Rates()
-export const auth = new Authentication()
+export const plansStore = new PlansStore();
+export const rates = new Rates();
+export const auth = new Authentication();

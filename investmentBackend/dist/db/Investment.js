@@ -18,5 +18,5 @@ exports.InvestmentSchema = new Schema({
     type: { type: String, required: true },
     isCompanyCapital: { type: Boolean, required: true },
     isRegulated: { type: Boolean, required: true }
-});
+}, { timestamps: true });
 exports.Investment = mongoose_1.default.model("Investment", exports.InvestmentSchema, "investments");
