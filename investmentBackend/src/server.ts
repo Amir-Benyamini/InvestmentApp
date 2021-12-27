@@ -30,17 +30,18 @@ app.use("/investments", investmentsRoutes);
 app.use("/plans", plansRoutes);
 app.use("/user", userRoutes);
 app.use("/auth", authRoutes);
-
+// app.use(express.static("../../build"));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "build", "index.html"));
+});
 app.get("/", function (req, res) {
   res.send("Hello welcome to my server");
 });
 //serve static asset if in production
-if (process.env.NODE_ENV === "production") {
-  //set static folder
-  app.use(express.static("../../build"));
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../../", "build", "index.html"));
-  });
-}
+// if (process.env.NODE_ENV === "production") {
+//set static folder
+
+// }
+console.log(`${__dirname}`);
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`server is up and running at port ${port}`));

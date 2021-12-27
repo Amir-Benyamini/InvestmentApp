@@ -32,16 +32,17 @@ app.use("/investments", investments_1.default);
 app.use("/plans", plans_1.default);
 app.use("/user", user_1.default);
 app.use("/auth", auth_1.default);
+// app.use(express.static("../../build"));
+app.get("*", (req, res) => {
+    res.sendFile(path_1.default.join(__dirname, "..", "build", "index.html"));
+});
 app.get("/", function (req, res) {
     res.send("Hello welcome to my server");
 });
 //serve static asset if in production
-if (process.env.NODE_ENV === "production") {
-    //set static folder
-    app.use(express_1.default.static("investmentClient/build"));
-    app.get("*", (req, res) => {
-        res.sendFile(path_1.default.resolve(__dirname, "investmentClient", "build", "index.html"));
-    });
-}
+// if (process.env.NODE_ENV === "production") {
+//set static folder
+// }
+console.log(`${__dirname}`);
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`server is up and running at port ${port}`));
