@@ -10,6 +10,7 @@ import userRoutes from "./routes/user";
 import connectDB from "./db/connection";
 import bodyParser from "body-parser";
 import path from "path";
+
 const app = express();
 connectDB();
 
@@ -36,11 +37,9 @@ app.get("/", function (req, res) {
 //serve static asset if in production
 if (process.env.NODE_ENV === "production") {
   //set static folder
-  app.use(express.static("investmentClient/build"));
+  app.use(express.static("../../build"));
   app.get("*", (req, res) => {
-    res.sendFile(
-      path.resolve(__dirname, "investmentClient", "build", "index.html")
-    );
+    res.sendFile(path.resolve(__dirname, "../../", "build", "index.html"));
   });
 }
 const port = process.env.PORT || 4000;
