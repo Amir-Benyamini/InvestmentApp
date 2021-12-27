@@ -38,9 +38,9 @@ app.get("/", function (req, res) {
 //serve static asset if in production
 if (process.env.NODE_ENV === "production") {
     //set static folder
-    app.use(express_1.default.static("investment/build"));
+    app.use(express_1.default.static("/build"));
     app.get("*", (req, res) => {
-        res.sendFile(path_1.default.resolve(__dirname, "investment", "build", "index.html"));
+        res.sendFile(path_1.default.resolve(__dirname, "build", "index.html"));
     });
 }
 const port = process.env.PORT || 8080;

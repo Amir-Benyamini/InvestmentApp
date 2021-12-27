@@ -8,8 +8,7 @@
   "main": "server.js",
   "scripts": {
 	 "start": "nodemon dist/server.js",
-	 "build": "",
-	 "heroku-postbuild":"NPM_CONFIC_PRODUCTION=false npm install --prefix investment && npm run build --prefix investment"
+	 "heroku-postbuild":"NPM_CONFIC_PRODUCTION=false npm install  && npm run build"
 	 
   },
   "author": "Amir Benyamini",
