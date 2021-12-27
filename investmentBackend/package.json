@@ -4,9 +4,11 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon dist/server.js"
+	 "start": "nodemon dist/server.js",
+	 "heroku-postbuild":"NPM_CONFIC_PRODUCTION=false npm install --prefix investmentBackend && npm run build --prefix investmentBackend"
+	 
   },
-  "author": "",
+  "author": "Amir Benyamini",
   "license": "ISC",
   "dependencies": {
     "@sendgrid/mail": "^7.4.7",

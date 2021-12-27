@@ -14,6 +14,7 @@ const auth_1 = __importDefault(require("./routes/auth"));
 const user_1 = __importDefault(require("./routes/user"));
 const connection_1 = __importDefault(require("./db/connection"));
 const body_parser_1 = __importDefault(require("body-parser"));
+const path_1 = __importDefault(require("path"));
 const app = (0, express_1.default)();
 (0, connection_1.default)();
 //middlewares
@@ -34,5 +35,13 @@ app.use("/auth", auth_1.default);
 app.get("/", function (req, res) {
     res.send("Hello welcome to my server");
 });
-const port = process.env.PORT;
+//serve static asset if in production
+if (process.env.NODE_ENV === "production") {
+    //set static folder
+    app.use(express_1.default.static("../../build"));
+    app.get("*", (req, res) => {
+        res.sendFile(path_1.default.resolve(__dirname, "client", "build", "index.html"));
+    });
+}
+const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`server is up and running at port ${port}`));

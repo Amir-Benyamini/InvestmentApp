@@ -9,7 +9,7 @@ import authRoutes from "./routes/auth";
 import userRoutes from "./routes/user";
 import connectDB from "./db/connection";
 import bodyParser from "body-parser";
-
+import path from "path";
 const app = express();
 connectDB();
 
@@ -33,6 +33,13 @@ app.use("/auth", authRoutes);
 app.get("/", function (req, res) {
   res.send("Hello welcome to my server");
 });
-
-const port = process.env.PORT;
+//serve static asset if in production
+if (process.env.NODE_ENV === "production") {
+  //set static folder
+  app.use(express.static("../../build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
+const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`server is up and running at port ${port}`));
