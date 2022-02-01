@@ -1,5 +1,5 @@
 class authAPI {
-  async signup(name, email, password) {
+  async signupCall(name: string, email: string, password: string) {
     const options = {
       method: "POST",
       headers: {
@@ -12,11 +12,11 @@ class authAPI {
         password,
       }),
     };
-
-    return await fetch(`http://localhost:4000/auth/signup`, options);
+    const response = await fetch(`http://localhost:4000/auth/signup`, options);
+    return response;
   }
 
-  async login(email, password) {
+  async loginCall(email: string, password: string) {
     const options = {
       method: "POST",
       headers: {
@@ -29,10 +29,11 @@ class authAPI {
       }),
     };
 
-    return await fetch(`http://localhost:4000/auth/login`, options);
+    const response = await fetch(`http://localhost:4000/auth/login`, options);
+    return response;
   }
 
-  async accountActivation(token) {
+  async accountActivation(token: string) {
     const options = {
       method: "POST",
       headers: {
@@ -50,7 +51,7 @@ class authAPI {
     );
   }
 
-  async loadProfile(id, token) {
+  async loadProfile(id: string, token: string) {
     const options = {
       method: "GET",
       headers: {
@@ -63,7 +64,7 @@ class authAPI {
     return await fetch(`http://localhost:4000/user/${id}`, options);
   }
 
-  async updateProfile(name, password, token) {
+  async updateProfile(name: string, password: string, token: string) {
     const options = {
       method: "PUT",
       headers: {
@@ -80,7 +81,7 @@ class authAPI {
     return await fetch(`http://localhost:4000/user/update`, options);
   }
 
-  async forgotPassword(email) {
+  async forgotPasswordCall(email: string) {
     const options = {
       method: "PUT",
       headers: {
@@ -91,11 +92,14 @@ class authAPI {
         email,
       }),
     };
-
-    return await fetch(`http://localhost:4000/auth/forgot-password`, options);
+    const response = await fetch(
+      `http://localhost:4000/auth/forgot-password`,
+      options
+    );
+    return response;
   }
 
-  async resetPassword(newPassword, token) {
+  async resetPassword(newPassword: string, token: string) {
     const options = {
       method: "PUT",
       headers: {
@@ -111,7 +115,7 @@ class authAPI {
     return await fetch(`http://localhost:4000/auth/reset-password`, options);
   }
 
-  async googleLogin(token) {
+  async googleLogin(token: string) {
     const options = {
       method: "POST",
       headers: {
@@ -126,7 +130,7 @@ class authAPI {
     return await fetch(`http://localhost:4000/auth/google-login`, options);
   }
 
-  async facebookLogin(userID, accessToken) {
+  async facebookLogin(userID: string, accessToken: string) {
     const options = {
       method: "POST",
       headers: {

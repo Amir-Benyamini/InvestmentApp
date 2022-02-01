@@ -1,17 +1,10 @@
 import React from "react";
 import { isAuth } from '../../services/authHelpers'
-import { Redirect, Route } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-	<Route {...rest} render={
-		props => isAuth() ? <Component {...props} /> : <Redirect to={
-			{
-				pathname: '/login',
-				state: { from: props.location }
-			}} />
-	}>
-
-	</Route>
-)
+const PrivateRoute = () => {
+  return isAuth() ? <Outlet /> : <Navigate to="/login" />;
+};
+  
 
 export default PrivateRoute

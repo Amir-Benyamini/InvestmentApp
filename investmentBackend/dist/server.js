@@ -14,7 +14,6 @@ const auth_1 = __importDefault(require("./routes/auth"));
 const user_1 = __importDefault(require("./routes/user"));
 const connection_1 = __importDefault(require("./db/connection"));
 const body_parser_1 = __importDefault(require("body-parser"));
-const path_1 = __importDefault(require("path"));
 const app = (0, express_1.default)();
 (0, connection_1.default)();
 //middlewares
@@ -33,9 +32,9 @@ app.use("/plans", plans_1.default);
 app.use("/user", user_1.default);
 app.use("/auth", auth_1.default);
 // app.use(express.static("../../build"));
-app.get("*", (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, "..", "build", "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "..", "build", "index.html"));
+// });
 app.get("/", function (req, res) {
     res.send("Hello welcome to my server");
 });

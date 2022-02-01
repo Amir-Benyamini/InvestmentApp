@@ -33,7 +33,8 @@ const signup = (req, res) => {
 				 <p>This email may contain sensetive information.</p>
 				 <p>${process.env.CLIENT_URL}</p>`,
             };
-            (0, email_1.sendEmailWithNodemailer)(req, res, emailData);
+            const mailerResponse = (0, email_1.sendEmailWithNodemailer)(req, res, emailData);
+            return mailerResponse;
         }
     });
 };

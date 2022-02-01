@@ -42,7 +42,8 @@ export const signup = (req: Request, res: Response) => {
 				 <p>This email may contain sensetive information.</p>
 				 <p>${process.env.CLIENT_URL}</p>`,
       };
-      sendEmailWithNodemailer(req, res, emailData);
+      const mailerResponse = sendEmailWithNodemailer(req, res, emailData);
+      return mailerResponse;
     }
   });
 };

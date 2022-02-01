@@ -31,9 +31,9 @@ app.use("/plans", plansRoutes);
 app.use("/user", userRoutes);
 app.use("/auth", authRoutes);
 // app.use(express.static("../../build"));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "build", "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "..", "build", "index.html"));
+// });
 app.get("/", function (req, res) {
   res.send("Hello welcome to my server");
 });
