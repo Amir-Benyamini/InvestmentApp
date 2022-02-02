@@ -146,7 +146,7 @@ class authAPI {
     return response;
   }
 
-  async facebookLogin(userID: string, accessToken: string) {
+  async facebookLoginCall(userID: string, accessToken: string) {
     const options = {
       method: "POST",
       headers: {
@@ -159,7 +159,11 @@ class authAPI {
       }),
     };
 
-    return await fetch(`http://localhost:4000/auth/facebook-login`, options);
+    const response = await fetch(
+      `http://localhost:4000/auth/facebook-login`,
+      options
+    );
+    return response;
   }
 }
 

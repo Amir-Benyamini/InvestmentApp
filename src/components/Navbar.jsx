@@ -29,10 +29,13 @@ export const NavBar = inject("auth")(
   observer((props) => {
     const classes = useStyles();
     const theme = useTheme();
-
     const [open, setOpen] = useState(false);
+
     const authenticate = props.auth.isLoggedIn;
-    console.log(authenticate);
+    useEffect(() => {
+      props.auth.authenticate();
+    }, []);
+  
     const isActive = (path) => {
       if (window.location.pathname === path) {
         return "";

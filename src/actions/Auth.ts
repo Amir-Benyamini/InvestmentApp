@@ -1,6 +1,7 @@
 import authAPI from "../services/authAPI";
 import { authenticate } from "../services/authHelpers";
 import { auth } from "../stores/index";
+
 export const login = async (email: string, password: string) => {
   const response = await authAPI.loginCall(email, password);
   if (response) {
@@ -123,13 +124,24 @@ export const googleLogin = async (token: string) => {
 };
 
 export const facebookLogin = async (userID: string, accessToken: string) => {
-  const response = await authAPI.facebookLogin(userID, accessToken);
+  const response = await authAPI.facebookLoginCall(userID, accessToken);
 
-  if (response.ok) {
-    console.log("FACEBOOK LOGIN SUCCESS!", response);
+  if (response) {
+    const data = await response.text();
+    if (response.ok) {
+      authenticate(JSON.parse(data), () => {
+        console.log("Authenticate is done!");
+        auth.authenticate();
+      });
+      if (auth.isLoggedIn) {
+        return { ok: true, data };
+      } else {
+        return { ok: false, data };
+      }
+    } else {
+      return { ok: false, data };
+    }
   }
-
-  return response;
 };
 
 export const loadProfile = async (userId: string, token: string) => {
