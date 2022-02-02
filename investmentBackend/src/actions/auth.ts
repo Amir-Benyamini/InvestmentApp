@@ -11,10 +11,42 @@ import { OAuth2Client, TokenPayload } from "google-auth-library";
 import axios from "axios";
 axios.defaults;
 
+interface LoginInput {
+  email: string;
+  password: string;
+}
 interface SignupInput {
   name: string;
   email: string;
   password: string;
+}
+
+interface Token {
+  token: string;
+}
+
+interface forgotPasswordInput {
+  email: string;
+}
+
+interface ResetPasswordInputs {
+  newPassword: string;
+  resetPasswordLink: string;
+}
+
+interface GoogleTokenId {
+  idToken: string;
+}
+
+interface FacebookTokenId {
+  userID: string;
+  accessToken: string;
+}
+
+interface FacebookUserData {
+  id: string;
+  name: string;
+  email: string;
 }
 
 export const signup = (req: Request, res: Response) => {
@@ -47,9 +79,7 @@ export const signup = (req: Request, res: Response) => {
     }
   });
 };
-interface Token {
-  token: string;
-}
+
 export const accountActivation = (req: Request, res: Response) => {
   const { token }: Token = req.body;
 
@@ -77,25 +107,22 @@ export const accountActivation = (req: Request, res: Response) => {
             });
           }
           return res.json({
-            messaga: "Signup success! Please login.",
+            message: "Signup success! Please login.",
           });
         });
       }
     );
   } else {
     return res.json({
-      messaga: "Something went wrong. Please try again.",
+      message: "Something went wrong. Please try again.",
     });
   }
 };
-interface LoginInput {
-  email: string;
-  password: string;
-}
-export const login = (req: Request, res: Response) => {
+
+export const login = async (req: Request, res: Response) => {
   const { email, password }: LoginInput = req.body;
 
-  User.findOne({ email }, (err: CallbackError, user: UserDoc) => {
+  await User.findOne({ email }, (err: CallbackError, user: UserDoc) => {
     if (err || !user) {
       return res.status(400).json({
         error: "User with that email does not exist. Please signup",
@@ -123,12 +150,9 @@ export const requireLogin = expressJwt({
   algorithms: ["HS256"],
 });
 
-interface forgotPasswordInput {
-  email: string;
-}
-export const forgotPassword = (req: Request, res: Response) => {
+export const forgotPassword = async (req: Request, res: Response) => {
   const { email }: forgotPasswordInput = req.body;
-  User.findOne({ email }, (err: CallbackError, user: UserDoc) => {
+  await User.findOne({ email }, async (err: CallbackError, user: UserDoc) => {
     if (err || !user) {
       return res.status(400).json({
         error: "User with that email does not exist. Please try again",
@@ -150,27 +174,19 @@ export const forgotPassword = (req: Request, res: Response) => {
 					 <p>This email may contain sensetive information.</p>
 					 <p>${process.env.CLIENT_URL}</p>`,
       };
-      return User.updateOne(
+
+      const updatedUser = await User.findByIdAndUpdate(
+        user.id,
         { resetPasswordLink: token },
-        (err: CallbackError, success: UserDoc) => {
-          if (err) {
-            console.log("RESET PASSWORD LINK ERROR", err);
-            return res.status(400).json({
-              error: "DB connection error on user forgot password",
-            });
-          } else {
-            sendEmailWithNodemailer(req, res, emailData);
-          }
-        }
+        { new: true }
       );
+      if (updatedUser) {
+        const response = await sendEmailWithNodemailer(req, res, emailData);
+        return response;
+      }
     }
   });
 };
-
-interface ResetPasswordInputs {
-  newPassword: string;
-  resetPasswordLink: string;
-}
 
 export const resetPassword = (req: Request, res: Response) => {
   const { resetPasswordLink, newPassword }: ResetPasswordInputs = req.body;
@@ -214,9 +230,6 @@ export const resetPassword = (req: Request, res: Response) => {
   }
 };
 
-interface GoogleTokenId {
-  idToken: string;
-}
 export const googleLogin = async (req: Request, res: Response) => {
   const client = new OAuth2Client(process.env.GOOGLE_CLIENT);
   const { idToken }: GoogleTokenId = req.body;
@@ -274,16 +287,7 @@ export const googleLogin = async (req: Request, res: Response) => {
     });
   }
 };
-interface FacebookTokenId {
-  userID: string;
-  accessToken: string;
-}
 
-interface FacebookUserData {
-  id: string;
-  name: string;
-  email: string;
-}
 export const facebookLogin = async (req: Request, res: Response) => {
   console.log("FACEBOOK LOGIN REQ BODY", req.body);
   const { userID, accessToken }: FacebookTokenId = req.body;

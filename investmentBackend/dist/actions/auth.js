@@ -60,21 +60,21 @@ const accountActivation = (req, res) => {
                     });
                 }
                 return res.json({
-                    messaga: "Signup success! Please login.",
+                    message: "Signup success! Please login.",
                 });
             });
         });
     }
     else {
         return res.json({
-            messaga: "Something went wrong. Please try again.",
+            message: "Something went wrong. Please try again.",
         });
     }
 };
 exports.accountActivation = accountActivation;
-const login = (req, res) => {
+const login = async (req, res) => {
     const { email, password } = req.body;
-    user_1.default.findOne({ email }, (err, user) => {
+    await user_1.default.findOne({ email }, (err, user) => {
         if (err || !user) {
             return res.status(400).json({
                 error: "User with that email does not exist. Please signup",
@@ -100,9 +100,9 @@ exports.requireLogin = (0, express_jwt_1.default)({
     secret: process.env.JWT_SECRET,
     algorithms: ["HS256"],
 });
-const forgotPassword = (req, res) => {
+const forgotPassword = async (req, res) => {
     const { email } = req.body;
-    user_1.default.findOne({ email }, (err, user) => {
+    await user_1.default.findOne({ email }, async (err, user) => {
         if (err || !user) {
             return res.status(400).json({
                 error: "User with that email does not exist. Please try again",
@@ -120,17 +120,11 @@ const forgotPassword = (req, res) => {
 					 <p>This email may contain sensetive information.</p>
 					 <p>${process.env.CLIENT_URL}</p>`,
             };
-            return user_1.default.updateOne({ resetPasswordLink: token }, (err, success) => {
-                if (err) {
-                    console.log("RESET PASSWORD LINK ERROR", err);
-                    return res.status(400).json({
-                        error: "DB connection error on user forgot password",
-                    });
-                }
-                else {
-                    (0, email_1.sendEmailWithNodemailer)(req, res, emailData);
-                }
-            });
+            const updatedUser = await user_1.default.findByIdAndUpdate(user.id, { resetPasswordLink: token }, { new: true });
+            if (updatedUser) {
+                const response = await (0, email_1.sendEmailWithNodemailer)(req, res, emailData);
+                return response;
+            }
         }
     });
 };

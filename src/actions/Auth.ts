@@ -1,6 +1,6 @@
 import authAPI from "../services/authAPI";
-import { authenticate, isAuth } from "../services/authHelpers";
-
+import { authenticate } from "../services/authHelpers";
+import { auth } from "../stores/index";
 export const login = async (email: string, password: string) => {
   const response = await authAPI.loginCall(email, password);
   if (response) {
@@ -8,8 +8,13 @@ export const login = async (email: string, password: string) => {
     if (response.ok) {
       authenticate(JSON.parse(data), () => {
         console.log("Authenticate is done!");
+        auth.authenticate();
       });
-      return { ok: true, data };
+      if (auth.isLoggedIn) {
+        return { ok: true, data };
+      } else {
+        return { ok: false, data };
+      }
     } else {
       return { ok: false, data };
     }
@@ -35,13 +40,17 @@ export const signup = async (name: string, email: string, password: string) => {
 };
 
 export const activateAccount = async (token: string) => {
-  const response = await authAPI.accountActivation(token);
-
-  if (response.ok) {
-    console.log("lOGIN SUCCESS!", response);
+  const response = await authAPI.accountActivationCall(token);
+  if (response) {
+    const data = await response.text();
+    if (response.ok) {
+      console.log("Account activation success!", response);
+      return { ok: true, data };
+    } else {
+      console.log("Account activation error!", response);
+      return { ok: false, data };
+    }
   }
-
-  return response;
 };
 
 export const updateProfile = async (
@@ -78,23 +87,39 @@ export const forgotPassword = async (email: string) => {
 };
 
 export const resetPassword = async (newPassword: string, token: string) => {
-  const response = await authAPI.resetPassword(newPassword, token);
-
-  if (response.ok) {
-    console.log("FORGOT PASSWORD SUCCESS!", response);
+  const response = await authAPI.resetPasswordCall(newPassword, token);
+  if (response) {
+    console.log(response);
+    const data = await response.text();
+    if (response.ok) {
+      console.log("Reset password success!", response);
+      return { ok: true, data };
+    } else {
+      console.log("Reset password error!", response);
+      return { ok: false, data };
+    }
   }
-
-  return response;
 };
 
 export const googleLogin = async (token: string) => {
-  const response = await authAPI.googleLogin(token);
+  const response = await authAPI.googleLoginCall(token);
 
-  if (response.ok) {
-    console.log("GOOGLE LOGIN SUCCESS!", response);
+  if (response) {
+    const data = await response.text();
+    if (response.ok) {
+      authenticate(JSON.parse(data), () => {
+        console.log("Authenticate is done!");
+        auth.authenticate();
+      });
+      if (auth.isLoggedIn) {
+        return { ok: true, data };
+      } else {
+        return { ok: false, data };
+      }
+    } else {
+      return { ok: false, data };
+    }
   }
-
-  return response;
 };
 
 export const facebookLogin = async (userID: string, accessToken: string) => {

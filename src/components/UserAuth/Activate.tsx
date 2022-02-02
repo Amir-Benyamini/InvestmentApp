@@ -8,10 +8,9 @@ import Button from "@material-ui/core/Button";
 export function Acivate() {
   const [values, setValues] = useState({
     token: "",
-    show: true,
   });
 
-  const { name, token, show } = values;
+  const { token } = values;
 
   const navigate = useNavigate();
   const params = useParams();
@@ -41,7 +40,7 @@ export function Acivate() {
   const activationLink = () => (
     <div>
       <h1>
-        Hey {name}, please click the "activate account" button to activate your
+        Hey, please click the "activate account" button to activate your
         account!
       </h1>
       <Button
@@ -61,4 +60,4 @@ export function Acivate() {
       {activationLink()}
     </div>
   );
-} 
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
@@ -23,20 +23,18 @@ import LinkM from "@material-ui/core/Link";
 import { useTheme } from "@material-ui/core/styles";
 import { useStyles } from "../constants";
 import { observer, inject } from "mobx-react";
-import {
-  isAuth,
-  removeLocalStorage,
-  removeCookie,
-} from "../services/authHelpers";
+import { removeLocalStorage, removeCookie } from "../services/authHelpers";
 
 export const NavBar = inject("auth")(
   observer((props) => {
     const classes = useStyles();
     const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
 
+    const [open, setOpen] = useState(false);
+    const authenticate = props.auth.isLoggedIn;
+    console.log(authenticate);
     const isActive = (path) => {
-      if (props.location.pathname === path) {
+      if (window.location.pathname === path) {
         return "";
       } else {
         return "inherit";
@@ -46,6 +44,7 @@ export const NavBar = inject("auth")(
       removeLocalStorage("user");
       removeCookie("token");
     };
+
     const handleDrawerOpen = () => {
       setOpen(true);
     };
@@ -53,7 +52,8 @@ export const NavBar = inject("auth")(
     const handleDrawerClose = () => {
       setOpen(false);
     };
-    if (!isAuth()) {
+
+    if (!authenticate) {
       return (
         <div className={classes.root}>
           <CssBaseline />

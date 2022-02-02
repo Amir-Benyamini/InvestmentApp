@@ -21,17 +21,17 @@ const App: React.FC = inject(
   observer(() => {
     return (
       <div>
-        {/* <NavBar /> */}
+        <NavBar />
 
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/auth/activate/:token" element={<Acivate />} />
           <Route
-            path="/auth/reset-password/:token"
+            path="/auth/password/reset/:token"
             element={<ResetPassword />}
           />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/auth/password/forgot" element={<ForgotPassword />} />
 
           <Route element={<PrivateRoute />}>
             <Route path="/" element={<Home />} />

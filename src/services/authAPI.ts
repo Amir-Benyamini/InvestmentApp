@@ -33,22 +33,27 @@ class authAPI {
     return response;
   }
 
-  async accountActivation(token: string) {
-    const options = {
+  async accountActivationCall(token: string) {
+    const headers = {
+      "Content-Type": "application/json",
+      Accept: "*/*",
+      "Content-Length": "calculated when request is sent",
+      Host: "calculated when request is sent",
+    };
+    const options: RequestInit = {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "*/*",
-      },
       body: JSON.stringify({
         token,
       }),
+      headers: headers,
     };
 
-    return await fetch(
+    const response = await fetch(
       `http://localhost:4000/auth/account-activation`,
       options
     );
+
+    return response;
   }
 
   async loadProfile(id: string, token: string) {
@@ -99,23 +104,31 @@ class authAPI {
     return response;
   }
 
-  async resetPassword(newPassword: string, token: string) {
-    const options = {
+  async resetPasswordCall(newPassword: string, resetPasswordLink: string) {
+    const headers = {
+      "Content-Type": "application/json",
+      Accept: "*/*",
+      "Content-Length": "calculated when request is sent",
+      Host: "calculated when request is sent",
+    };
+    const options: RequestInit = {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "*/*",
-      },
       body: JSON.stringify({
-        resetPasswordLink: token,
+        resetPasswordLink,
         newPassword,
       }),
+      headers: headers,
     };
 
-    return await fetch(`http://localhost:4000/auth/reset-password`, options);
+    const response = await fetch(
+      `http://localhost:4000/auth/reset-password`,
+      options
+    );
+
+    return response;
   }
 
-  async googleLogin(token: string) {
+  async googleLoginCall(token: string) {
     const options = {
       method: "POST",
       headers: {
@@ -126,8 +139,11 @@ class authAPI {
         idToken: token,
       }),
     };
-
-    return await fetch(`http://localhost:4000/auth/google-login`, options);
+    const response = await fetch(
+      `http://localhost:4000/auth/google-login`,
+      options
+    );
+    return response;
   }
 
   async facebookLogin(userID: string, accessToken: string) {

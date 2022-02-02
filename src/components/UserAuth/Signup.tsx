@@ -51,11 +51,14 @@ export function Signup() {
           toast.success(JSON.parse(response.data!).message);
           setTimeout(() => {
             navigate(`/`);
-          }, 6000);
+          }, 5000);
         } else {
           resetForm("Submit");
           toast.error(JSON.parse(response.data!).error);
         }
+      } else {
+		resetForm("Submit");
+		toast.error(JSON.parse(response.data!).error);
       }
     } else {
       resetForm("Submit");

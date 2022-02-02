@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { resetPassword } from '../../actions/Auth'
+import { resetPassword } from "../../actions/Auth";
 import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import FormControl from "@material-ui/core/FormControl";
@@ -8,7 +8,12 @@ import Button from "@material-ui/core/Button";
 import "react-toastify/dist/ReactToastify.css";
 
 export const ResetPassword = () => {
-  const [values, setValues] = useState({
+  interface resetPasswordInput {
+    token: string;
+    newPassword: string;
+    buttonText: string;
+  }
+  const [values, setValues] = useState<resetPasswordInput>({
     token: "",
     newPassword: "",
     buttonText: "Reset Password",
@@ -28,29 +33,30 @@ export const ResetPassword = () => {
 
   const { token, newPassword, buttonText } = values;
 
-  const updateLoginInput = (value, name) => {
-    const updatedValues = { ...values };
-    updatedValues[name] = value;
+  const updateInput = (value: string, name: string) => {
+    const updatedValues: resetPasswordInput = { ...values };
+    updatedValues[name as keyof resetPasswordInput] = value;
     setValues(updatedValues);
   };
-  const resetForm = (buttonText) => {
+  const resetForm = (buttonText: string) => {
     setValues({ ...values, newPassword: "", buttonText });
   };
 
-  const onFormSubmit = async (event) => {
+  const onFormSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
     setValues({ ...values, buttonText: "Resetting..." });
-
-    let res = await resetPassword(newPassword, token);
-    let data = await res.json();
-
-    if (res.ok) {
-      resetForm("Reset Password");
-      toast.success(data.message);
-    }
-    if (!res.ok) {
-      resetForm("Submit");
-      toast.error(data.error);
+    let response = await resetPassword(newPassword, token);
+    if (response) {
+      if (response.ok) {
+        toast.success(`${JSON.parse(response.data!).message}`);
+        resetForm("Reset");
+        setTimeout(() => {
+          navigate(`/`);
+        }, 5000);
+      } else {
+        toast.error(JSON.parse(response.data!).error);
+        resetForm("Reset");
+      }
     }
   };
 
@@ -65,7 +71,7 @@ export const ResetPassword = () => {
           type="text"
           label="Password"
           value={newPassword}
-          onChange={(e) => updateLoginInput(e.target.value, e.target.name)}
+          onChange={(e) => updateInput(e.target.value, e.target.name)}
         />
 
         <Button

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../actions/Auth";
 import { authenticate } from "../../services/authHelpers";
@@ -39,10 +39,17 @@ export const Login = () => {
     });
   };
 
-  const informParent = (res: any) => {
-    authenticate(res, () => {
-      console.log("LOGIN SUCCESS!", res);
-    });
+  const informParent = (response: any) => {
+    if (response.ok) {
+      toast.success(
+        `Login success! Welcome back ${JSON.parse(response.data!).user.name}.`
+      );
+      setTimeout(() => {
+        navigate(`/`);
+      }, 5000);
+    } else {
+      toast.error(`${JSON.parse(response.data!).error}.`);
+    }
   };
   const onFormSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -57,7 +64,7 @@ export const Login = () => {
         );
         setTimeout(() => {
           navigate(`/`);
-        }, 6000);
+        }, 5000);
       } else {
         resetForm("Submit");
         toast.error(`${JSON.parse(response.data!).error}.`);
