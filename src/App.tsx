@@ -26,7 +26,6 @@ const App: React.FC = inject(
     return (
       <ThemeProvider theme={theme}>
         <div>
-          {/* <NavBar /> */}
           <Nav />
 
           <Routes>
