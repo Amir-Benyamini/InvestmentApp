@@ -1,10 +1,10 @@
 import React from "react";
 import { googleLogin } from '../../actions/Auth';
-import Googlelogin from 'react-google-login'
-import Button from "@material-ui/core/Button";
+import Googlelogin from "react-google-login";
+import Button from "@mui/material/Button";
+import GoogleIcon from "@mui/icons-material/Google";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import GoogleIcon from "@mui/icons-material/Google";
 
 export const GoogleAuth = ({ informParent }) => {
   const responseGoogle = async (res) => {
@@ -30,10 +30,11 @@ export const GoogleAuth = ({ informParent }) => {
         render={(renderProps) => (
           <Button
             variant="outlined"
-            color="Secondary"
+            color="error"
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
             startIcon={<GoogleIcon />}
+            fullWidth={true}
           >
             Login With Google
           </Button>

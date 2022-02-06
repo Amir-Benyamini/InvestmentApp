@@ -11,13 +11,18 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import FormGroup from '@mui/material/FormGroup';
 import Switch from '@mui/material/Switch';
-import { currencies, investmentTypes, liquidityLables, investmentIn, inputValidation } from '../../constants';
-import { useStyles } from '../../constants'
+import { useStyles } from '../../constans/styling'
+import {
+  currencies,
+  investmentTypes,
+  liquidityLables,
+} from "../../constans/inputs";
+import { investmentIn, inputValidation } from "../../constans/validations";
 import * as investmentsActions from '../../actions/investments'
 import { toast } from "react-toastify";
 
 export const AddInvestment = inject("plansStore")(observer((props) => {
-	const classes = useStyles();
+	// const classes = useStyles();
 	const planId = props.plansStore.plan.id
 	const [investmentMenu, setInvestmentMenu] = useState(false)
 	const [investmentInput, setInvestmentInput] = useState(investmentIn)

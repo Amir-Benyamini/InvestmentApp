@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { activateAccount } from "../../actions/Auth";
+import Card from "@mui/material/Card";
+import Button from "@mui/material/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Button from "@material-ui/core/Button";
-
 export function Acivate() {
   const [values, setValues] = useState({
     token: "",
@@ -38,24 +38,26 @@ export function Acivate() {
   };
 
   const activationLink = () => (
-    <div>
-      <h1>
-        Hey, please click the "activate account" button to activate your
-        account!
-      </h1>
-      <Button
-        onClick={onAccountActivation}
-        variant="contained"
-        size="large"
-        color="primary"
-      >
-        acivate account
-      </Button>
-    </div>
+    <Card>
+      <div className="form">
+        <h1 className="form-text">Please activate your account!</h1>
+        <div className="login-btn">
+          <Button
+            onClick={onAccountActivation}
+            variant="contained"
+            size="large"
+            color="primary"
+            fullWidth={true}
+          >
+            acivate account
+          </Button>
+        </div>
+      </div>
+    </Card>
   );
 
   return (
-    <div>
+    <div className="form-container">
       <ToastContainer />
       {activationLink()}
     </div>

@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../actions/Auth";
-import { authenticate } from "../../services/authHelpers";
 import { ToastContainer, toast } from "react-toastify";
-import FormControl from "@material-ui/core/FormControl";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import FormControl from "@mui/material/FormControl";
+import TextField from "@mui/material/TextField";
+import Card from "@mui/material/Card";
+import Button from "@mui/material/Button";
 import "react-toastify/dist/ReactToastify.css";
 import { GoogleAuth } from "./GoogleAuth";
 import { FacebookAuth } from "./FacebookAuth";
+import { useStyles } from "../../constans/styling";
 
 interface loginForm {
   email: string;
@@ -30,6 +31,7 @@ export const Login = () => {
     setValues(updatedValues);
   };
   const navigate = useNavigate();
+  const classes = useStyles();
   const resetForm = (buttonText: string) => {
     setValues({
       ...values,
@@ -76,50 +78,59 @@ export const Login = () => {
   };
 
   const loginForm = () => (
-    <form>
-      <FormControl>
-        <TextField
-          required
-          variant="outlined"
-          id="email"
-          name="email"
-          type="text"
-          label="Email"
-          value={email}
-          onChange={(e) => updateLoginInput(e.target.value, e.target.name)}
-        />
+    <Card>
+      <form className={classes.form}>
+        <FormControl margin={"normal"} fullWidth={true}>
+          <h1 className={classes.center_Text}>Login</h1>
+          <GoogleAuth informParent={informParent} />
+          <FacebookAuth informParent={informParent} />
+          <hr />
+          <TextField
+            sx={{ margin: "4px" }}
+            required
+            variant="outlined"
+            id="email"
+            name="email"
+            type="text"
+            label="Email"
+            value={email}
+            onChange={(e) => updateLoginInput(e.target.value, e.target.name)}
+          />
 
-        <TextField
-          required
-          variant="outlined"
-          id="password"
-          name="password"
-          type="text"
-          label="Password"
-          value={password}
-          onChange={(e) => updateLoginInput(e.target.value, e.target.name)}
-        />
-        <Button
-          onClick={onFormSubmit}
-          variant="contained"
-          size="large"
-          color="primary"
-        >
-          {buttonText}
-        </Button>
+          <TextField
+            sx={{ margin: "4px" }}
+            required
+            variant="outlined"
+            id="password"
+            name="password"
+            type="text"
+            label="Password"
+            value={password}
+            onChange={(e) => updateLoginInput(e.target.value, e.target.name)}
+          />
+          <Button
+            sx={{ margin: "4px" }}
+            onClick={onFormSubmit}
+            variant="contained"
+            size="large"
+            color="primary"
+          >
+            {buttonText}
+          </Button>
 
-        <Link to="/auth/password/forgot">forgot password</Link>
-      </FormControl>
-    </form>
+          <Link className={classes.center_Text} to="/auth/password/forgot">
+            forgot password
+          </Link>
+        </FormControl>
+      </form>
+    </Card>
   );
 
   return (
-    <div>
+    <div className="form-container">
       <ToastContainer />
       {/* {isAuth() ? <Navigate to="/" /> : null} */}
-      <h1>Login</h1>
-      <GoogleAuth informParent={informParent} />
-      <FacebookAuth informParent={informParent} />
+
       {loginForm()}
     </div>
   );

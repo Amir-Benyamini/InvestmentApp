@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { forgotPassword } from "../../actions/Auth";
+import FormControl from "@mui/material/FormControl";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
 import { ToastContainer, toast } from "react-toastify";
-import FormControl from "@material-ui/core/FormControl";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import "react-toastify/dist/ReactToastify.css";
 
 interface forgotPasswordForm {
@@ -56,35 +57,39 @@ export const ForgotPassword = () => {
   };
 
   const forgotPasswordForm = () => (
-    <form>
-      <FormControl>
-        <TextField
-          required
-          variant="outlined"
-          id="email"
-          name="email"
-          type="text"
-          label="Email"
-          value={email}
-          onChange={(e) => updateLoginInput(e.target.value, e.target.name)}
-        />
+    <Card>
+      <form className="form">
+        <FormControl margin={"normal"} fullWidth={true}>
+          <h1 className="form-text">Enter Your Email To Reset Password</h1>
+          <TextField
+            sx={{ margin: "4px" }}
+            required
+            variant="outlined"
+            id="email"
+            name="email"
+            type="text"
+            label="Email"
+            value={email}
+            onChange={(e) => updateLoginInput(e.target.value, e.target.name)}
+          />
 
-        <Button
-          onClick={onFormSubmit}
-          variant="contained"
-          size="large"
-          color="primary"
-        >
-          {buttonText}
-        </Button>
-      </FormControl>
-    </form>
+          <Button
+            sx={{ margin: "4px" }}
+            onClick={onFormSubmit}
+            variant="contained"
+            size="large"
+            color="primary"
+          >
+            {buttonText}
+          </Button>
+        </FormControl>
+      </form>
+    </Card>
   );
 
   return (
-    <div>
+    <div className="form-container">
       <ToastContainer />
-      <h1>Enter Your Email To Reset Password</h1>
       {forgotPasswordForm()}
     </div>
   );

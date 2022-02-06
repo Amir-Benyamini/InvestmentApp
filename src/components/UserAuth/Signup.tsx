@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signup } from "../../actions/Auth";
 import { ToastContainer, toast } from "react-toastify";
-import FormControl from "@material-ui/core/FormControl";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import Card from "@mui/material/Card";
+import FormControl from "@mui/material/FormControl";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 import "react-toastify/dist/ReactToastify.css";
+import { useStyles } from "../../constans/styling";
 
 interface signupForm {
   name: string;
@@ -21,7 +23,10 @@ export function Signup() {
     buttonText: "Submit",
   });
   const { name, email, password, buttonText } = values;
+
   const navigate = useNavigate();
+  const classes = useStyles();
+
   const updateSignupInput = (value: string, name: string) => {
     const updatedValues: signupForm = { ...values };
 
@@ -57,8 +62,8 @@ export function Signup() {
           toast.error(JSON.parse(response.data!).error);
         }
       } else {
-		resetForm("Submit");
-		toast.error(JSON.parse(response.data!).error);
+        resetForm("Submit");
+        toast.error(JSON.parse(response.data!).error);
       }
     } else {
       resetForm("Submit");
@@ -67,56 +72,63 @@ export function Signup() {
   };
 
   const signupForm = () => (
-    <form>
-      <FormControl>
-        <TextField
-          required
-          variant="outlined"
-          id="name"
-          name="name"
-          type="text"
-          label="User Name"
-          value={name}
-          onChange={(e) => updateSignupInput(e.target.value, e.target.name)}
-        />
+    <Card>
+      <form className="form">
+        <FormControl margin={"normal"} fullWidth={true}>
+          <h1 className="form-text">Signup</h1>
+          <hr />
+          <TextField
+            sx={{ margin: "4px" }}
+            required
+            variant="outlined"
+            id="name"
+            name="name"
+            type="text"
+            label="User Name"
+            value={name}
+            onChange={(e) => updateSignupInput(e.target.value, e.target.name)}
+          />
 
-        <TextField
-          required
-          variant="outlined"
-          id="email"
-          name="email"
-          type="text"
-          label="Email"
-          value={email}
-          onChange={(e) => updateSignupInput(e.target.value, e.target.name)}
-        />
+          <TextField
+            sx={{ margin: "4px" }}
+            required
+            variant="outlined"
+            id="email"
+            name="email"
+            type="text"
+            label="Email"
+            value={email}
+            onChange={(e) => updateSignupInput(e.target.value, e.target.name)}
+          />
 
-        <TextField
-          required
-          variant="outlined"
-          id="password"
-          name="password"
-          type="text"
-          label="Password"
-          value={password}
-          onChange={(e) => updateSignupInput(e.target.value, e.target.name)}
-        />
-        <Button
-          onClick={onFormSubmit}
-          variant="contained"
-          size="large"
-          color="primary"
-        >
-          {buttonText}
-        </Button>
-      </FormControl>
-    </form>
+          <TextField
+            sx={{ margin: "4px" }}
+            required
+            variant="outlined"
+            id="password"
+            name="password"
+            type="text"
+            label="Password"
+            value={password}
+            onChange={(e) => updateSignupInput(e.target.value, e.target.name)}
+          />
+          <Button
+            onClick={onFormSubmit}
+            variant="contained"
+            size="large"
+            color="primary"
+            sx={{ margin: "4px" }}
+          >
+            {buttonText}
+          </Button>
+        </FormControl>
+      </form>
+    </Card>
   );
 
   return (
-    <div>
+    <div className="form-container">
       <ToastContainer />
-      <h1>Signup</h1>
       {signupForm()}
     </div>
   );

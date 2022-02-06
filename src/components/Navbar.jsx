@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import clsx from "clsx";
-import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
@@ -19,7 +19,7 @@ import AnalyticsIcon from "@mui/icons-material/Analytics";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import Button from "@material-ui/core/Button";
-import LinkM from "@material-ui/core/Link";
+import Link from "@material-ui/core/Link";
 import { useTheme } from "@material-ui/core/styles";
 import { useStyles } from "../constants";
 import { observer, inject } from "mobx-react";
@@ -32,10 +32,11 @@ export const NavBar = inject("auth")(
     const [open, setOpen] = useState(false);
 
     const authenticate = props.auth.isLoggedIn;
+
     useEffect(() => {
       props.auth.authenticate();
     }, []);
-  
+
     const isActive = (path) => {
       if (window.location.pathname === path) {
         return "";
@@ -67,7 +68,7 @@ export const NavBar = inject("auth")(
             })}
           >
             <Toolbar>
-              <LinkM
+              <Link
                 color="inherit"
                 href="/"
                 underline="none"
@@ -75,7 +76,7 @@ export const NavBar = inject("auth")(
                 className={classes.title}
               >
                 <Typography variant="h6">enWhealthy</Typography>
-              </LinkM>
+              </Link>
               <Button size="large" color={isActive("/signup")} href="/signup">
                 Signup
               </Button>
@@ -104,7 +105,7 @@ export const NavBar = inject("auth")(
             })}
           >
             <Toolbar>
-              <LinkM
+              <Link
                 color="inherit"
                 href="/"
                 underline="none"
@@ -114,7 +115,7 @@ export const NavBar = inject("auth")(
                 <Typography variant="h6" noWrap className={classes.title}>
                   enWhealthy
                 </Typography>
-              </LinkM>
+              </Link>
               <Button onClick={logout} size="large" color="inherit" href="/">
                 Logout
               </Button>
@@ -178,7 +179,7 @@ export const NavBar = inject("auth")(
                   icon: <AnalyticsIcon color="primary" />,
                 },
               ].map((menuItem, index) => (
-                <LinkM
+                <Link
                   key={index}
                   href={menuItem.path}
                   color="inherit"
@@ -188,7 +189,7 @@ export const NavBar = inject("auth")(
                     <ListItemIcon>{menuItem.icon}</ListItemIcon>
                     <ListItemText primary={menuItem.text} />
                   </ListItem>
-                </LinkM>
+                </Link>
               ))}
             </List>
           </Drawer>

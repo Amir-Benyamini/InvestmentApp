@@ -1,10 +1,10 @@
 import React from "react";
 import { facebookLogin } from '../../actions/Auth';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
-import Button from '@material-ui/core/Button';
+import Button from "@mui/material/Button";
+import FacebookIcon from "@mui/icons-material/Facebook";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import FacebookIcon from "@mui/icons-material/Facebook";
 
 export const FacebookAuth = ({ informParent }) => {
   const responseFacebook = async (res) => {
@@ -30,6 +30,7 @@ export const FacebookAuth = ({ informParent }) => {
             color="primary"
             onClick={renderProps.onClick}
             startIcon={<FacebookIcon />}
+            fullWidth={true}
           >
             Login With Facebook
           </Button>

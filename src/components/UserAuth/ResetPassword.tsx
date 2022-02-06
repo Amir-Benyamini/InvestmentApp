@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { resetPassword } from "../../actions/Auth";
 import { useNavigate, useParams } from "react-router-dom";
+import { useStyles } from "../../constans/styling";
+import FormControl from "@mui/material/FormControl";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
 import { ToastContainer, toast } from "react-toastify";
-import FormControl from "@material-ui/core/FormControl";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import "react-toastify/dist/ReactToastify.css";
 
 export const ResetPassword = () => {
@@ -19,6 +21,7 @@ export const ResetPassword = () => {
     buttonText: "Reset Password",
   });
 
+  const classes = useStyles();
   const navigate = useNavigate();
   const params = useParams();
 
@@ -61,35 +64,40 @@ export const ResetPassword = () => {
   };
 
   const resetPasswordForm = () => (
-    <form>
-      <FormControl>
-        <TextField
-          required
-          variant="outlined"
-          id="password"
-          name="newPassword"
-          type="text"
-          label="Password"
-          value={newPassword}
-          onChange={(e) => updateInput(e.target.value, e.target.name)}
-        />
+    <Card>
+      <form className="form">
+        <FormControl margin={"normal"} fullWidth={true}>
+          <h1 className="form-text">Please Reset your Password:</h1>
 
-        <Button
-          onClick={onFormSubmit}
-          variant="contained"
-          size="large"
-          color="primary"
-        >
-          {buttonText}
-        </Button>
-      </FormControl>
-    </form>
+          <TextField
+            sx={{ margin: "4px" }}
+            required
+            variant="outlined"
+            id="password"
+            name="newPassword"
+            type="text"
+            label="Password"
+            value={newPassword}
+            onChange={(e) => updateInput(e.target.value, e.target.name)}
+          />
+
+          <Button
+            sx={{ margin: "4px" }}
+            onClick={onFormSubmit}
+            variant="contained"
+            size="large"
+            color="primary"
+          >
+            {buttonText}
+          </Button>
+        </FormControl>
+      </form>
+    </Card>
   );
 
   return (
-    <div>
+    <div className="form-container">
       <ToastContainer />
-      <h1>{`Hey, please Reset Password below:`}</h1>
       {resetPasswordForm()}
     </div>
   );
