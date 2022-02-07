@@ -124,17 +124,20 @@ export default inject("auth")(
                   icon: <AnalyticsIcon color="primary" />,
                 },
               ].map((menuItem, index) => (
-                <Link
-                  key={index}
-                  href={menuItem.path}
-                  color="inherit"
-                  underline="none"
-                >
-                  <ListItem button key={menuItem.text}>
-                    <ListItemIcon>{menuItem.icon}</ListItemIcon>
-                    <ListItemText primary={menuItem.text} />
-                  </ListItem>
-                </Link>
+                <div>
+                  <Link
+                    key={index}
+                    href={menuItem.path}
+                    color="inherit"
+                    underline="none"
+                  >
+                    <ListItem button key={menuItem.text}>
+                      <ListItemIcon>{menuItem.icon}</ListItemIcon>
+                      <ListItemText primary={menuItem.text} />
+                    </ListItem>
+                  </Link>
+                  <Divider />
+                </div>
               ))}
             </List>
           </Drawer>

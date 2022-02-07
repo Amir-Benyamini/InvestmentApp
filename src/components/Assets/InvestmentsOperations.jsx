@@ -1,17 +1,14 @@
 import React from "react";
-import { useStyles } from '../../constants'
-import { AddInvestment } from './AddInvestment'
-import { TimeFrame } from '../plan/TimeFrame'
+import { AddInvestment } from "./AddInvestment";
+import { TimeFrame } from "../plan/TimeFrame";
 
 export const InvestmentsOperations = () => {
-	const classes = useStyles();
-
-	return (
-		<div className={classes.planSummerySubContainers}>
-			<AddInvestment />
-			<TimeFrame />
-		</div>
-	)
+  return (
+    <div className="control-panel">
+      <AddInvestment />
+      <TimeFrame />
+    </div>
+  );
 };
 
 

@@ -19,7 +19,7 @@ export const PlanDash = inject("plansStore")(
 
     return (
       <div>
-        {/* <PlanHeader plan={selectedPlan} /> */}
+        <PlanHeader plan={selectedPlan} />
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
             <TableHead>

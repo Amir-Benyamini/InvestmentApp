@@ -6,7 +6,8 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
-import "react-toastify/dist/ReactToastify.css";
+import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
 import { GoogleAuth } from "./GoogleAuth";
 import { FacebookAuth } from "./FacebookAuth";
 import { useStyles } from "../../constans/styling";
@@ -84,7 +85,11 @@ export const Login = () => {
           <h1 className={classes.center_Text}>Login</h1>
           <GoogleAuth informParent={informParent} />
           <FacebookAuth informParent={informParent} />
-          <hr />
+          <Divider sx={{ margin: "2.5% 0" }}>
+            <Typography gutterBottom={true} variant="h5" color="textSecondary">
+              OR
+            </Typography>
+          </Divider>
           <TextField
             sx={{ margin: "4px" }}
             required

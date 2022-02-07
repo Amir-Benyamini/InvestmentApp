@@ -2,7 +2,6 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { observer, inject } from "mobx-react";
 import PrivateRoute from "./components/UserAuth/PrivateRoute";
-import { NavBar } from "./components/Navbar";
 import { PlanDash } from "./components/plan/PlanDash";
 import { MonitorDash } from "./components/monitor/MonitorDash";
 import { AnalyticsDash } from "./components/Analytics/AnalyticsDash";
@@ -14,8 +13,9 @@ import { ForgotPassword } from "./components/UserAuth/ForgotPassword";
 import { ResetPassword } from "./components/UserAuth/ResetPassword";
 import { Home } from "./components/Home/Home";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import Nav from "./components/Nav";
+import "react-toastify/dist/ReactToastify.css";
 
-import Nav from "./components/nav";
 
 const App: React.FC = inject(
   "rates",

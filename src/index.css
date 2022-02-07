@@ -34,6 +34,16 @@ code {
   padding: 100px;
 }
 
-.table{
+.planControlContainer {
+  display: flex;
+  justify-content: space-between  ;
   
+}
+.control-panel{
+  display: flex;
+  padding: 0 5%;
+}
+.plan-summery-container{
+  display: flex;
+  justify-content: center;
 }

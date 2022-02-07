@@ -35,6 +35,7 @@ export const GoogleAuth = ({ informParent }) => {
             disabled={renderProps.disabled}
             startIcon={<GoogleIcon />}
             fullWidth={true}
+            sx={{ marginBottom: "8px" }}
           >
             Login With Google
           </Button>
