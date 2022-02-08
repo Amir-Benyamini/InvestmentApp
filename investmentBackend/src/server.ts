@@ -3,10 +3,7 @@ import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
 dotenv.config({ path: `${__dirname}/../.env` });
-import investmentsRoutes from "./routes/investments";
-import plansRoutes from "./routes/plans";
-import authRoutes from "./routes/auth";
-import userRoutes from "./routes/user";
+import { initializeRoutes } from "./routes/index";
 import connectDB from "./db/connection";
 import bodyParser from "body-parser";
 import path from "path";
@@ -15,10 +12,7 @@ const app = express();
 connectDB();
 
 //middlewares
-app.use(cors()); //allow all origins
-// if(process.env.NODE_ENV === 'development'){
-// 	app.use(cors({origin: `http://localhost:300`}))
-// };
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.json());
@@ -26,22 +20,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 
 //routes
-app.use("/investments", investmentsRoutes);
-app.use("/plans", plansRoutes);
-app.use("/user", userRoutes);
-app.use("/auth", authRoutes);
-// app.use(express.static("../../build"));
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "..", "build", "index.html"));
-// });
-app.get("/", function (req, res) {
-  res.send("Hello welcome to my server");
-});
-//serve static asset if in production
-// if (process.env.NODE_ENV === "production") {
-//set static folder
+initializeRoutes(app);
 
-// }
+// app.get("/", function (req, res) {
+//   res.send("Hello welcome to my server");
+// });
+
+if (process.env.NODE_ENV === "production") {
+  const publicPath = path.join(__dirname, "..", "..", "build");
+  app.use(express.static(path.resolve(__dirname, "..", "..", "build")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(publicPath, "index.html"));
+  });
+}
+
 console.log(`${__dirname}`);
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`server is up and running at port ${port}`));

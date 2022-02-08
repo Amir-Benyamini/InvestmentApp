@@ -1,4 +1,9 @@
 class authAPI {
+  baseUrl =
+    process.env.NODE_ENV === "production"
+      ? "http://localhost:3000/"
+      : "http://localhost:4000/";
+
   async signupCall(name: string, email: string, password: string) {
     const options = {
       method: "POST",
@@ -12,7 +17,7 @@ class authAPI {
         password,
       }),
     };
-    const response = await fetch(`http://localhost:4000/auth/signup`, options);
+    const response = await fetch(`${this.baseUrl}auth/signup`, options);
     return response;
   }
 
@@ -29,7 +34,7 @@ class authAPI {
       }),
     };
 
-    const response = await fetch(`http://localhost:4000/auth/login`, options);
+    const response = await fetch(`${this.baseUrl}auth/login`, options);
     return response;
   }
 
@@ -49,7 +54,7 @@ class authAPI {
     };
 
     const response = await fetch(
-      `http://localhost:4000/auth/account-activation`,
+      `${this.baseUrl}auth/account-activation`,
       options
     );
 
@@ -66,7 +71,7 @@ class authAPI {
       },
     };
 
-    return await fetch(`http://localhost:4000/user/${id}`, options);
+    return await fetch(`${this.baseUrl}user/${id}`, options);
   }
 
   async updateProfile(name: string, password: string, token: string) {
@@ -83,7 +88,7 @@ class authAPI {
       }),
     };
 
-    return await fetch(`http://localhost:4000/user/update`, options);
+    return await fetch(`${this.baseUrl}user/update`, options);
   }
 
   async forgotPasswordCall(email: string) {
@@ -98,7 +103,7 @@ class authAPI {
       }),
     };
     const response = await fetch(
-      `http://localhost:4000/auth/forgot-password`,
+      `${this.baseUrl}auth/forgot-password`,
       options
     );
     return response;
@@ -120,10 +125,7 @@ class authAPI {
       headers: headers,
     };
 
-    const response = await fetch(
-      `http://localhost:4000/auth/reset-password`,
-      options
-    );
+    const response = await fetch(`${this.baseUrl}auth/reset-password`, options);
 
     return response;
   }
@@ -139,10 +141,7 @@ class authAPI {
         idToken: token,
       }),
     };
-    const response = await fetch(
-      `http://localhost:4000/auth/google-login`,
-      options
-    );
+    const response = await fetch(`${this.baseUrl}auth/google-login`, options);
     return response;
   }
 
@@ -159,10 +158,7 @@ class authAPI {
       }),
     };
 
-    const response = await fetch(
-      `http://localhost:4000/auth/facebook-login`,
-      options
-    );
+    const response = await fetch(`${this.baseUrl}auth/facebook-login`, options);
     return response;
   }
 }
