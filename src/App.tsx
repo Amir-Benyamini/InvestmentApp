@@ -13,7 +13,7 @@ import { ForgotPassword } from "./components/UserAuth/ForgotPassword";
 import { ResetPassword } from "./components/UserAuth/ResetPassword";
 import { Home } from "./components/Home/Home";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import { Nav } from "./components/Nav";
+import { Nav } from "./components/nav";
 import "react-toastify/dist/ReactToastify.css";
 
 
