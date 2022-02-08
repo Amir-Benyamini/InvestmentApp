@@ -1,6 +1,6 @@
 class investmentsAPI {
   baseUrl =
-    process.env.NODE_ENV === "production"
+    process.env.REACT_APP_ENV == "production"
       ? "https://enwhealthy.herokuapp.com/"
       : "http://localhost:3000/";
 

@@ -26,13 +26,13 @@ initializeRoutes(app);
 //   res.send("Hello welcome to my server");
 // });
 
-if (process.env.NODE_ENV === "production") {
+
   const publicPath = path.join(__dirname, "..", "..", "build");
   app.use(express.static(path.resolve(__dirname, "..", "..", "build")));
   app.get("*", (req, res) => {
     res.sendFile(path.join(publicPath, "index.html"));
   });
-}
+
 
 console.log(`${__dirname}`);
 const port = process.env.PORT || 3000;

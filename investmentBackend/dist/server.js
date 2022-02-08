@@ -26,13 +26,11 @@ app.use((0, morgan_1.default)("dev"));
 // app.get("/", function (req, res) {
 //   res.send("Hello welcome to my server");
 // });
-if (process.env.NODE_ENV === "production") {
-    const publicPath = path_1.default.join(__dirname, "..", "..", "build");
-    app.use(express_1.default.static(path_1.default.resolve(__dirname, "..", "..", "build")));
-    app.get("*", (req, res) => {
-        res.sendFile(path_1.default.join(publicPath, "index.html"));
-    });
-}
+const publicPath = path_1.default.join(__dirname, "..", "..", "build");
+app.use(express_1.default.static(path_1.default.resolve(__dirname, "..", "..", "build")));
+app.get("*", (req, res) => {
+    res.sendFile(path_1.default.join(publicPath, "index.html"));
+});
 console.log(`${__dirname}`);
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`server is up and running at port ${port}`));
