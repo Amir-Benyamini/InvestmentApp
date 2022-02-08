@@ -25,7 +25,7 @@ import AnalyticsIcon from "@mui/icons-material/Analytics";
 import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
 
-export default inject("auth")(
+export const Nav = inject("auth")(
   //@ts-ignore
   observer((props: any) => {
     const theme = useTheme();
