@@ -1,4 +1,9 @@
 class investmentsAPI {
+  baseUrl =
+    process.env.NODE_ENV === "production"
+      ? "https://enwhealthy.herokuapp.com/"
+      : "http://localhost:3000/";
+
   async addInvestment(planId, investment, userId) {
     const options = {
       method: "PUT",
@@ -9,7 +14,7 @@ class investmentsAPI {
     };
 
     const res = await fetch(
-      `http://localhost:4000/investments/addInvestment/${planId}/${userId}`,
+      `${this.baseUrl}investments/addInvestment/${planId}/${userId}`,
       options
     );
     const planJson = res.json();
@@ -25,7 +30,7 @@ class investmentsAPI {
     };
 
     const res = await fetch(
-      `http://localhost:4000/investments/deleteInvestment/${investmentId}/${planId}/${userId}`,
+      `${this.baseUrl}investments/deleteInvestment/${investmentId}/${planId}/${userId}`,
       options
     );
     return res.ok;
