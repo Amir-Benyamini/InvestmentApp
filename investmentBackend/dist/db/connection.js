@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // const mongoose = require('mongoose');
 const mongoose_1 = __importDefault(require("mongoose"));
 const connectDB = async function () {
-    const conn = await mongoose_1.default.connect(process.env.DB || "mongodb://localhost/enWhealtyDB", {
+    const conn = await mongoose_1.default.connect(process.env.DB, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,
