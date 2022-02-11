@@ -1,9 +1,9 @@
 export class Investment {
-  constructor(investmentInput, currencyRate) {
+  constructor(investmentInput) {
     this.id = investmentInput._id;
     this.amount = parseInt(investmentInput.amount);
-    this.currencyRate = currencyRate;
-    this.baseAmount = parseInt(investmentInput.amount) * this.currencyRate;
+    this.currencyRate = 1;
+    this.convertedAmount = this.amount * this.currencyRate;
     this.name = investmentInput.name;
     this.company = investmentInput.company;
     this.currency = investmentInput.currency;
@@ -20,8 +20,8 @@ export class Investment {
     const base = 1 + rate / 1;
     if (this.currency === "USD") {
       const compundInterest =
-        this.baseAmount * Math.pow(base, investmentsTimeRange) -
-        this.baseAmount;
+        this.convertedAmount * Math.pow(base, investmentsTimeRange) -
+        this.convertedAmount;
       return Math.round(compundInterest);
     } else {
       const compundInterest =
@@ -33,7 +33,7 @@ export class Investment {
   interest(investmentsTimeRange) {
     const rate = this.revPerYear / 100;
     if (this.currency === "USD") {
-      const interest = this.baseAmount * rate * investmentsTimeRange;
+      const interest = this.convertedAmount * rate * investmentsTimeRange;
       return Math.round(interest);
     } else {
       const interest = this.amount * rate * investmentsTimeRange;
@@ -69,5 +69,12 @@ export class Investment {
     }
     const riskCal = riskIndicators;
     return riskCal;
+  }
+
+  convertCurrency(rate) {
+    if (rate) {
+      this.currencyRate = rate;
+    }
+    this.convertedAmount = this.amount / this.currencyRate;
   }
 }

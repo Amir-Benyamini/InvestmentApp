@@ -62,4 +62,10 @@ export class PlansStore {
       return investment.id !== investmentId;
     });
   }
+
+  updatePlansRates(rates) {
+    this.plans.forEach((plan) => {
+      plan.convertInvestmentsCurrency(rates);
+    });
+  }
 }

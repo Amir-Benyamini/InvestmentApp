@@ -4,8 +4,9 @@ import { Plan } from "../objects/Plan";
 
 export const fetchPlans = async (userId) => {
   const plansJson = await plansAPI.getPlans(userId);
-  const plans = plansJson.map((plan) => new Plan(plan, rates.getUSDRate()));
+  const plans = plansJson.map((plan) => new Plan(plan));
   plansStore.setPlans(plans);
+  plansStore.updatePlansRates(rates.latestRates);
 };
 
 export const setPlan = (plan) => {
@@ -14,7 +15,7 @@ export const setPlan = (plan) => {
 
 export const createPlan = async (name, userId) => {
   const planJason = await plansAPI.createPlan(name, userId);
-  const plan = new Plan(planJason, rates.getUSDRate());
+  const plan = new Plan(planJason);
   plansStore.setPlan(plan);
   return planJason;
 };

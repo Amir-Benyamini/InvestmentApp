@@ -11,12 +11,22 @@ export class Rates {
     });
   }
 
-  fetchLatests() {
-    fetch(
-      `https://api.currencylayer.com/live?access_key=01a14970a9a45aa2120f57b17f9f08e7`
-    )
-      .then((response) => response.json())
-      .then((data) => (this.latestRates = data));
+  async fetchLatests() {
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const response = await fetch(
+      "https://freecurrencyapi.net/api/v2/latest?apikey=86697850-88f9-11ec-a628-3dea19c29d44&base_currency=ILS",
+      options
+    );
+    console.log(response);
+    const data = await response.json();
+    console.log(data);
+    this.latestRates = data.data;
+    console.log(this.latestRates);
   }
 
   convertUSDILS(amount) {
@@ -25,6 +35,6 @@ export class Rates {
   }
 
   getUSDRate() {
-    return this.latestRates.quotes.USDILS;
+    return this.latestRates.USD;
   }
 }

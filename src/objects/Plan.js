@@ -6,7 +6,7 @@ export class Plan {
   timeFrame = 1;
   name = "";
 
-  constructor(planJson, usdRate) {
+  constructor(planJson) {
     makeObservable(this, {
       investments: observable,
       timeFrame: observable,
@@ -14,7 +14,7 @@ export class Plan {
     });
 
     planJson.investments.forEach((investmentJson) => {
-      const investment = new Investment(investmentJson, usdRate);
+      const investment = new Investment(investmentJson);
       this.investments.push(investment);
     });
 
@@ -27,7 +27,7 @@ export class Plan {
 
     this.investments.forEach((investment) => {
       if (investment.currency === "USD") {
-        amount += investment.baseAmount;
+        amount += investment.convertedAmount;
       } else {
         amount += investment.amount;
       }
@@ -55,7 +55,7 @@ export class Plan {
 
     this.investments.forEach((investment) => {
       if (investment.currency === "USD") {
-        totalAmount += investment.baseAmount;
+        totalAmount += investment.convertedAmount;
 
         if (investment.type === "Stock-Market") {
           totalAmount += investment.compoundInterest(this.timeFrame);
@@ -76,9 +76,9 @@ export class Plan {
     return totalAmount;
   }
 
-  updateCurrencyRates(currencyRate) {
+  convertInvestmentsCurrency(rates) {
     this.investments.forEach((investment) => {
-      investment.currencyRate = currencyRate;
+      investment.convertCurrency(rates[investment.currency]);
     });
   }
 }

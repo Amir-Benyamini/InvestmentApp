@@ -2,7 +2,7 @@ class authAPI {
   baseUrl =
     process.env.REACT_APP_ENV == "production"
       ? "https://enwhealthy.herokuapp.com/"
-      : "http://localhost:3000/";
+      : "http://localhost:4000/";
 
   async signupCall(name: string, email: string, password: string) {
     const options = {

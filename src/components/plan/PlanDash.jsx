@@ -61,7 +61,7 @@ export const PlanDash = inject("plansStore")(
                           style: "currency",
                           currency: "ILS",
                           notation: "compact",
-                        }).format(investment.baseAmount)
+                        }).format(investment.convertedAmount)
                       : new Intl.NumberFormat("en-US", {
                           style: "currency",
                           currency: "ILS",
