@@ -3,10 +3,18 @@
 The ultimate all in one whealth managment app to optimize your whealth growth!
 
 # Installation & Usage:
+
 1. npm run build
 2. npm start
 
 # Key features:
+
+- User authentication
+- User profile managment
+- Currency rate convertion
+- Investments plans
+- Investments monitoring
+- Advance analytics and visualizations
 
 # Technologies:
 
