@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { forgotPassword } from "../../actions/Auth";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
@@ -82,6 +82,10 @@ export const ForgotPassword = () => {
           >
             {buttonText}
           </Button>
+
+          <Link className="form-text" to="/login">
+            back to login
+          </Link>
         </FormControl>
       </form>
     </Card>

@@ -10,7 +10,6 @@ import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import { GoogleAuth } from "./GoogleAuth";
 import { FacebookAuth } from "./FacebookAuth";
-import { useStyles } from "../../constans/styling";
 
 interface loginForm {
   email: string;
@@ -32,7 +31,7 @@ export const Login = () => {
     setValues(updatedValues);
   };
   const navigate = useNavigate();
-  const classes = useStyles();
+
   const resetForm = (buttonText: string) => {
     setValues({
       ...values,
@@ -80,9 +79,9 @@ export const Login = () => {
 
   const loginForm = () => (
     <Card>
-      <form className={classes.form}>
+      <form className="form">
         <FormControl margin={"normal"} fullWidth={true}>
-          <h1 className={classes.center_Text}>Login</h1>
+          <h1 className="form-text">Login</h1>
           <GoogleAuth informParent={informParent} />
           <FacebookAuth informParent={informParent} />
           <Divider sx={{ margin: "2.5% 0" }}>
@@ -123,7 +122,7 @@ export const Login = () => {
             {buttonText}
           </Button>
 
-          <Link className={classes.center_Text} to="/auth/password/forgot">
+          <Link className="form-text" to="/auth/password/forgot">
             forgot password
           </Link>
         </FormControl>

@@ -7,7 +7,7 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "react-toastify/dist/ReactToastify.css";
-import { useStyles } from "../../constans/styling";
+
 
 interface signupForm {
   name: string;
@@ -25,7 +25,6 @@ export function Signup() {
   const { name, email, password, buttonText } = values;
 
   const navigate = useNavigate();
-  const classes = useStyles();
 
   const updateSignupInput = (value: string, name: string) => {
     const updatedValues: signupForm = { ...values };
