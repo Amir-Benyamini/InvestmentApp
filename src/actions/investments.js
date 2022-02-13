@@ -1,5 +1,5 @@
 import { Investment } from "../objects/Investment";
-import { plansStore } from "../stores";
+import { plansStore, rates } from "../stores";
 import investmentsAPI from "../services/investmentsAPI";
 
 export const addInvestment = async (investmentInput, userId) => {
@@ -9,6 +9,7 @@ export const addInvestment = async (investmentInput, userId) => {
     userId
   );
   const investment = new Investment(investmentJson);
+  investment.convertCurrency(rates.latestRates[investment.currency]);
   plansStore.addInvestment(investment);
 };
 

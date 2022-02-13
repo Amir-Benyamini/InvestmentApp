@@ -29,9 +29,6 @@ export const updatePlanName = async (name, planId, userId) => {
   const success = await plansAPI.updatePlan(name, planId, userId);
   if (success) {
     plansStore.updatePlanName(name);
-    // const planJason = await plansAPI.getPlan(id)
-    // const plan = new Plan (planJason, rates.getUSDRate())
-    // plansStore.setPlan(plan)
   }
 };
 
