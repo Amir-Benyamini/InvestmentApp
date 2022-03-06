@@ -1,5 +1,6 @@
 import { Investment } from "./Investment";
 import { makeObservable, observable } from "mobx";
+import { getYear, addYears } from "date-fns";
 
 export class Plan {
   investments = [];
@@ -48,6 +49,29 @@ export class Plan {
     });
 
     return interest;
+  }
+
+  interestAmountByYear(startYear) {
+    let data = { years: [], intrests: [] };
+
+    for (let i = 0; i < this.timeFrame; i++) {
+      let intrest = 0;
+      let years = 1;
+      years += i;
+
+      this.investments.forEach((investment) => {
+        if (investment.type === "Stock-Market") {
+          intrest += investment.compoundInterest(years);
+        } else {
+          intrest += investment.interest(years);
+        }
+      });
+      data.intrests.push(intrest);
+      let year = startYear + years;
+      data.years.push(year + "");
+    }
+
+    return data;
   }
 
   get totalAmount() {

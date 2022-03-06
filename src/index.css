@@ -47,3 +47,9 @@ code {
   display: flex;
   justify-content: center;
 }
+
+#date-range{
+  margin-top: 1%;
+  margin-bottom: 1%;
+  padding-left: 2%;
+}
