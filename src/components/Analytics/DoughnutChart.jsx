@@ -31,7 +31,7 @@ export const DoughnutChart = observer((props) => {
       tooltip: {
         callbacks: {
           label: (context) => {
-            let label = context.dataset.label || "";
+            let label = context.label || "";
 
             if (label) {
               label += ": ";
