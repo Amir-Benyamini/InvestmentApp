@@ -81,7 +81,7 @@ export const BarChart = observer((props) => {
     },
   };
   const chart = () => {
-    let planData = plan.interestAmountByYear(2022);
+    let planData = plan.interestAmountByYear;
     const labels = planData.years;
 
     const data = {

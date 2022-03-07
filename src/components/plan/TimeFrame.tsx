@@ -10,27 +10,32 @@ import { getYear, addYears } from "date-fns";
 
 export const TimeFrame = inject("plansStore")(
   observer(() => {
-    const [planTimeFrame, setPlanTimeFrame] = useState(1);
-    const [start, setStart] = React.useState<Date | null>(new Date());
-    const [end, setEnd] = React.useState<Date | null>(addYears(new Date(), 1));
+    const [start, setStart] = React.useState<Date>(new Date());
+    const [end, setEnd] = React.useState<Date>(addYears(new Date(), 1));
+    const [planTimeFrame, setPlanTimeFrame] = React.useState<object>({
+      start: getYear(start),
+      end: getYear(end),
+      timeFrame: getYear(end) - getYear(start),
+    });
 
     useEffect(() => {
       updatePlanTimeRange(start!, end!);
-    }, [end, start]);
+    }, [start, end]);
 
     useEffect(() => {
       console.log(planTimeFrame);
       changePlanTimeFrame(planTimeFrame);
     }, [planTimeFrame]);
 
-    const updatePlanTimeRange = (
-      startDate: number | Date,
-      endDate: number | Date
-    ) => {
-      let start = getYear(startDate);
-      let end = getYear(endDate);
+    const updatePlanTimeRange = (startDate: Date, endDate: Date) => {
+      let startYear: number = getYear(startDate);
+      let endYear: number = getYear(endDate);
 
-      setPlanTimeFrame(end - start);
+      setPlanTimeFrame({
+        start: startYear,
+        end: endYear,
+        timeFrame: endYear - startYear,
+      });
     };
 
     return (
@@ -43,7 +48,7 @@ export const TimeFrame = inject("plansStore")(
             maxDate={new Date("2090-12-01")}
             value={start}
             onChange={(newValue) => {
-              setStart(newValue);
+              setStart(newValue!);
             }}
             renderInput={(params) => (
               <TextField
@@ -64,7 +69,7 @@ export const TimeFrame = inject("plansStore")(
             maxDate={new Date("2090-12-01")}
             value={end}
             onChange={(newValue) => {
-              setEnd(newValue);
+              setEnd(newValue!);
             }}
             renderInput={(params) => (
               <TextField

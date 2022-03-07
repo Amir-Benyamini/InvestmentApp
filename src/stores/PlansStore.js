@@ -4,8 +4,10 @@ export class PlansStore {
   constructor() {
     this.plan = {
       investments: [],
-      timeFrame: NaN,
       name: "",
+      startDate: undefined,
+      endDate: undefined,
+      timeFrame: 1,
     };
     this.plans = [];
 
@@ -38,8 +40,10 @@ export class PlansStore {
     this.plan = plan;
   }
 
-  setPlanTimeFrame(timeFrame) {
-    this.plan.timeFrame = timeFrame;
+  setPlanTimeFrame(timeFrameObj) {
+    this.plan.startDate = timeFrameObj.start;
+    this.plan.endDate = timeFrameObj.end;
+    this.plan.timeFrame = timeFrameObj.timeFrame;
   }
 
   updatePlanName(name) {

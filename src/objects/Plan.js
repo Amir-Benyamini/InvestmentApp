@@ -1,17 +1,20 @@
 import { Investment } from "./Investment";
 import { makeObservable, observable } from "mobx";
-import { getYear, addYears } from "date-fns";
 
 export class Plan {
   investments = [];
-  timeFrame = 1;
   name = "";
+  startDate = undefined;
+  endDate = undefined;
+  timeFrame = 1;
 
   constructor(planJson) {
     makeObservable(this, {
       investments: observable,
       timeFrame: observable,
       name: observable,
+      startDate: observable,
+      endDate: observable,
     });
 
     planJson.investments.forEach((investmentJson) => {
@@ -51,7 +54,7 @@ export class Plan {
     return interest;
   }
 
-  interestAmountByYear(startYear) {
+  get interestAmountByYear() {
     let data = { years: [], intrests: [] };
 
     for (let i = 0; i < this.timeFrame; i++) {
@@ -67,7 +70,7 @@ export class Plan {
         }
       });
       data.intrests.push(intrest);
-      let year = startYear + years;
+      let year = this.startDate + years;
       data.years.push(year + "");
     }
 
