@@ -4,25 +4,27 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend
 );
 
-export const BarChart = observer((props) => {
+export const LineChart = observer((props) => {
   const plan = props.plan;
-  const [barData, setBarData] = useState({
+  const [lineData, setLineData] = useState({
     labels: [],
     datasets: [
       {
@@ -43,9 +45,7 @@ export const BarChart = observer((props) => {
         ticks: {
           callback: (value) => {
             return new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "ILS",
-              notation: "compact",
+              style: "percent",
             }).format(value);
           },
         },
@@ -57,7 +57,7 @@ export const BarChart = observer((props) => {
       },
       title: {
         display: true,
-        text: "Profit Over Years",
+        text: "Yield Over Years",
       },
       tooltip: {
         callbacks: {
@@ -69,9 +69,9 @@ export const BarChart = observer((props) => {
             }
             if (context.parsed.y !== null) {
               label += new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "ILS",
-                notation: "compact",
+                style: "percent",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
               }).format(context.parsed.y);
             }
             return label;
@@ -81,21 +81,21 @@ export const BarChart = observer((props) => {
     },
   };
   const chart = () => {
-    let planData = plan.interestAmountByYear;
+    let planData = plan.yieldByYear;
     const labels = planData.years;
 
     const data = {
       labels,
       datasets: [
         {
-          label: "Profit",
+          label: "Yield",
           data: planData.intrests,
           backgroundColor: "rgb(54, 162, 235)",
         },
       ],
     };
 
-    setBarData(data);
+    setLineData(data);
   };
 
   useEffect(() => {
@@ -106,7 +106,7 @@ export const BarChart = observer((props) => {
 
   return (
     <div style={{ width: 380 }}>
-      <Bar options={options} data={barData} />
+      <Line options={options} data={lineData} />
     </div>
   );
 });

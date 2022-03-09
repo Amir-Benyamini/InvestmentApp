@@ -43,13 +43,18 @@ code {
   display: flex;
   padding: 0 5%;
 }
-.plan-summery-container{
-  display: flex;
-  justify-content: center;
+.chart-container{
+ width: 200;
+ height: 200;
 }
 
-#date-range{
-  margin-top: 1%;
-  margin-bottom: 1%;
-  padding-left: 2%;
+.summery-card-container{
+  height: 220px;
+  width: 400px;
+}
+
+.center-content-container{
+  display: flex;
+  justify-content: center;
+
 }

@@ -59,17 +59,73 @@ export class Plan {
 
     for (let i = 0; i < this.timeFrame; i++) {
       let intrest = 0;
-      let years = 1;
+      let years = 0;
       years += i;
 
       this.investments.forEach((investment) => {
         if (investment.type === "Stock-Market") {
-          intrest += investment.compoundInterest(years);
+          intrest += investment.compoundInterest(years +1);
         } else {
-          intrest += investment.interest(years);
+          intrest += investment.interest(years +1);
         }
       });
       data.intrests.push(intrest);
+      let year = this.startDate + years;
+      data.years.push(year + "");
+    }
+
+    return data;
+  }
+
+  get yield() {
+    let amount = 0;
+    let interest = 0;
+
+    this.investments.forEach((investment) => {
+      if (investment.currency === "USD") {
+        amount += investment.convertedAmount;
+      } else {
+        amount += investment.amount;
+      }
+    });
+
+    this.investments.forEach((investment) => {
+      if (investment.type === "Stock-Market") {
+        interest += investment.compoundInterest(this.timeFrame);
+      } else {
+        interest += investment.interest(this.timeFrame);
+      }
+    });
+    return interest / amount;
+  }
+
+  get yieldByYear() {
+    let data = { years: [], intrests: [] };
+
+    for (let i = 0; i < this.timeFrame; i++) {
+      let intrest = 0;
+      let amount = 0;
+      let years = 0;
+      years += i;
+
+      this.investments.forEach((investment) => {
+        if (investment.type === "Stock-Market") {
+          intrest += investment.compoundInterest(years +1);
+         
+        } 
+         if(investment.type === "Real-Estat"){
+          intrest += investment.interest(years +1);
+        } 
+         if(investment.currency === "USD"){
+          amount += investment.convertedAmount;
+        } 
+         if(investment.currency === "ILS"){
+          amount += investment.amount;
+        }
+      });
+
+ 
+      data.intrests.push(intrest / amount);
       let year = this.startDate + years;
       data.years.push(year + "");
     }
@@ -105,7 +161,7 @@ export class Plan {
 
   convertInvestmentsCurrency(rates) {
     this.investments.forEach((investment) => {
-      investment.convertCurrency(rates[investment.currency]);
+      investment.convertCurrency(rates[investment.currency].value);
     });
   }
 }

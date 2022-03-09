@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
+import { flexbox } from "@mui/system";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -18,6 +19,7 @@ export const DoughnutChart = observer((props) => {
     ],
   });
   const options = {
+    animation: false,
     responsive: true,
     locale: "en-US",
     plugins: {
@@ -71,11 +73,11 @@ export const DoughnutChart = observer((props) => {
     if (plan.id) {
       chart();
     }
-  }, [plan.id, plan.timeFrame]);
+  }, [plan.timeFrame, plan.investments.length]);
 
   return (
-    <div style={{ width: 300 }}>
-      <Doughnut options={options} data={doughnutData} />
+    <div style={{ width: 220 }}>
+      <Doughnut options={options} data={doughnutData} />;
     </div>
   );
 });

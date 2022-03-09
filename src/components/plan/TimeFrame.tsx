@@ -41,45 +41,47 @@ export const TimeFrame = inject("plansStore")(
     return (
       <div>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DatePicker
-            views={["year"]}
-            label="Start Year"
-            minDate={new Date()}
-            maxDate={new Date("2090-12-01")}
-            value={start}
-            onChange={(newValue) => {
-              setStart(newValue!);
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                helperText={null}
-                size="small"
-                sx={{ width: 105, marginTop: 2 }}
-              />
-            )}
-          />
-          <Typography id="date-range" variant="subtitle1">
-            to
-          </Typography>
-          <DatePicker
-            views={["year"]}
-            label="End Year"
-            minDate={addYears(new Date(), 1)}
-            maxDate={new Date("2090-12-01")}
-            value={end}
-            onChange={(newValue) => {
-              setEnd(newValue!);
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                helperText={null}
-                size="small"
-                sx={{ width: 105 }}
-              />
-            )}
-          />
+          <div className="center-content-container">
+            <DatePicker
+              views={["year"]}
+              label="Start Year"
+              minDate={new Date()}
+              maxDate={new Date("2090-12-01")}
+              value={start}
+              onChange={(newValue) => {
+                setStart(newValue!);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  helperText={null}
+                  size="small"
+                  sx={{ width: 105, marginTop: 2 }}
+                />
+              )}
+            />
+            <Typography sx={{ margin: 2 }} variant="subtitle1">
+              to
+            </Typography>
+            <DatePicker
+              views={["year"]}
+              label="End Year"
+              minDate={addYears(new Date(), 1)}
+              maxDate={new Date("2090-12-01")}
+              value={end}
+              onChange={(newValue) => {
+                setEnd(newValue!);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  helperText={null}
+                  size="small"
+                  sx={{ width: 105, marginTop: 2 }}
+                />
+              )}
+            />
+          </div>
         </LocalizationProvider>
       </div>
     );

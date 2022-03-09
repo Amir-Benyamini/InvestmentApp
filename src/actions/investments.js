@@ -9,7 +9,7 @@ export const addInvestment = async (investmentInput, userId) => {
     userId
   );
   const investment = new Investment(investmentJson);
-  investment.convertCurrency(rates.latestRates[investment.currency]);
+  investment.convertCurrency(rates.latestRates[investment.currency].value);
   plansStore.addInvestment(investment);
 };
 
