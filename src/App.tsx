@@ -4,7 +4,6 @@ import { observer, inject } from "mobx-react";
 import PrivateRoute from "./components/UserAuth/PrivateRoute";
 import { PlanDash } from "./components/plan/PlanDash";
 import { MonitorDash } from "./components/monitor/MonitorDash";
-import { AnalyticsDash } from "./components/Analytics/AnalyticsDash";
 import { Signup } from "./components/UserAuth/Signup";
 import { Login } from "./components/UserAuth/Login";
 import { Acivate } from "./components/UserAuth/Activate";
@@ -15,7 +14,6 @@ import { Home } from "./components/Home/Home";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { Nav } from "./components/nav";
 import "react-toastify/dist/ReactToastify.css";
-
 
 const App: React.FC = inject(
   "rates",
@@ -40,7 +38,6 @@ const App: React.FC = inject(
 
             <Route element={<PrivateRoute />}>
               <Route path="/" element={<Home />} />
-              <Route path="/analytics" element={<AnalyticsDash />} />
               <Route path="/monitor" element={<MonitorDash />} />
               <Route path="/plan" element={<PlanDash />} />
               <Route path="/profile" element={<Profile />} />

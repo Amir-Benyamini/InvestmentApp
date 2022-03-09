@@ -118,11 +118,6 @@ export const Nav = inject("auth")(
                   path: "/plan",
                   icon: <TimelineIcon color="primary" />,
                 },
-                {
-                  text: "Analytics",
-                  path: "/analytics",
-                  icon: <AnalyticsIcon color="primary" />,
-                },
               ].map((menuItem, index) => (
                 <div>
                   <Link
