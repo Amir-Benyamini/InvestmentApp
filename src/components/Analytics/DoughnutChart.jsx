@@ -9,10 +9,10 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 export const DoughnutChart = observer((props) => {
   const plan = props.plan;
   const [doughnutData, setDoughnutData] = useState({
-    labels: ["Capital", "Profit"],
+    labels: ["Initial Capital", "Estimated Profit"],
     datasets: [
       {
-        label: "Capital vs Profit",
+        label: "Initial Capital vs Estimated Profit",
         data: [],
         backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)"],
       },
@@ -28,7 +28,7 @@ export const DoughnutChart = observer((props) => {
       },
       title: {
         display: true,
-        text: "Capital vs Profit",
+        text: "Initial Capital vs Estimated Profit",
       },
       tooltip: {
         callbacks: {
@@ -58,10 +58,10 @@ export const DoughnutChart = observer((props) => {
     data[1] = plan.interestAmount;
 
     setDoughnutData({
-      labels: ["Capital", "Profit"],
+      labels: ["Initial Capital", "Estimated Profit"],
       datasets: [
         {
-          label: "Capital vs Profit",
+          label: "Capital vs Estimated Profit",
           data: data,
           backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)"],
         },

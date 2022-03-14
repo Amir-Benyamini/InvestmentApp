@@ -57,7 +57,7 @@ export const BarChart = observer((props) => {
       },
       title: {
         display: true,
-        text: "Profit Over Years",
+        text: "Estimated Profit Over Years",
       },
       tooltip: {
         callbacks: {
@@ -88,7 +88,7 @@ export const BarChart = observer((props) => {
       labels,
       datasets: [
         {
-          label: "Profit",
+          label: "Estimated Profit",
           data: planData.intrests,
           backgroundColor: "rgb(54, 162, 235)",
         },

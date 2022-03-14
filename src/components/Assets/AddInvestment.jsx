@@ -26,7 +26,10 @@ import * as investmentsActions from "../../actions/investments";
 import { toast } from "react-toastify";
 import NumberFormat from "react-number-format";
 
-export const AddInvestment = inject("plansStore")(
+export const AddInvestment = inject(
+  "plansStore",
+  "rates"
+)(
   observer((props) => {
     const planId = props.plansStore.plan.id;
     const [investmentMenu, setInvestmentMenu] = useState(false);
@@ -34,6 +37,7 @@ export const AddInvestment = inject("plansStore")(
     const [validation, setValidation] = useState(inputValidation);
 
     // const Investments = props.planStore.investments
+    const rates = props.rates.latestRates;
 
     const userId = JSON.parse(localStorage.getItem("user"))._id;
 
@@ -122,9 +126,9 @@ export const AddInvestment = inject("plansStore")(
                 select
                 onChange={(e) => updateInvestmentInput(e)}
               >
-                {currencies.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.value}
+                {Object.values(rates).map((currency) => (
+                  <MenuItem key={currency.code} value={currency.code}>
+                    {currency.code}
                   </MenuItem>
                 ))}
               </TextField>

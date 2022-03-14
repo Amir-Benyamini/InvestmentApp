@@ -57,7 +57,7 @@ export const LineChart = observer((props) => {
       },
       title: {
         display: true,
-        text: "Yield Over Years",
+        text: "Estimated Yield Over Years",
       },
       tooltip: {
         callbacks: {
@@ -88,7 +88,7 @@ export const LineChart = observer((props) => {
       labels,
       datasets: [
         {
-          label: "Yield",
+          label: "Estimated Yield",
           data: planData.intrests,
           backgroundColor: "rgb(54, 162, 235)",
         },

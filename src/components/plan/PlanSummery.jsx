@@ -28,11 +28,11 @@ export const PlanSummery = observer((props) => {
         <CardContent className="center-content-container">
           {!plan.id ? (
             <Typography gutterBottom={true} variant="h5" color="textSecondary">
-              Please set a plan.
+              Please select a plan or creat a new one.
             </Typography>
           ) : plan.id && plan.investments.length <= 0 ? (
             <Typography gutterBottom={true} variant="h5" color="textSecondary">
-              Please add an investment.
+              Please add this plan first investment.
             </Typography>
           ) : (
             <Box sx={{ flexGrow: 1 }}>
@@ -82,7 +82,7 @@ export const PlanSummery = observer((props) => {
                           variant="subtitle1"
                           color="textSecondary"
                         >
-                          {`Total Yield: ${new Intl.NumberFormat("en-US", {
+                          {`Estimated Yield: ${new Intl.NumberFormat("en-US", {
                             style: "percent",
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,

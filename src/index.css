@@ -39,6 +39,11 @@ code {
   justify-content:space-between  ;
   
 }
+.planShortControlContainer {
+  display: flex;
+  justify-content:center  ;
+  
+}
 .button-group{
  padding: 0.5% 1.5%;
 }

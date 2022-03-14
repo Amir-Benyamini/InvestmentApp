@@ -24,16 +24,18 @@ export const PlanDash = inject("plansStore")(
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <StyledTableCell>Asset</StyledTableCell>
+                <StyledTableCell>Investment</StyledTableCell>
                 <StyledTableCell align="center">Company</StyledTableCell>
                 <StyledTableCell align="center">Type</StyledTableCell>
-                <StyledTableCell align="center">
-                  Investment Amount&nbsp;(₪)
-                </StyledTableCell>
                 <StyledTableCell align="center">Currancy</StyledTableCell>
-
                 <StyledTableCell align="center">
-                  Interest Amount&nbsp;(₪)
+                  Amount&nbsp;(₪)
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  Estimated Yield
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  Estimated Profit&nbsp;(₪)
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   Risk Grade&nbsp;(0-100)
@@ -44,7 +46,7 @@ export const PlanDash = inject("plansStore")(
 
             <TableBody>
               {selectedPlan.investments.map((investment) => (
-                <StyledTableRow key={investment.name}>
+                <StyledTableRow key={investment.id}>
                   <StyledTableCell>{investment.name}</StyledTableCell>
 
                   <StyledTableCell align="center">
@@ -56,7 +58,11 @@ export const PlanDash = inject("plansStore")(
                   </StyledTableCell>
 
                   <StyledTableCell align="center">
-                    {investment.currency === "USD"
+                    {investment.currency === "" ? "ILS" : investment.currency}
+                  </StyledTableCell>
+
+                  <StyledTableCell align="center">
+                    {investment.currency !== "ILS"
                       ? new Intl.NumberFormat("en-US", {
                           style: "currency",
                           currency: "ILS",
@@ -70,7 +76,10 @@ export const PlanDash = inject("plansStore")(
                   </StyledTableCell>
 
                   <StyledTableCell align="center">
-                    {investment.currency === "" ? "ILS" : investment.currency}
+                    {new Intl.NumberFormat("en-US", {
+                      style: "percent",
+                      maximumFractionDigits: 2,
+                    }).format(investment.revPerYear / 100)}
                   </StyledTableCell>
 
                   <StyledTableCell align="center">

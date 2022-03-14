@@ -23,7 +23,6 @@ export const TimeFrame = inject("plansStore")(
     }, [start, end]);
 
     useEffect(() => {
-      console.log(planTimeFrame);
       changePlanTimeFrame(planTimeFrame);
     }, [planTimeFrame]);
 
