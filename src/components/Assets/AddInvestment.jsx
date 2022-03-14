@@ -17,9 +17,14 @@ import {
   investmentTypes,
   liquidityLables,
 } from "../../constans/inputs";
-import { investmentIn, inputValidation } from "../../constans/validations";
+import {
+  investmentIn,
+  inputValidation,
+  validateInvestmentInput,
+} from "../../constans/validations";
 import * as investmentsActions from "../../actions/investments";
 import { toast } from "react-toastify";
+import NumberFormat from "react-number-format";
 
 export const AddInvestment = inject("plansStore")(
   observer((props) => {
@@ -28,97 +33,20 @@ export const AddInvestment = inject("plansStore")(
     const [investmentInput, setInvestmentInput] = useState(investmentIn);
     const [validation, setValidation] = useState(inputValidation);
 
-    const validate = () => {
-      if (investmentInput.name === "") {
-        const newValidation = { ...validation };
-        newValidation.name.error = true;
-        setValidation(newValidation);
-        return false;
-      } else {
-        const newValidation = { ...validation };
-        newValidation.name.error = false;
-        setValidation(newValidation);
-      }
-      if (investmentInput.company === "") {
-        const newValidation = { ...validation };
-        newValidation.company.error = true;
-        setValidation(newValidation);
-        return false;
-      }
-      if (investmentInput.company !== "") {
-        const newValidation = { ...validation };
-        newValidation.company.error = false;
-        setValidation(newValidation);
-      }
-      if (investmentInput.currency === "") {
-        const newValidation = { ...validation };
-        newValidation.currency.error = true;
-        setValidation(newValidation);
-        return false;
-      }
-      if (investmentInput.currency !== "") {
-        const newValidation = { ...validation };
-        newValidation.currency.error = false;
-        setValidation(newValidation);
-      }
-      if (investmentInput.revPerYear === 0) {
-        const newValidation = { ...validation };
-        newValidation.revPerYear.error = true;
-        setValidation(newValidation);
-        return false;
-      }
-      if (investmentInput.revPerYear !== 0) {
-        const newValidation = { ...validation };
-        newValidation.revPerYear.error = false;
-        setValidation(newValidation);
-      }
-      if (investmentInput.amount === 0) {
-        const newValidation = { ...validation };
-        newValidation.amount.error = true;
-        setValidation(newValidation);
-        return false;
-      }
-      if (investmentInput.amount !== 0) {
-        const newValidation = { ...validation };
-        newValidation.amount.error = false;
-        setValidation(newValidation);
-      }
-      if (investmentInput.type === "") {
-        const newValidation = { ...validation };
-        newValidation.type.error = true;
-        setValidation(newValidation);
-        return false;
-      }
-      if (investmentInput.type !== "") {
-        const newValidation = { ...validation };
-        newValidation.type.error = false;
-        setValidation(newValidation);
-      }
-      if (investmentInput.liquidity === "") {
-        const newValidation = { ...validation };
-        newValidation.liquidity.error = true;
-        setValidation(newValidation);
-        return false;
-      }
-      if (investmentInput.liquidity !== "") {
-        const newValidation = { ...validation };
-        newValidation.liquidity.error = false;
-        setValidation(newValidation);
-      }
-
-      return true;
-    };
     // const Investments = props.planStore.investments
 
     const userId = JSON.parse(localStorage.getItem("user"))._id;
 
-    const updateInvestmentInput = (value, name) => {
+    const updateInvestmentInput = (event) => {
       const updatedInputs = { ...investmentInput };
 
-      if (name === "isRegulated" || name === "isCompanyCapital") {
-        updatedInputs[name] = !investmentInput[name];
+      if (
+        event.target.name === "isRegulated" ||
+        event.target.name === "isCompanyCapital"
+      ) {
+        updatedInputs[event.target.name] = !investmentInput[event.target.name];
       } else {
-        updatedInputs[name] = value;
+        updatedInputs[event.target.name] = event.target.value;
       }
 
       setInvestmentInput(updatedInputs);
@@ -134,7 +62,7 @@ export const AddInvestment = inject("plansStore")(
     };
 
     const addInvestment = async () => {
-      if (validate()) {
+      if (validateInvestmentInput(investmentInput, validation, setValidation)) {
         investmentsActions.addInvestment(investmentInput, userId);
         handleInvestmentMentu();
         toast.success("Investment succesfully added!");
@@ -155,156 +83,156 @@ export const AddInvestment = inject("plansStore")(
           <DialogTitle>Fill Investment Data</DialogTitle>
           <Divider />
           <DialogContent>
-            <form>
-              <FormControl>
-                <TextField
-                  sx={{ margin: "5px 0" }}
-                  id="name"
-                  name="name"
-                  type="text"
-                  label="Investment Name"
-                  required
-                  error={validation.name.error}
-                  helperText={validation.name.error ? validation.name.text : ""}
-                  onChange={(e) =>
-                    updateInvestmentInput(e.target.value, e.target.name)
-                  }
+            <FormControl>
+              <TextField
+                sx={{ margin: "5px 0" }}
+                id="name"
+                name="name"
+                type="text"
+                label="Investment Name"
+                required
+                error={validation.name.error}
+                helperText={validation.name.error ? validation.name.text : ""}
+                onChange={(e) => updateInvestmentInput(e)}
+              />
+
+              <TextField
+                sx={{ margin: "5px 0" }}
+                id="company"
+                name="company"
+                label="Company"
+                type="text"
+                required
+                error={validation.company.error}
+                helperText={
+                  validation.company.error ? validation.company.text : ""
+                }
+                onChange={(e) => updateInvestmentInput(e)}
+              />
+              <TextField
+                sx={{ margin: "5px 0" }}
+                id="currency"
+                name="currency"
+                label="Currency"
+                required
+                error={validation.currency.error}
+                helperText={
+                  validation.currency.error ? validation.currency.text : ""
+                }
+                select
+                onChange={(e) => updateInvestmentInput(e)}
+              >
+                {currencies.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.value}
+                  </MenuItem>
+                ))}
+              </TextField>
+
+              <NumberFormat
+                sx={{ margin: "5px 0" }}
+                value={investmentInput.revPerYear}
+                onValueChange={(values) => {
+                  let event = {
+                    target: {
+                      name: "revPerYear",
+                      value: values.floatValue,
+                    },
+                  };
+                  updateInvestmentInput(event);
+                }}
+                customInput={TextField}
+                label="Yield Per Year"
+                required
+                error={validation.revPerYear.error}
+                helperText={
+                  validation.revPerYear.error ? validation.revPerYear.text : ""
+                }
+                thousandSeparator
+                suffix="%"
+                allowNegative={false}
+              />
+
+              <NumberFormat
+                sx={{ margin: "5px 0" }}
+                value={investmentInput.amount}
+                onValueChange={(values) => {
+                  let event = {
+                    target: {
+                      name: "amount",
+                      value: values.floatValue,
+                    },
+                  };
+                  updateInvestmentInput(event);
+                }}
+                customInput={TextField}
+                type="text"
+                label="Investment Amount"
+                name="amount"
+                required
+                error={validation.amount.error}
+                helperText={
+                  validation.amount.error ? validation.amount.text : ""
+                }
+                thousandSeparator
+                prefix={investmentInput.currency === "USD" ? "$" : "₪"}
+                allowNegative={false}
+              />
+
+              <TextField
+                sx={{ margin: "5px 0" }}
+                id="type"
+                name="type"
+                label="Investment Type"
+                required
+                error={validation.type.error}
+                helperText={validation.type.error ? validation.type.text : ""}
+                select
+                onChange={(e) => updateInvestmentInput(e)}
+              >
+                {investmentTypes.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.value}
+                  </MenuItem>
+                ))}
+              </TextField>
+
+              <TextField
+                sx={{ margin: "5px 0" }}
+                id="liquidity"
+                name="liquidity"
+                label="Liquidity"
+                required
+                error={validation.liquidity.error}
+                helperText={
+                  validation.liquidity.error ? validation.liquidity.text : ""
+                }
+                select
+                onChange={(e) => updateInvestmentInput(e)}
+              >
+                {liquidityLables.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+
+              <FormGroup>
+                <FormControlLabel
+                  control={<Switch />}
+                  label="Regulated"
+                  name="isRegulated"
+                  onChange={(e) => updateInvestmentInput(e)}
                 />
 
-                <TextField
-                  sx={{ margin: "5px 0" }}
-                  id="company"
-                  name="company"
-                  label="Company"
-                  type="text"
-                  required
-                  error={validation.company.error}
-                  helperText={
-                    validation.company.error ? validation.company.text : ""
-                  }
-                  onChange={(e) =>
-                    updateInvestmentInput(e.target.value, e.target.name)
-                  }
+                <FormControlLabel
+                  control={<Switch />}
+                  label="Shared Risk"
+                  name="isCompanyCapital"
+                  onChange={(e) => updateInvestmentInput(e)}
                 />
-                <TextField
-                  sx={{ margin: "5px 0" }}
-                  id="currency"
-                  name="currency"
-                  label="Currency"
-                  required
-                  error={validation.currency.error}
-                  helperText={
-                    validation.currency.error ? validation.currency.text : ""
-                  }
-                  select
-                  onChange={(e) =>
-                    updateInvestmentInput(e.target.value, e.target.name)
-                  }
-                >
-                  {currencies.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.value}
-                    </MenuItem>
-                  ))}
-                </TextField>
-
-                <TextField
-                  sx={{ margin: "5px 0" }}
-                  id="revPerYear"
-                  name="revPerYear"
-                  type="number"
-                  label="Yield Per Year"
-                  required
-                  error={validation.revPerYear.error}
-                  helperText={
-                    validation.revPerYear.error
-                      ? validation.revPerYear.text
-                      : ""
-                  }
-                  onChange={(e) =>
-                    updateInvestmentInput(e.target.value, e.target.name)
-                  }
-                />
-
-                <TextField
-                  sx={{ margin: "5px 0" }}
-                  id="amount"
-                  name="amount"
-                  type="number"
-                  label="Investment Amount"
-                  required
-                  error={validation.amount.error}
-                  helperText={
-                    validation.amount.error ? validation.amount.text : ""
-                  }
-                  onChange={(e) =>
-                    updateInvestmentInput(e.target.value, e.target.name)
-                  }
-                />
-
-                <TextField
-                  sx={{ margin: "5px 0" }}
-                  id="type"
-                  name="type"
-                  label="Investment Type"
-                  required
-                  error={validation.type.error}
-                  helperText={validation.type.error ? validation.type.text : ""}
-                  select
-                  onChange={(e) =>
-                    updateInvestmentInput(e.target.value, e.target.name)
-                  }
-                >
-                  {investmentTypes.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.value}
-                    </MenuItem>
-                  ))}
-                </TextField>
-
-                <TextField
-                  sx={{ margin: "5px 0" }}
-                  id="liquidity"
-                  name="liquidity"
-                  label="Liquidity"
-                  required
-                  error={validation.liquidity.error}
-                  helperText={
-                    validation.liquidity.error ? validation.liquidity.text : ""
-                  }
-                  select
-                  onChange={(e) =>
-                    updateInvestmentInput(e.target.value, e.target.name)
-                  }
-                >
-                  {liquidityLables.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-
-                <FormGroup>
-                  <FormControlLabel
-                    control={<Switch />}
-                    label="Regulated"
-                    name="isRegulated"
-                    onChange={(e) =>
-                      updateInvestmentInput(e.target.value, e.target.name)
-                    }
-                  />
-
-                  <FormControlLabel
-                    control={<Switch />}
-                    label="Shared Risk"
-                    name="isCompanyCapital"
-                    onChange={(e) =>
-                      updateInvestmentInput(e.target.value, e.target.name)
-                    }
-                  />
-                </FormGroup>
-              </FormControl>
-            </form>
+              </FormGroup>
+            </FormControl>
           </DialogContent>
           <Divider />
           <DialogActions sx={{ display: "flex", justifyContent: "center" }}>
@@ -316,8 +244,6 @@ export const AddInvestment = inject("plansStore")(
             </Button>
           </DialogActions>
         </Dialog>
-        {/* <label>end date:</label>
-			<input name='endDate' type="date" value={investmentInput.endDate} onChange={(e) => updateInvestmentInput(e.target.value, e.target.name)} /> */}
       </div>
     );
   })

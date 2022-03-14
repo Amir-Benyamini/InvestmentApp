@@ -9,10 +9,8 @@ export const PlanHeader = (props) => {
   return (
     <div>
       <PlanSummery plan={plan} />
-      <div className="planControlContainer">
-        <InvestmentsOperations />
-        <PlanOperations />
-      </div>
+
+      <PlanOperations />
     </div>
   );
 };

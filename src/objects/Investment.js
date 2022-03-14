@@ -17,7 +17,7 @@ export class Investment {
 
   compoundInterest(investmentsTimeRange) {
     const rate = this.revPerYear / 100;
-    const base = 1 + rate / 1;
+    const base = 1 + rate;
     if (this.currency === "USD") {
       const compundInterest =
         this.convertedAmount * Math.pow(base, investmentsTimeRange) -

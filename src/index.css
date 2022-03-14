@@ -36,12 +36,11 @@ code {
 
 .planControlContainer {
   display: flex;
-  justify-content: space-between  ;
+  justify-content:space-between  ;
   
 }
-.control-panel{
-  display: flex;
-  padding: 0 5%;
+.button-group{
+ padding: 0.5% 1.5%;
 }
 .chart-container{
  width: 200;
@@ -57,4 +56,26 @@ code {
   display: flex;
   justify-content: center;
 
+}
+@media (max-width: 841px) {
+  .summery-card-container{
+    height: 220px;
+    width: 100vw;
+  }
+  .planControlContainer{
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+  }
+  .form-container {
+    /* display: flex;
+    justify-content: center;
+    align-content: center; */
+    margin-top: 15vh;
+    padding: 1vw;
+  }
+.form {
+  width: 100vw;
+  padding: 8px;
+}
 }

@@ -81,7 +81,15 @@ export const Login = () => {
     <Card>
       <form className="form">
         <FormControl margin={"normal"} fullWidth={true}>
-          <h1 className="form-text">Login</h1>
+          <Typography
+            className="form-text"
+            variant="h3"
+            gutterBottom
+            component="h3"
+          >
+            Login
+          </Typography>
+    
           <GoogleAuth informParent={informParent} />
           <FacebookAuth informParent={informParent} />
           <Divider sx={{ margin: "2.5% 0" }}>

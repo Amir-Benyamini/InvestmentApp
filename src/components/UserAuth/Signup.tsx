@@ -6,8 +6,9 @@ import Card from "@mui/material/Card";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
 import "react-toastify/dist/ReactToastify.css";
-
 
 interface signupForm {
   name: string;
@@ -74,8 +75,15 @@ export function Signup() {
     <Card>
       <form className="form">
         <FormControl margin={"normal"} fullWidth={true}>
-          <h1 className="form-text">Signup</h1>
-          <hr />
+          <Typography
+            className="form-text"
+            variant="h3"
+            gutterBottom
+            component="h3"
+          >
+            Signup
+          </Typography>
+
           <TextField
             sx={{ margin: "4px" }}
             required

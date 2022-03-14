@@ -6,6 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
+import Typography from "@mui/material/Typography";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -67,7 +68,23 @@ export const ResetPassword = () => {
     <Card>
       <form className="form">
         <FormControl margin={"normal"} fullWidth={true}>
-          <h1 className="form-text">Please Reset your Password:</h1>
+          <Typography
+            className="form-text"
+            variant="h3"
+            gutterBottom
+            component="h3"
+          >
+            Reset Password
+          </Typography>
+
+          <Typography
+            className="form-text"
+            variant="subtitle1"
+            gutterBottom
+            component="p"
+          >
+            Enter your new password below!
+          </Typography>
 
           <TextField
             sx={{ margin: "4px" }}

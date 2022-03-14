@@ -1,3 +1,6 @@
+// export const currenciesData = (currenciesObj: object) => {
+//   for(let i = 0; i< currenciesObj.length)
+// };
 export const currencies = [
   {
     value: "USD",
