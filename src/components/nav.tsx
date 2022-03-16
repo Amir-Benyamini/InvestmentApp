@@ -30,7 +30,7 @@ export const Nav = inject("auth")(
   observer((props: any) => {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-
+    const screenWidth = window.screen.width;
     useEffect(() => {
       props.auth.authenticate();
     }, []);
@@ -51,93 +51,183 @@ export const Nav = inject("auth")(
     };
 
     if (authenticate) {
-      return (
-        <Box sx={{ display: "flex", marginBottom: "100px" }}>
-          <CssBaseline />
-          <AppBar position="fixed" open={open}>
-            <Toolbar>
-              <Typography
-                variant="h6"
-                noWrap
-                sx={{ flexGrow: 1 }}
-                component="div"
-              >
-                enWhealthy
-              </Typography>
-              <Button onClick={logout} size="large" color="inherit" href="/">
-                Logout
-              </Button>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="end"
-                onClick={handleDrawerOpen}
-                sx={{ ...(open && { display: "none" }) }}
-              >
-                <MenuIcon />
-              </IconButton>
-            </Toolbar>
-          </AppBar>
+      if (screenWidth > 841) {
+        return (
+          <Box sx={{ display: "flex", marginBottom: "100px" }}>
+            <CssBaseline />
+            <AppBar position="fixed" open={open}>
+              <Toolbar>
+                <Typography
+                  variant="h6"
+                  noWrap
+                  sx={{ flexGrow: 1 }}
+                  component="div"
+                >
+                  enWhealthy
+                </Typography>
+                <Button onClick={logout} size="large" color="inherit" href="/">
+                  Logout
+                </Button>
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  edge="end"
+                  onClick={handleDrawerOpen}
+                  sx={{ ...(open && { display: "none" }), marginRight: 1 }}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Toolbar>
+            </AppBar>
 
-          <Drawer
-            sx={{
-              width: drawerWidth,
-              flexShrink: 0,
-              "& .MuiDrawer-paper": {
+            <Drawer
+              sx={{
                 width: drawerWidth,
-              },
-            }}
-            variant="persistent"
-            anchor="right"
-            open={open}
-          >
-            <DrawerHeader>
-              <IconButton onClick={handleDrawerClose}>
-                {theme.direction === "rtl" ? (
-                  <ChevronLeftIcon />
-                ) : (
-                  <ChevronRightIcon />
-                )}
-              </IconButton>
-            </DrawerHeader>
-            <Divider />
-            <List>
-              {[
-                {
-                  text: "Profile",
-                  path: "/profile",
-                  icon: <AccountCircleIcon color="primary" />,
+                flexShrink: 0,
+                "& .MuiDrawer-paper": {
+                  width: drawerWidth,
                 },
-                {
-                  text: "Plan",
-                  path: "/",
-                  icon: <TimelineIcon color="primary" />,
+              }}
+              variant="persistent"
+              anchor="right"
+              open={open}
+            >
+              <DrawerHeader>
+                <IconButton onClick={handleDrawerClose}>
+                  {theme.direction === "rtl" ? (
+                    <ChevronLeftIcon />
+                  ) : (
+                    <ChevronRightIcon />
+                  )}
+                </IconButton>
+              </DrawerHeader>
+              <Divider />
+              <List>
+                {[
+                  {
+                    text: "Profile",
+                    path: "/profile",
+                    icon: <AccountCircleIcon color="primary" />,
+                  },
+                  {
+                    text: "Plan",
+                    path: "/",
+                    icon: <TimelineIcon color="primary" />,
+                  },
+                  {
+                    text: "Monitor",
+                    path: "/monitor",
+                    icon: <AccountBalanceIcon color="primary" />,
+                  },
+                ].map((menuItem, index) => (
+                  <div>
+                    <Link
+                      key={index}
+                      href={menuItem.path}
+                      color="inherit"
+                      underline="none"
+                    >
+                      <ListItem button key={menuItem.text}>
+                        <ListItemIcon>{menuItem.icon}</ListItemIcon>
+                        <ListItemText primary={menuItem.text} />
+                      </ListItem>
+                    </Link>
+                    <Divider />
+                  </div>
+                ))}
+              </List>
+            </Drawer>
+          </Box>
+        );
+      } else {
+        return (
+          <Box sx={{ display: "flex", marginBottom: "100px" }}>
+            <CssBaseline />
+            <AppBar position="fixed" open={open}>
+              <Toolbar>
+                <Typography
+                  variant="h6"
+                  noWrap
+                  sx={{ flexGrow: 1 }}
+                  component="div"
+                >
+                  enWhealthy
+                </Typography>
+                <Button onClick={logout} size="large" color="inherit" href="/">
+                  Logout
+                </Button>
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  edge="end"
+                  onClick={handleDrawerOpen}
+                  sx={{ ...(open && { display: "none" }), marginRight: 1 }}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Toolbar>
+            </AppBar>
+
+            <Drawer
+              sx={{
+                width: screenWidth,
+                flexShrink: 0,
+                "& .MuiDrawer-paper": {
+                  width: screenWidth,
                 },
-                {
-                  text: "Monitor",
-                  path: "/monitor",
-                  icon: <AccountBalanceIcon color="primary" />,
-                },
-              ].map((menuItem, index) => (
-                <div>
-                  <Link
-                    key={index}
-                    href={menuItem.path}
-                    color="inherit"
-                    underline="none"
-                  >
-                    <ListItem button key={menuItem.text}>
-                      <ListItemIcon>{menuItem.icon}</ListItemIcon>
-                      <ListItemText primary={menuItem.text} />
-                    </ListItem>
-                  </Link>
-                  <Divider />
-                </div>
-              ))}
-            </List>
-          </Drawer>
-        </Box>
-      );
+              }}
+              variant="persistent"
+              anchor="top"
+              open={open}
+            >
+              <DrawerHeader>
+                <IconButton onClick={handleDrawerClose}>
+                  {theme.direction === "rtl" ? (
+                    <ChevronLeftIcon />
+                  ) : (
+                    <ChevronRightIcon />
+                  )}
+                </IconButton>
+              </DrawerHeader>
+              <Divider />
+              <List>
+                {[
+                  {
+                    text: "Profile",
+                    path: "/profile",
+                    icon: <AccountCircleIcon color="primary" />,
+                  },
+                  {
+                    text: "Plan",
+                    path: "/",
+                    icon: <TimelineIcon color="primary" />,
+                  },
+                  {
+                    text: "Monitor",
+                    path: "/monitor",
+                    icon: <AccountBalanceIcon color="primary" />,
+                  },
+                ].map((menuItem, index) => (
+                  <div>
+                    <Link
+                      key={index}
+                      href={menuItem.path}
+                      color="inherit"
+                      underline="none"
+                    >
+                      <ListItem button key={menuItem.text}>
+                        <ListItemIcon>{menuItem.icon}</ListItemIcon>
+                        <ListItemText primary={menuItem.text} />
+                      </ListItem>
+                    </Link>
+                    <Divider />
+                  </div>
+                ))}
+              </List>
+            </Drawer>
+          </Box>
+        );
+      }
     } else {
       return (
         <Box sx={{ display: "flex" }}>

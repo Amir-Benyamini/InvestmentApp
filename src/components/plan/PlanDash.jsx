@@ -18,6 +18,7 @@ export const PlanDash = inject("plansStore")(
     // const userId = JSON.parse(localStorage.getItem("user"))._id;
     const selectedPlan = props.plansStore.plan;
     const user = JSON.parse(localStorage.getItem("user"));
+
     useEffect(async () => {
       planActions.fetchFirstPlan(user);
     }, []);
@@ -27,7 +28,7 @@ export const PlanDash = inject("plansStore")(
         <PlanHeader plan={selectedPlan} />
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
-            <TableHead classes={{ color: "secondary" }}>
+            <TableHead>
               <TableRow>
                 <StyledTableCell>Investment</StyledTableCell>
                 <StyledTableCell align="center">Company</StyledTableCell>
