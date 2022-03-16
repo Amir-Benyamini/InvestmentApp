@@ -1,5 +1,5 @@
-import React from "react";
-import { observer, inject } from 'mobx-react'
+import React, { useEffect } from "react";
+import { observer, inject } from "mobx-react";
 import Button from "@mui/material/Button";
 import { deletePlan } from "../../actions/Plan";
 import { ToastContainer, toast } from "react-toastify";

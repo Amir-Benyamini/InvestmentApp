@@ -9,10 +9,6 @@ export const fetchPlans = async (userId) => {
   plansStore.updatePlansRates(rates.latestRates);
 };
 
-export const setPlan = (plan) => {
-  plansStore.setPlan(plan);
-};
-
 export const fetchFirstPlan = async (user) => {
   const plansJson = await plansAPI.getPlans(user._id);
   const plans = plansJson.map((plan) => new Plan(plan));
@@ -27,6 +23,9 @@ export const fetchFirstPlan = async (user) => {
     plansStore.setPlan(plan);
   }
 };
+export const setPlan = (plan) => {
+  plansStore.setPlan(plan);
+};
 
 export const createPlan = async (name, userId) => {
   const planJason = await plansAPI.createPlan(name, userId);
@@ -36,8 +35,11 @@ export const createPlan = async (name, userId) => {
 };
 
 export const deletePlan = async (userId) => {
-  plansAPI.deletePlan(plansStore.plan.id, userId);
-  plansStore.deletePlan(plansStore.plan.id);
+  let updatedPlans = await plansAPI.deletePlan(plansStore.plan.id, userId);
+  if (updatedPlans) {
+    plansStore.deletePlan(plansStore.plan.id);
+    if (plansStore.plans.length > 0) plansStore.setPlan(plansStore.plans[0]);
+  }
 };
 
 export const updatePlanName = async (name, planId, userId) => {
