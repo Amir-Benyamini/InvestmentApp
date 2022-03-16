@@ -74,7 +74,12 @@ class authAPI {
     return await fetch(`${this.baseUrl}user/${id}`, options);
   }
 
-  async updateProfile(name: string, password: string, token: string) {
+  async updateProfile(
+    name: string,
+    password: string,
+    token: string,
+    id: string
+  ) {
     const options = {
       method: "PUT",
       headers: {
@@ -85,6 +90,7 @@ class authAPI {
       body: JSON.stringify({
         name,
         password,
+        id,
       }),
     };
 

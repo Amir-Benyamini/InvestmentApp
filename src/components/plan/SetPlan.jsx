@@ -49,7 +49,7 @@ export const SetPlan = inject("plansStore")(
     return (
       <div>
         <Button color="inherit" onClick={togglePlansMenu}>
-          Set Plan
+          My Plans
         </Button>
         <Dialog
           disableBackdropClick

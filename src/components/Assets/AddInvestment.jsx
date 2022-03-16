@@ -77,7 +77,9 @@ export const AddInvestment = inject(
 
     return (
       <div>
-        <Button onClick={handleInvestmentMentu}>Add Investment</Button>
+        <Button color="secondary" onClick={handleInvestmentMentu}>
+          Add Investment
+        </Button>
         <Dialog
           disableBackdropClick
           disableEscapeKeyDown

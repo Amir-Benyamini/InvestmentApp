@@ -25,10 +25,11 @@ export function Profile() {
   });
 
   const token = getCookie("token");
+  const user = JSON.parse(localStorage.getItem("user"));
   const { name, email, role } = values;
 
   useEffect(async () => {
-    let res = await loadProfile(isAuth()._id, token);
+    let res = await loadProfile(user._id, token);
     let data = await res.text();
 
     if (res.ok) {
@@ -58,7 +59,7 @@ export function Profile() {
     event.preventDefault();
     setButtonText("Updating..");
 
-    let res = await updateProfile(form.name, form.password, token);
+    let res = await updateProfile(form.name, form.password, token, user._id);
     let data = await res.json();
 
     if (res.ok) {

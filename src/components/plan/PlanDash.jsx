@@ -1,5 +1,5 @@
-import React from "react";
-import { PlanHeader } from './PlanHeader'
+import React, { useEffect } from "react";
+import { PlanHeader } from "./PlanHeader";
 import { observer, inject } from "mobx-react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,18 +11,23 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import IconButton from "@mui/material/IconButton";
 import { StyledTableRow, StyledTableCell } from "../../constans/styling";
 import * as investmentsActions from "../../actions/investments";
+import * as planActions from "../../actions/Plan";
 
 export const PlanDash = inject("plansStore")(
   observer((props) => {
-    const userId = JSON.parse(localStorage.getItem("user"))._id;
+    // const userId = JSON.parse(localStorage.getItem("user"))._id;
     const selectedPlan = props.plansStore.plan;
+    const user = JSON.parse(localStorage.getItem("user"));
+    useEffect(async () => {
+      planActions.fetchFirstPlan(user);
+    }, []);
 
     return (
       <div>
         <PlanHeader plan={selectedPlan} />
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
-            <TableHead>
+            <TableHead classes={{ color: "secondary" }}>
               <TableRow>
                 <StyledTableCell>Investment</StyledTableCell>
                 <StyledTableCell align="center">Company</StyledTableCell>
@@ -109,7 +114,7 @@ export const PlanDash = inject("plansStore")(
                       onClick={() => {
                         investmentsActions.deleteInvestment(
                           investment.id,
-                          userId
+                          user._id
                         );
                       }}
                       disableRipple={true}

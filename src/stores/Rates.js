@@ -16,7 +16,6 @@ export class Rates {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Host: "http://localhost:3000/",
       },
     };
     const response = await fetch(

@@ -89,11 +89,16 @@ export const Login = () => {
           >
             Login
           </Typography>
-    
+
           <GoogleAuth informParent={informParent} />
           <FacebookAuth informParent={informParent} />
           <Divider sx={{ margin: "2.5% 0" }}>
-            <Typography gutterBottom={true} variant="h5" color="textSecondary">
+            <Typography
+              sx={{ marginTop: 1 }}
+              gutterBottom={true}
+              variant="h5"
+              color="textSecondary"
+            >
               OR
             </Typography>
           </Divider>

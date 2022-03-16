@@ -79,6 +79,7 @@ const updatePlan = async function (req, res) {
         const plan = await user.plans.id(planId);
         if (plan) {
             plan.name = name;
+            user.save();
             return res.json(plan);
         }
         else {

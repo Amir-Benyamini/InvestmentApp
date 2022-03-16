@@ -57,9 +57,10 @@ export const activateAccount = async (token: string) => {
 export const updateProfile = async (
   name: string,
   password: string,
-  token: string
+  token: string,
+  id: string
 ) => {
-  const response = await authAPI.updateProfile(name, password, token);
+  const response = await authAPI.updateProfile(name, password, token, id);
 
   if (response.ok) {
     console.log("PROFILE UPDATE SUCCESS!", response);

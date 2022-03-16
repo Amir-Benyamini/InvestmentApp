@@ -11,7 +11,8 @@ import { Profile } from "./components/UserAuth/Profile";
 import { ForgotPassword } from "./components/UserAuth/ForgotPassword";
 import { ResetPassword } from "./components/UserAuth/ResetPassword";
 import { Home } from "./components/Home/Home";
-import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@mui/material";
+import { customTheme } from "./constans/theme";
 import { Nav } from "./components/nav";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -20,9 +21,8 @@ const App: React.FC = inject(
   "auth"
 )(
   observer(() => {
-    const theme = createMuiTheme();
     return (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={customTheme}>
         <div>
           <Nav />
 
@@ -37,7 +37,7 @@ const App: React.FC = inject(
             <Route path="/auth/password/forgot" element={<ForgotPassword />} />
 
             <Route element={<PrivateRoute />}>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<PlanDash />} />
               <Route path="/monitor" element={<MonitorDash />} />
               <Route path="/plan" element={<PlanDash />} />
               <Route path="/profile" element={<Profile />} />

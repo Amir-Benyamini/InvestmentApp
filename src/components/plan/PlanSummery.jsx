@@ -15,25 +15,32 @@ import { styled } from "@mui/material/styles";
 
 export const PlanSummery = observer((props) => {
   const plan = props.plan;
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  }));
+
   return (
     <div>
       <Card variant="outlined">
         <CardContent className="center-content-container">
           {!plan.id ? (
-            <Typography gutterBottom={true} variant="h5" color="textSecondary">
-              Please select a plan or creat a new one.
+            <Typography gutterBottom={true} variant="h6" color="textSecondary">
+              Please choose a plan or creat a new one.
             </Typography>
           ) : plan.id && plan.investments.length <= 0 ? (
-            <Typography gutterBottom={true} variant="h5" color="textSecondary">
-              Please add this plan first investment.
-            </Typography>
+            <div>
+              <Typography
+                gutterBottom={true}
+                variant="h6"
+                color="textSecondary"
+              >
+                Current Plan: {plan.name}
+              </Typography>
+              <Typography
+                gutterBottom={true}
+                variant="h6"
+                color="textSecondary"
+              >
+                Please add your first investment.
+              </Typography>
+            </div>
           ) : (
             <Box sx={{ flexGrow: 1 }}>
               <Grid
@@ -54,7 +61,7 @@ export const PlanSummery = observer((props) => {
                       <Grid item xs={12}>
                         <Typography
                           gutterBottom={true}
-                          variant="subtitle1"
+                          variant="h6"
                           color="textSecondary"
                           sx={{ marginTop: 1 }}
                         >

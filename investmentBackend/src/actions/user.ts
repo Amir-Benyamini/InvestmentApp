@@ -26,13 +26,13 @@ interface UserToken {
 interface UserInputBody {
   name: string;
   password: string;
-  user: UserToken;
+  id: string;
 }
 export const update = (req: Request, res: Response) => {
   // console.log('UPDATE USER - req.user', req.user, 'UPDATE DATA', req.body)
-  const { name, password, user }: UserInputBody = req.body;
+  const { name, password, id }: UserInputBody = req.body;
 
-  User.findById(user._id, (err: CallbackError, user: UserDoc) => {
+  User.findById(id, (err: CallbackError, user: UserDoc) => {
     if (err || !user) {
       return res.status(400).json({
         error: "User not found",

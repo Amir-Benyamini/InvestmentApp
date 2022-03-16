@@ -90,7 +90,7 @@ export const BarChart = observer((props) => {
         {
           label: "Estimated Profit",
           data: planData.intrests,
-          backgroundColor: "rgb(54, 162, 235)",
+          backgroundColor: "#4caf50",
         },
       ],
     };

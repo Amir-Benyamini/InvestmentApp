@@ -10,23 +10,14 @@ export const Home = () => {
     console.log(`Hello ${name}`);
   };
   return (
+    //hero header - explain about the app and link to plan (later to monitor as well)
+    //benfits or why to use this app section (headlin + 3 cards)
+    //how to use this app section (procees bar or steps)
+    //include background image and some graphics
+
     <div>
-      <h1>Bar Home Page</h1>
-      <TextField
-        name="name"
-        type="text"
-        label="Privet Name"
-        onChange={(e) => {
-          setName(e.target.value);
-        }}
-      />
-      <Button
-        onClick={() => {
-          greet(name);
-        }}
-      >
-        click me and i will console log
-      </Button>
+      <h1>Welcome to enWhealthy</h1>
+      
     </div>
   );
 };

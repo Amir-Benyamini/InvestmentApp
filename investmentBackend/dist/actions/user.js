@@ -21,8 +21,8 @@ const read = (req, res) => {
 exports.read = read;
 const update = (req, res) => {
     // console.log('UPDATE USER - req.user', req.user, 'UPDATE DATA', req.body)
-    const { name, password, user } = req.body;
-    user_1.default.findById(user._id, (err, user) => {
+    const { name, password, id } = req.body;
+    user_1.default.findById(id, (err, user) => {
         if (err || !user) {
             return res.status(400).json({
                 error: "User not found",

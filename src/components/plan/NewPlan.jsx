@@ -41,7 +41,7 @@ export const NewPlan = () => {
   return (
     <div>
       <ToastContainer />
-      <Button color="primary" onClick={toggleNameDialog}>
+      <Button color="secondary" onClick={toggleNameDialog}>
         New Plan
       </Button>
       <Dialog open={nameDialog} onClose={toggleNameDialog}>

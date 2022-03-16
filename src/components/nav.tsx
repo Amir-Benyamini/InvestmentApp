@@ -109,14 +109,14 @@ export const Nav = inject("auth")(
                   icon: <AccountCircleIcon color="primary" />,
                 },
                 {
+                  text: "Plan",
+                  path: "/",
+                  icon: <TimelineIcon color="primary" />,
+                },
+                {
                   text: "Monitor",
                   path: "/monitor",
                   icon: <AccountBalanceIcon color="primary" />,
-                },
-                {
-                  text: "Plan",
-                  path: "/plan",
-                  icon: <TimelineIcon color="primary" />,
                 },
               ].map((menuItem, index) => (
                 <div>

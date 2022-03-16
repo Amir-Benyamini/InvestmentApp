@@ -13,6 +13,21 @@ export const setPlan = (plan) => {
   plansStore.setPlan(plan);
 };
 
+export const fetchFirstPlan = async (user) => {
+  const plansJson = await plansAPI.getPlans(user._id);
+  const plans = plansJson.map((plan) => new Plan(plan));
+  plansStore.setPlans(plans);
+  plansStore.updatePlansRates(rates.latestRates);
+
+  if (plansStore.plans.length > 0) {
+    plansStore.setPlan(plansStore.plans[0]);
+  } else {
+    const planJason = await plansAPI.createPlan(user.name, user._id);
+    const plan = new Plan(planJason);
+    plansStore.setPlan(plan);
+  }
+};
+
 export const createPlan = async (name, userId) => {
   const planJason = await plansAPI.createPlan(name, userId);
   const plan = new Plan(planJason);
