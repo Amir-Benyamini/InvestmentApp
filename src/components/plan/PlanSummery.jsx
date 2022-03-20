@@ -4,14 +4,13 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { observer } from "mobx-react";
 import { TimeFrame } from "./TimeFrame";
 import { DoughnutChart } from "../Analytics/DoughnutChart";
 import { BarChart } from "../Analytics/BarChart";
 import { LineChart } from "../Analytics/LineChart";
-import { styled } from "@mui/material/styles";
+
 
 export const PlanSummery = observer((props) => {
   const plan = props.plan;
@@ -19,7 +18,10 @@ export const PlanSummery = observer((props) => {
   return (
     <div>
       <Card variant="outlined">
-        <CardContent className="center-content-container">
+        <CardContent
+          sx={{ backgroundColor: "#F4F5F7", paddingTop: 12 }}
+          className="center-content-container"
+        >
           {!plan.id ? (
             <Typography gutterBottom={true} variant="h6" color="textSecondary">
               Please choose a plan or creat a new one.

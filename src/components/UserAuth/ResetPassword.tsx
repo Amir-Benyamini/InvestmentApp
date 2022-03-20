@@ -113,9 +113,11 @@ export const ResetPassword = () => {
   );
 
   return (
-    <div className="form-container">
-      <ToastContainer />
-      {resetPasswordForm()}
+    <div className="form-background">
+      <div className="form-container">
+        <ToastContainer />
+        {resetPasswordForm()}
+      </div>
     </div>
   );
 };

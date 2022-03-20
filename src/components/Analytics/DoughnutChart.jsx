@@ -63,7 +63,7 @@ export const DoughnutChart = observer((props) => {
         {
           label: "Capital vs Estimated Profit",
           data: data,
-          backgroundColor: ["#bdbdbd", "#4caf50"],
+          backgroundColor: ["#bdbdbd", "#81c784"],
         },
       ],
     });

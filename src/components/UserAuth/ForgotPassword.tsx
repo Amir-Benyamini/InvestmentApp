@@ -64,9 +64,9 @@ export const ForgotPassword = () => {
         <FormControl margin={"normal"} fullWidth={true}>
           <Typography
             className="form-text"
-            variant="h3"
+            variant="h5"
             gutterBottom
-            component="h3"
+            component="h5"
           >
             Forgot your password?
           </Typography>
@@ -112,9 +112,11 @@ export const ForgotPassword = () => {
   );
 
   return (
-    <div className="form-container">
-      <ToastContainer />
-      {forgotPasswordForm()}
+    <div className="form-background">
+      <div className="form-container">
+        <ToastContainer />
+        {forgotPasswordForm()}
+      </div>
     </div>
   );
 };

@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import { GoogleAuth } from "./GoogleAuth";
 import { FacebookAuth } from "./FacebookAuth";
 
+
 interface loginForm {
   email: string;
   password: string;
@@ -144,11 +145,13 @@ export const Login = () => {
   );
 
   return (
-    <div className="form-container">
-      <ToastContainer />
-      {/* {isAuth() ? <Navigate to="/" /> : null} */}
+    <div className="form-background">
+      <div className="form-container">
+        <ToastContainer />
+        {/* {isAuth() ? <Navigate to="/" /> : null} */}
 
-      {loginForm()}
+        {loginForm()}
+      </div>
     </div>
   );
 };

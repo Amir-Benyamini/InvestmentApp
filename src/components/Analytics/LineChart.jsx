@@ -90,7 +90,7 @@ export const LineChart = observer((props) => {
         {
           label: "Estimated Yield",
           data: planData.intrests,
-          backgroundColor: "#4caf50",
+          backgroundColor: "#81c784",
         },
       ],
     };

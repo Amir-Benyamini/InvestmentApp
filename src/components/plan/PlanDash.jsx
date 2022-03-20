@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { PlanHeader } from "./PlanHeader";
 import { observer, inject } from "mobx-react";
+import { AddInvestment } from "../Assets/AddInvestment";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
@@ -129,6 +130,8 @@ export const PlanDash = inject("plansStore")(
             </TableBody>
           </Table>
         </TableContainer>
+
+        <AddInvestment />
       </div>
     );
   })

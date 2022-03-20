@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { observer, inject } from 'mobx-react'
 import Button from "@mui/material/Button";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -12,11 +14,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import FormGroup from "@mui/material/FormGroup";
 import Switch from "@mui/material/Switch";
 import Divider from "@mui/material/Divider";
-import {
-  currencies,
-  investmentTypes,
-  liquidityLables,
-} from "../../constans/inputs";
+import { investmentTypes, liquidityLables } from "../../constans/inputs";
 import {
   investmentIn,
   inputValidation,
@@ -38,7 +36,7 @@ export const AddInvestment = inject(
 
     // const Investments = props.planStore.investments
     const rates = props.rates.latestRates;
-
+    const screenWidth = window.screen.width;
     const userId = JSON.parse(localStorage.getItem("user"))._id;
 
     const updateInvestmentInput = (event) => {
@@ -76,10 +74,21 @@ export const AddInvestment = inject(
     };
 
     return (
-      <div>
-        <Button color="secondary" onClick={handleInvestmentMentu}>
+      <div id="add-btn">
+        <Fab
+          variant="extended"
+          size={screenWidth < 850 ? "small" : "medium"}
+          aria-label="add"
+          color="secondary"
+          sx={{ color: "white" }}
+          onClick={handleInvestmentMentu}
+        >
+          <AddIcon />
+          Add investment
+        </Fab>
+        {/* <Button color="secondary" onClick={handleInvestmentMentu}>
           Add Investment
-        </Button>
+        </Button> */}
         <Dialog
           disableBackdropClick
           disableEscapeKeyDown

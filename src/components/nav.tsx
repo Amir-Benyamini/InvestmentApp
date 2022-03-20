@@ -53,7 +53,7 @@ export const Nav = inject("auth")(
     if (authenticate) {
       if (screenWidth > 841) {
         return (
-          <Box sx={{ display: "flex", marginBottom: "100px" }}>
+          <Box sx={{ display: "flex"}}>
             <CssBaseline />
             <AppBar position="fixed" open={open}>
               <Toolbar>
@@ -63,7 +63,7 @@ export const Nav = inject("auth")(
                   sx={{ flexGrow: 1 }}
                   component="div"
                 >
-                  enWhealthy
+                  enWealthy
                 </Typography>
                 <Button onClick={logout} size="large" color="inherit" href="/">
                   Logout
@@ -141,7 +141,7 @@ export const Nav = inject("auth")(
         );
       } else {
         return (
-          <Box sx={{ display: "flex", marginBottom: "100px" }}>
+          <Box sx={{ display: "flex"}}>
             <CssBaseline />
             <AppBar position="fixed" open={open}>
               <Toolbar>
@@ -151,7 +151,7 @@ export const Nav = inject("auth")(
                   sx={{ flexGrow: 1 }}
                   component="div"
                 >
-                  enWhealthy
+                  enWealthy
                 </Typography>
                 <Button onClick={logout} size="large" color="inherit" href="/">
                   Logout
@@ -230,7 +230,7 @@ export const Nav = inject("auth")(
       }
     } else {
       return (
-        <Box sx={{ display: "flex" }}>
+        <Box sx={{ display: "flex"}}>
           <CssBaseline />
           <AppBar position="sticky" open={open}>
             <Toolbar>
@@ -240,7 +240,7 @@ export const Nav = inject("auth")(
                 sx={{ flexGrow: 1 }}
                 component="div"
               >
-                enWhealthy
+                enWealthy
               </Typography>
               <Button size="large" color="inherit" href="/signup">
                 Signup

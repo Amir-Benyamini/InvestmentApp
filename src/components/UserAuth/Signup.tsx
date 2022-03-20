@@ -134,9 +134,11 @@ export function Signup() {
   );
 
   return (
-    <div className="form-container">
-      <ToastContainer />
-      {signupForm()}
+    <div className="form-background">
+      <div className="form-container">
+        <ToastContainer />
+        {signupForm()}
+      </div>
     </div>
   );
 }

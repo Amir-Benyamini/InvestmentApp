@@ -57,9 +57,11 @@ export function Acivate() {
   );
 
   return (
-    <div className="form-container">
-      <ToastContainer />
-      {activationLink()}
+    <div className="form-background">
+      <div className="form-container">
+        <ToastContainer />
+        {activationLink()}
+      </div>
     </div>
   );
 }
