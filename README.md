@@ -1,6 +1,6 @@
-![enWhealty Header](assets/enWhealty.png "enWhealty header")
+![enWealthy Header](assets/enWealthy.png "enWealthy header")
 
-The ultimate all in one whealth managment app to optimize your whealth growth!
+The ultimate all in one wealth managment app to optimize your whealth growth!
 
 # Installation & Usage:
 
