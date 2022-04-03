@@ -9,6 +9,7 @@ const morgan_1 = __importDefault(require("morgan"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config({ path: `${__dirname}/../.env` });
 const index_1 = require("./routes/index");
+const updateRates_1 = require("./services/updateRates");
 const connection_1 = __importDefault(require("./db/connection"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const path_1 = __importDefault(require("path"));
@@ -23,9 +24,14 @@ app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, morgan_1.default)("dev"));
 //routes
 (0, index_1.initializeRoutes)(app);
-// app.get("/", function (req, res) {
-//   res.send("Hello welcome to my server");
-// });
+//update rates
+(0, updateRates_1.updateRates)();
+setInterval(async () => { (0, updateRates_1.updateRates)(); }, 43200000);
+// keep heroku awake
+// if(process.env.NODE_ENV === "production"){
+//   setInterval( async () => {keepHerokuAwake()}
+//   , 300000)
+// }
 const publicPath = path_1.default.join(__dirname, "..", "..", "build");
 app.use(express_1.default.static(path_1.default.resolve(__dirname, "..", "..", "build")));
 app.get("*", (req, res) => {

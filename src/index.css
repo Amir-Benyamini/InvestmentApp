@@ -56,12 +56,12 @@ code {
  padding: 0.5% 1.5%;
 }
 .chart-container{
- width: 200;
- height: 200;
+ width: 380px;
+ padding-top: 4px;
 }
 
 .summery-card-container{
-  height: 220px;
+  height: 230px;
   width: 400px;
 }
 
@@ -83,7 +83,7 @@ code {
 
 @media (max-width: 841px) {
   .summery-card-container{
-    height: 220px;
+    height: 230px;
     width: 100vw;
   }
   .planControlContainer{
@@ -100,5 +100,13 @@ code {
   padding: 10px;
 }
 
+}
+
+@media (max-width: 441px) {
+  
+.chart-container{
+  width: 90vw;
+  padding-top: 2vh;
+ }
 }
 

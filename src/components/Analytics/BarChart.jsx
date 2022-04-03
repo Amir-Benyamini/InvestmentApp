@@ -57,7 +57,7 @@ export const BarChart = observer((props) => {
       },
       title: {
         display: true,
-        text: "Estimated Profit Over Years",
+        text: "Estimated Profit Per Years",
       },
       tooltip: {
         callbacks: {
@@ -105,7 +105,7 @@ export const BarChart = observer((props) => {
   }, [plan.timeFrame, plan.investments.length]);
 
   return (
-    <div style={{ width: 380 }}>
+    <div className="chart-container">
       <Bar options={options} data={barData} />
     </div>
   );

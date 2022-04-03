@@ -56,7 +56,7 @@ export class Plan {
 
   get interestAmountByYear() {
     let data = { years: [], intrests: [] };
-
+    
     for (let i = 0; i < this.timeFrame; i++) {
       let intrest = 0;
       let years = 0;
@@ -64,9 +64,12 @@ export class Plan {
 
       this.investments.forEach((investment) => {
         if (investment.type === "Stock-Market") {
-          intrest += investment.compoundInterest(years +1);
+          intrest +=
+            investment.compoundInterest(years + 1) -
+            investment.compoundInterest(years);
         } else {
-          intrest += investment.interest(years +1);
+          intrest +=
+            investment.interest(years + 1) - investment.interest(years);
         }
       });
       data.intrests.push(intrest);
@@ -110,11 +113,11 @@ export class Plan {
 
       this.investments.forEach((investment) => {
         if (investment.type === "Stock-Market") {
-          intrest += investment.compoundInterest(years +1);
+          intrest += investment.compoundInterest(years +1) - investment.compoundInterest(years);
          
         } 
          if(investment.type === "Real-Estat"){
-          intrest += investment.interest(years +1);
+          intrest += investment.interest(years +1) - investment.interest(years);;
         } 
          if(investment.currency === "USD"){
           amount += investment.convertedAmount;

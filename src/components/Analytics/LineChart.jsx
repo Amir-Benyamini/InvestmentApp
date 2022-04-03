@@ -57,7 +57,7 @@ export const LineChart = observer((props) => {
       },
       title: {
         display: true,
-        text: "Estimated Yield Over Years",
+        text: "Estimated Yield Per Years",
       },
       tooltip: {
         callbacks: {
@@ -105,7 +105,7 @@ export const LineChart = observer((props) => {
   }, [plan.timeFrame, plan.investments.length]);
 
   return (
-    <div style={{ width: 380 }}>
+    <div className="chart-container">
       <Line options={options} data={lineData} />
     </div>
   );

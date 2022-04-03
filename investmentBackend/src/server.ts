@@ -4,9 +4,12 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 dotenv.config({ path: `${__dirname}/../.env` });
 import { initializeRoutes } from "./routes/index";
+import { updateRates } from "./services/updateRates"
+import { keepHerokuAwake } from "./services/keepHerokuAwake"
 import connectDB from "./db/connection";
 import bodyParser from "body-parser";
 import path from "path";
+
 
 const app = express();
 connectDB();
@@ -22,9 +25,17 @@ app.use(morgan("dev"));
 //routes
 initializeRoutes(app);
 
-// app.get("/", function (req, res) {
-//   res.send("Hello welcome to my server");
-// });
+//update rates
+updateRates()
+setInterval( 
+  async () => { updateRates() }
+, 43200000)
+
+// keep heroku awake
+// if(process.env.NODE_ENV === "production"){
+//   setInterval( async () => {keepHerokuAwake()}
+//   , 300000)
+// }
 
 
   const publicPath = path.join(__dirname, "..", "..", "build");

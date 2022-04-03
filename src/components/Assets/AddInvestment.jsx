@@ -190,7 +190,6 @@ export const AddInvestment = inject(
                   validation.amount.error ? validation.amount.text : ""
                 }
                 thousandSeparator
-                prefix={investmentInput.currency === "USD" ? "$" : "₪"}
                 allowNegative={false}
               />
 

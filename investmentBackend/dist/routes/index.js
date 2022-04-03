@@ -8,10 +8,12 @@ const auth_1 = __importDefault(require("./auth"));
 const user_1 = __importDefault(require("./user"));
 const investments_1 = __importDefault(require("./investments"));
 const plans_1 = __importDefault(require("./plans"));
+const rates_1 = __importDefault(require("./rates"));
 const initializeRoutes = (app) => {
     app.use("/auth", auth_1.default);
     app.use("/user", user_1.default);
     app.use("/investments", investments_1.default);
     app.use("/plans", plans_1.default);
+    app.use("/rates", rates_1.default);
 };
 exports.initializeRoutes = initializeRoutes;
