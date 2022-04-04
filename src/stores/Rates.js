@@ -2,6 +2,7 @@ import { observable, makeObservable, action } from "mobx";
 
 export class Rates {
   constructor() {
+    this.url = process.env.REACT_APP_ENV === "production" ? "https://enwhealthy.herokuapp.com/rates/getRates" : "http://localhost:4000/rates/getRates"
     this.latestRates = {};
     this.fetchLatests();
 
@@ -19,13 +20,12 @@ export class Rates {
       },
     };
     const response = await fetch(
-      "https://api.currencyapi.com/v3/latest?apikey=86697850-88f9-11ec-a628-3dea19c29d44&base_currency=ILS",
+      this.url,
       options
     );
     
     const data = await response.json();
-
-    this.latestRates = data.data;
+    this.latestRates = data
    
   }
 
