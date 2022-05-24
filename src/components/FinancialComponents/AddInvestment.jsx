@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { observer, inject } from 'mobx-react'
 import Button from "@mui/material/Button";
-import Fab from "@mui/material/Fab";
-import AddIcon from "@mui/icons-material/Add";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -14,13 +12,15 @@ import DialogTitle from "@mui/material/DialogTitle";
 import FormGroup from "@mui/material/FormGroup";
 import Switch from "@mui/material/Switch";
 import Divider from "@mui/material/Divider";
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { investmentTypes, liquidityLables } from "../../constans/inputs";
 import {
   investmentIn,
   inputValidation,
-  validateInvestmentInput,
+  validateInput,
+  resetValidation
 } from "../../constans/validations";
-import * as investmentsActions from "../../actions/investments";
+import * as investmentsActions from "../../actions/Investment";
 import { toast } from "react-toastify";
 import NumberFormat from "react-number-format";
 
@@ -58,44 +58,38 @@ export const AddInvestment = inject(
       if (planId !== undefined) {
         setInvestmentInput(investmentIn);
         setInvestmentMenu(!investmentMenu);
+        resetValidation(validation, setValidation)
+        
       } else {
         toast.error("Please set plan first!");
       }
+      if(investmentMenu === true) props.handleClose()
     };
 
     const addInvestment = async () => {
-      if (validateInvestmentInput(investmentInput, validation, setValidation)) {
+      if (validateInput(investmentInput, validation, setValidation)) {
         investmentsActions.addInvestment(investmentInput, userId);
         handleInvestmentMentu();
         toast.success("Investment succesfully added!");
+        if(investmentMenu === true) props.handleClose()
       } else {
         toast.error("Please fill all requierd fields!");
       }
     };
 
     return (
-      <div id="add-btn">
-        <Fab
-          variant="extended"
-          size={screenWidth < 850 ? "small" : "medium"}
-          aria-label="add"
-          color="secondary"
-          sx={{ color: "white" }}
-          onClick={handleInvestmentMentu}
-        >
-          <AddIcon />
-          Add investment
-        </Fab>
-        {/* <Button color="secondary" onClick={handleInvestmentMentu}>
-          Add Investment
-        </Button> */}
+      <div className="plus-icons">
+  
+        <AttachMoneyIcon sx={{margin:"auto"}}   onClick={handleInvestmentMentu} /> 
+       
+       
         <Dialog
           disableBackdropClick
           disableEscapeKeyDown
           open={investmentMenu}
           onClose={handleInvestmentMentu}
         >
-          <DialogTitle>Fill Investment Data</DialogTitle>
+          <DialogTitle sx={{textAlign: "center"}}>Fill Investment Data</DialogTitle>
           <Divider />
           <DialogContent>
             <FormControl>
@@ -195,12 +189,12 @@ export const AddInvestment = inject(
 
               <TextField
                 sx={{ margin: "5px 0" }}
-                id="type"
-                name="type"
+                id="subType"
+                name="subType"
                 label="Investment Type"
                 required
-                error={validation.type.error}
-                helperText={validation.type.error ? validation.type.text : ""}
+                error={validation.subType.error}
+                helperText={validation.subType.error ? validation.subType.text : ""}
                 select
                 onChange={(e) => updateInvestmentInput(e)}
               >
@@ -254,7 +248,7 @@ export const AddInvestment = inject(
               Cancel
             </Button>
             <Button onClick={addInvestment} color="primary">
-              Invest
+              Add Investment
             </Button>
           </DialogActions>
         </Dialog>

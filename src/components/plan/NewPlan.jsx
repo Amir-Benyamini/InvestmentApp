@@ -45,7 +45,7 @@ export const NewPlan = () => {
         New Plan
       </Button>
       <Dialog open={nameDialog} onClose={toggleNameDialog}>
-        <DialogTitle>Choose Plan Name</DialogTitle>
+        <DialogTitle sx={{textAlign: "center"}}>Choose Plan Name</DialogTitle>
         <Divider />
         <DialogContent>
           <FormControl>

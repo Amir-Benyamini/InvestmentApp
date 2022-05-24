@@ -1,22 +1,19 @@
 import mongoose, { Types } from "mongoose";
 
-interface InvestmentInput {
+interface LoanInput {
   type: string
   amount: number;
   name: string;
+  company: String,
   currency: string;
-  revPerYear: number;
-  company: string;
-  endDate: string;
-  liquidity: string;
+  interest: number;
   subType: string;
-  isCompanyCapital: boolean;
-  isRegulated: boolean;
+
 }
 
-export default interface InvestmentDoc
+export default interface LoanDoc
   extends Types.Subdocument,
-    InvestmentInput {
+  LoanInput {
   createdAt: string;
   updatedAt: string;
   _id: mongoose.Types.ObjectId;

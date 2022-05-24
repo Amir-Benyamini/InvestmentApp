@@ -57,7 +57,7 @@ export const SetPlan = inject("plansStore")(
           open={plansMenu}
           onClose={togglePlansMenu}
         >
-          <DialogTitle>Select Plan</DialogTitle>
+          <DialogTitle sx={{textAlign: "center"}}>Select Plan</DialogTitle>
           <Divider />
           <DialogContent>
             <List itemCount={plans.length}>

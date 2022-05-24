@@ -26,7 +26,7 @@ export const PlanSummery = observer((props) => {
             <Typography gutterBottom={true} variant="h6" color="textSecondary">
               Please choose a plan or creat a new one.
             </Typography>
-          ) : plan.id && plan.investments.length <= 0 ? (
+          ) : plan.id && plan.data.length <= 0 ? (
             <div>
               <Typography
                 gutterBottom={true}
@@ -82,7 +82,7 @@ export const PlanSummery = observer((props) => {
                             style: "currency",
                             currency: "ILS",
                             notation: "compact",
-                          }).format(plan.totalAmount)}`}
+                          }).format(plan.totalPlanAmount + plan.planRevAmount)}`}
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>

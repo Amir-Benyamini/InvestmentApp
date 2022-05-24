@@ -43,7 +43,7 @@
     "build": "react-scripts --openssl-legacy-provider build",
     "build-heroku": "react-scripts build",
     "heroku-postbuild": "npm install && npm run build-heroku && cd investmentBackend && npm install",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -64,5 +64,8 @@
       "last 1 safari version"
     ]
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "jest": "^26.6.0"
+  }
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { observer, inject } from "mobx-react";
 import PrivateRoute from "./components/UserAuth/PrivateRoute";
-import { PlanDash } from "./components/plan/PlanDash";
+import { PlanDash } from "./components/Plan/PlanDash";
 import { MonitorDash } from "./components/monitor/MonitorDash";
 import { Signup } from "./components/UserAuth/Signup";
 import { Login } from "./components/UserAuth/Login";
@@ -13,7 +13,7 @@ import { ResetPassword } from "./components/UserAuth/ResetPassword";
 import { Home } from "./components/Home/Home";
 import { ThemeProvider } from "@mui/material";
 import { customTheme } from "./constans/theme";
-import { Nav } from "./components/nav";
+import { Nav } from "./components/Nav";
 import "react-toastify/dist/ReactToastify.css";
 
 const App: React.FC = inject(

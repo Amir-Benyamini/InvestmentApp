@@ -81,6 +81,10 @@ code {
   z-index: 1;
 }
 
+.plus-icons {
+  display: flex;
+}
+
 @media (max-width: 841px) {
   .summery-card-container{
     height: 230px;

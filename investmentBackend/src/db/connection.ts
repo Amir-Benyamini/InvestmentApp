@@ -7,7 +7,7 @@ const connectDB = async function(){
     useUnifiedTopology: true,
     useCreateIndex: true,
   });
-	console.log('DB is connected')
+    console.log('DB is connected')
 	// conn.connection.db.dropDatabase();
 }; 
 

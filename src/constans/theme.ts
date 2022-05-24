@@ -14,12 +14,14 @@ export const customTheme = createTheme({
       main: secoundaryColor,
     },
   },
-  //@ts-ignore
-  MuiFab: {
-    MuiTableCell: {
-      head: {
-        backgroundColor: "secondary",
-      },
+  components: {
+    MuiSpeedDial: {
+      styleOverrides: {
+        fab: {
+          backgroundColor: secoundaryColor,
+        },
+
+      }
     },
-  },
+  }
 });

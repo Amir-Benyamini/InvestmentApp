@@ -4,6 +4,8 @@ export class PlansStore {
   constructor() {
     this.plan = {
       investments: [],
+      loans: [],
+      data: [],
       name: "",
       startDate: undefined,
       endDate: undefined,
@@ -13,22 +15,19 @@ export class PlansStore {
 
     makeObservable(this, {
       plans: observable,
-      setPlans: action,
       plan: observable,
-      addInvestment: action,
-      deleteInvestment: action,
+      setPlans: action,
       setPlan: action,
       setPlanTimeFrame: action,
       updatePlanName: action,
+      addInvestment: action,
+      deleteInvestment: action,
+      addLoan: action
     });
   }
-
+ //plans methods
   setPlans(plans) {
     this.plans = plans;
-  }
-
-  addInvestment(investment) {
-    this.plan.investments.push(investment);
   }
 
   addPlan(newPlan) {
@@ -61,15 +60,41 @@ export class PlansStore {
     });
   }
 
-  deleteInvestment(investmentId) {
-    this.plan.investments = this.plan.investments.filter(function (investment) {
-      return investment.id !== investmentId;
-    });
-  }
-
   updatePlansRates(rates) {
     this.plans.forEach((plan) => {
       plan.convertInvestmentsCurrency(rates);
     });
   }
+  //investments methods
+  addInvestment(investment) {
+    this.plan.investments.push(investment);
+    this.plan.data.push(investment)
+  }
+
+  deleteInvestment(investmentId) {
+    this.plan.investments = this.plan.investments.filter(function (investment) {
+      return investment.id !== investmentId;
+    });
+
+    this.plan.data = this.plan.data.filter(function (item) {
+      return item.id !== investmentId;
+    });
+  }
+   //loans methods
+   addLoan(loan) {
+    this.plan.loans.push(loan);
+    this.plan.data.push(loan)
+  }
+
+  deleteLoan(loanId) {
+    this.plan.loans = this.plan.loans.filter( (loan) => {
+      return loan.id !== loanId;
+    });
+
+    this.plan.data = this.plan.data.filter( (loan) => {
+      return loan.id !== loanId;
+    });
+  }
 }
+
+

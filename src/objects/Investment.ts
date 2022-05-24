@@ -1,7 +1,24 @@
+import InvestmentDoc from "../../investmentBackend/src/interfaces/investmentDoc"
+
 export class Investment {
-  constructor(investmentInput) {
+  type = "Investment"
+  id
+  amount
+  currencyRate
+  convertedAmount
+  name
+  company
+  currency
+  revPerYear
+  endDate
+  liquidity
+  subType
+  isCompanyCapital
+  isRegulated
+
+  constructor(investmentInput: InvestmentDoc) {
     this.id = investmentInput._id;
-    this.amount = parseInt(investmentInput.amount);
+    this.amount = investmentInput.amount;
     this.currencyRate = 1;
     this.convertedAmount = this.amount * this.currencyRate;
     this.name = investmentInput.name;
@@ -10,12 +27,12 @@ export class Investment {
     this.revPerYear = investmentInput.revPerYear;
     this.endDate = investmentInput.endDate;
     this.liquidity = investmentInput.liquidity;
-    this.type = investmentInput.type;
+    this.subType = investmentInput.subType;
     this.isCompanyCapital = investmentInput.isCompanyCapital;
     this.isRegulated = investmentInput.isRegulated;
   }
 
-  compoundInterest(investmentsTimeRange) {
+  compoundInterest(investmentsTimeRange: number) {
     const rate = this.revPerYear / 100;
     const base = 1 + rate;
     if (this.currency !== "ILS") {
@@ -30,7 +47,7 @@ export class Investment {
     }
   }
 
-  interest(investmentsTimeRange) {
+  interestAmount(investmentsTimeRange: number) {
     const rate = this.revPerYear / 100;
     if (this.currency !== "ILS") {
       const interest = this.convertedAmount * rate * investmentsTimeRange;
@@ -71,7 +88,7 @@ export class Investment {
     return riskCal;
   }
 
-  convertCurrency(rate) {
+  convertCurrency(rate: number) {
     if (rate) {
       this.currencyRate = rate;
     }

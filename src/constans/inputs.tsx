@@ -7,6 +7,7 @@ export const investmentTypes = [
   },
 ];
 
+
 export const liquidityLables = [
   {
     value: "days",

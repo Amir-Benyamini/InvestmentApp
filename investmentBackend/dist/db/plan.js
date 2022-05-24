@@ -6,9 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Plan = exports.PlanSchema = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const Investment_1 = require("./Investment");
+const Loan_1 = require("./Loan");
 const Schema = mongoose_1.default.Schema;
 exports.PlanSchema = new Schema({
     name: { type: String, required: true },
-    investments: [Investment_1.InvestmentSchema]
+    investments: [Investment_1.InvestmentSchema],
+    loans: [Loan_1.LoanSchema]
 }, { timestamps: true });
 exports.Plan = mongoose_1.default.model("Plan", exports.PlanSchema, "plans");

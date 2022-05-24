@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { PlanHeader } from "./PlanHeader";
 import { observer, inject } from "mobx-react";
-import { AddInvestment } from "../Assets/AddInvestment";
+import {PlusButton} from "../FinancialComponents/PlusButton"
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
@@ -11,8 +11,10 @@ import Paper from "@mui/material/Paper";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import IconButton from "@mui/material/IconButton";
 import { StyledTableRow, StyledTableCell } from "../../constans/styling";
-import * as investmentsActions from "../../actions/investments";
+import * as investmentsActions from "../../actions/Investment";
+import * as loanActions from "../../actions/Loan";
 import * as planActions from "../../actions/Plan";
+
 
 export const PlanDash = inject("plansStore")(
   observer((props) => {
@@ -29,20 +31,21 @@ export const PlanDash = inject("plansStore")(
         <PlanHeader plan={selectedPlan} />
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
-            <TableHead>
+            <TableHead >
               <TableRow>
-                <StyledTableCell>Investment</StyledTableCell>
-                <StyledTableCell align="center">Company</StyledTableCell>
+                <StyledTableCell>Name</StyledTableCell>
                 <StyledTableCell align="center">Type</StyledTableCell>
+                <StyledTableCell align="center">Sub Type</StyledTableCell>
+                <StyledTableCell align="center">Company</StyledTableCell>
                 <StyledTableCell align="center">Currancy</StyledTableCell>
                 <StyledTableCell align="center">
                   Amount&nbsp;(₪)
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  Estimated Yield
+                  EST. Yield / Interest
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  Estimated Profit&nbsp;(₪)
+                EST. Profit / Loss&nbsp;(₪)
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   Risk Grade&nbsp;(0-100)
@@ -52,7 +55,81 @@ export const PlanDash = inject("plansStore")(
             </TableHead>
 
             <TableBody>
-              {selectedPlan.investments.map((investment) => (
+              {selectedPlan.data.map((item) => (<StyledTableRow key={item.id}>
+                  <StyledTableCell>{item.name}</StyledTableCell>
+                  <StyledTableCell align="center">{item.type} </StyledTableCell>
+                  <StyledTableCell align="center">{item.subType ? item.subType : "-" } </StyledTableCell>
+                  <StyledTableCell align="center">{item.company} </StyledTableCell>
+                  <StyledTableCell align="center">{item.currency} </StyledTableCell>
+
+                  <StyledTableCell align="center">{
+                  item.currency !== "ILS"
+                      ? new Intl.NumberFormat("en-US", {
+                          style: "currency",
+                          currency: "ILS",
+                          notation: "compact",
+                        }).format(item.convertedAmount)
+                      : new Intl.NumberFormat("en-US", {
+                          style: "currency",
+                          currency: "ILS",
+                          notation: "compact",
+                        }).format(item.amount)} </StyledTableCell>
+
+                  <StyledTableCell align="center">
+                    {item.type == "Investment" ? new Intl.NumberFormat("en-US", {
+                      style: "percent",
+                      maximumFractionDigits: 2,
+                    }).format(item.revPerYear / 100) : new Intl.NumberFormat("en-US", {
+                      style: "percent",
+                      maximumFractionDigits: 2,
+                    }).format(item.interest / 100)}
+                  </StyledTableCell>
+
+                  <StyledTableCell align="center">
+                    {item.subType === "Stock-Market"
+                      ? new Intl.NumberFormat("en-US", {
+                          style: "currency",
+                          currency: "ILS",
+                          notation: "compact",
+                        }).format(
+                          item.compoundInterest(selectedPlan.timeFrame)
+                        )
+                      : new Intl.NumberFormat("en-US", {
+                          style: "currency",
+                          currency: "ILS",
+                          notation: "compact",
+                        }).format(item.interestAmount(selectedPlan.timeFrame))}
+                  </StyledTableCell>
+
+                  <StyledTableCell align="center">
+                    {item.type === "Investment" ? new Intl.NumberFormat("en-US", {
+                      style: "percent",
+                    }).format(item.risk(selectedPlan.timeFrame)): "-"}
+                  </StyledTableCell>
+
+                  <StyledTableCell align="center">
+                    <IconButton
+                      onClick={() => {
+                        if(item.type === "Investment"){
+                          investmentsActions.deleteInvestment(
+                            item.id,
+                            user._id
+                          );
+                        } if(item.type === "Loan") {
+                          loanActions.deleteLoan(
+                            item.id,
+                            user._id
+                            );
+                        }
+                      }}
+                      disableRipple={true}
+                      color="error"
+                    >
+                      <DeleteForeverIcon color="error" fontSize="large" />
+                    </IconButton>
+                  </StyledTableCell>
+                  </StyledTableRow>))}
+              {/* {selectedPlan.investments.map((investment) => (
                 <StyledTableRow key={investment.id}>
                   <StyledTableCell>{investment.name}</StyledTableCell>
 
@@ -126,12 +203,12 @@ export const PlanDash = inject("plansStore")(
                     </IconButton>
                   </StyledTableCell>
                 </StyledTableRow>
-              ))}
+              ))} */}
             </TableBody>
           </Table>
         </TableContainer>
 
-        <AddInvestment />
+        <PlusButton />
       </div>
     );
   })

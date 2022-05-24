@@ -62,7 +62,7 @@ export const UpdatePlan = inject("plansStore")(
           open={updateDialog}
           onClose={toggleUptadeDialog}
         >
-          <DialogTitle>Update Plan Name</DialogTitle>
+          <DialogTitle sx={{textAlign: "center"}}>Update Plan Name</DialogTitle>
           <Divider />
           <DialogContent>
             <FormControl>

@@ -12,7 +12,14 @@ import path from "path";
 
 
 const app = express();
-connectDB();
+
+connectDB().then(() => {
+  //update rates
+  updateRates()
+  setInterval(
+    async () => { updateRates() }
+    , 43200000)
+});
 
 //middlewares
 app.use(cors());
@@ -25,11 +32,6 @@ app.use(morgan("dev"));
 //routes
 initializeRoutes(app);
 
-//update rates
-updateRates()
-setInterval( 
-  async () => { updateRates() }
-, 43200000)
 
 // keep heroku awake
 // if(process.env.NODE_ENV === "production"){

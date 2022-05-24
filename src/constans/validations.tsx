@@ -1,11 +1,12 @@
 export const investmentIn = {
+  type: "Investment",
+  subType: "",
   name: "",
   company: "",
   currency: "",
   revPerYear: 0,
   amount: 0,
   liquidity: "",
-  type: "",
   isCompanyCapital: false,
   isRegulated: false,
   endDate: "",
@@ -18,90 +19,59 @@ export const inputValidation = {
   revPerYear: { error: false, text: "revenue is requierd" },
   amount: { error: false, text: "amount is requierd" },
   liquidity: { error: false, text: "liquitidy is requierd" },
-  type: { error: false, text: "investment type is requierd" },
+  subType: { error: false, text: "investment type is requierd" },
 };
 
-export const validateInvestmentInput = (
-  investmentInput: any,
+export const loanInputValidation = {
+  name: { error: false, text: "name is requierd" },
+  company: { error: false, text: "company is requierd" },
+  currency: { error: false, text: "currency is requierd" },
+  interest: { error: false, text: "interest is requierd" },
+  amount: { error: false, text: "amount is requierd" },
+
+};
+
+export const loanIn = {
+  type: "Loan",
+  name: "",
+  company: "",
+  currency: "",
+  interest: 0,
+  amount: 0,
+};
+
+
+export const validateInput = (
+  input: any,
   validation: any,
   setValidation: any
 ) => {
-  if (investmentInput.name === "") {
-    const newValidation = { ...validation };
-    newValidation.name.error = true;
-    setValidation(newValidation);
-    return false;
-  } else {
-    const newValidation = { ...validation };
-    newValidation.name.error = false;
-    setValidation(newValidation);
-  }
-  if (investmentInput.company === "") {
-    const newValidation = { ...validation };
-    newValidation.company.error = true;
-    setValidation(newValidation);
-    return false;
-  }
-  if (investmentInput.company !== "") {
-    const newValidation = { ...validation };
-    newValidation.company.error = false;
-    setValidation(newValidation);
-  }
-  if (investmentInput.currency === "") {
-    const newValidation = { ...validation };
-    newValidation.currency.error = true;
-    setValidation(newValidation);
-    return false;
-  }
-  if (investmentInput.currency !== "") {
-    const newValidation = { ...validation };
-    newValidation.currency.error = false;
-    setValidation(newValidation);
-  }
-  if (investmentInput.revPerYear === 0) {
-    const newValidation = { ...validation };
-    newValidation.revPerYear.error = true;
-    setValidation(newValidation);
-    return false;
-  }
-  if (investmentInput.revPerYear !== 0) {
-    const newValidation = { ...validation };
-    newValidation.revPerYear.error = false;
-    setValidation(newValidation);
-  }
-  if (investmentInput.amount === 0) {
-    const newValidation = { ...validation };
-    newValidation.amount.error = true;
-    setValidation(newValidation);
-    return false;
-  }
-  if (investmentInput.amount !== 0) {
-    const newValidation = { ...validation };
-    newValidation.amount.error = false;
-    setValidation(newValidation);
-  }
-  if (investmentInput.type === "") {
-    const newValidation = { ...validation };
-    newValidation.type.error = true;
-    setValidation(newValidation);
-    return false;
-  }
-  if (investmentInput.type !== "") {
-    const newValidation = { ...validation };
-    newValidation.type.error = false;
-    setValidation(newValidation);
-  }
-  if (investmentInput.liquidity === "") {
-    const newValidation = { ...validation };
-    newValidation.liquidity.error = true;
-    setValidation(newValidation);
-    return false;
-  }
-  if (investmentInput.liquidity !== "") {
-    const newValidation = { ...validation };
-    newValidation.liquidity.error = false;
-    setValidation(newValidation);
-  }
 
+  const inputList = Object.keys(input)
+  const validationList = inputList.filter(key => `${key}` in validation)
+
+  for (let i = 0; i < validationList.length; i++) {
+    let key = validationList[i]
+    if (!input[key]) {
+      const newValidation = { ...validation };
+      newValidation[key].error = true
+      setValidation(newValidation)
+      return false
+    } else {
+      const newValidation = { ...validation };
+      newValidation[key].error = false
+      setValidation(newValidation)
+    }
+  }
   return true;
+
+
 };
+
+export const resetValidation = (validation: any, setValidation: any) => {
+  const validationList = Object.keys(validation)
+  validationList.forEach(key => {
+    validation[key].error = false
+  })
+  setValidation(validation)
+}

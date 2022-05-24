@@ -14,7 +14,11 @@ const connection_1 = __importDefault(require("./db/connection"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const path_1 = __importDefault(require("path"));
 const app = (0, express_1.default)();
-(0, connection_1.default)();
+(0, connection_1.default)().then(() => {
+    //update rates
+    (0, updateRates_1.updateRates)();
+    setInterval(async () => { (0, updateRates_1.updateRates)(); }, 43200000);
+});
 //middlewares
 app.use((0, cors_1.default)());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
@@ -24,9 +28,6 @@ app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, morgan_1.default)("dev"));
 //routes
 (0, index_1.initializeRoutes)(app);
-//update rates
-(0, updateRates_1.updateRates)();
-setInterval(async () => { (0, updateRates_1.updateRates)(); }, 43200000);
 // keep heroku awake
 // if(process.env.NODE_ENV === "production"){
 //   setInterval( async () => {keepHerokuAwake()}
