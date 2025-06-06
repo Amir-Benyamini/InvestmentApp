@@ -21,7 +21,7 @@ export const getCookie = (key) => {
 //get local storage
 export const getLocalStorage = (key) => {
   if (window !== undefined) {
-    localStorage.getItem(key);
+    return localStorage.getItem(key);
   }
 };
 
