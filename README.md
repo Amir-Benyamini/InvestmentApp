@@ -6,6 +6,12 @@ The ultimate all in one wealth managment app to optimize your whealth growth!
 
 1. npm run build
 2. npm start
+## Running locally
+1. Install dependencies with `npm install --legacy-peer-deps` and then `cd investmentBackend && npm install --legacy-peer-deps`
+2. Copy `investmentBackend/.env.example` to `investmentBackend/.env` and fill in the values.
+3. Start MongoDB locally and run `npm run build` followed by `npm start`.
+4. For development frontend use `npm run react-start`.
+
 
 # Key features:
 
